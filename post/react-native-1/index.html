@@ -1,0 +1,314 @@
+<!doctype html>
+<html class="no-js">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <title>Pascal&#39;s dev blog</title>
+        <meta name="author">
+        <meta name="description" content="Pascal&#39;s blog about software development.">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="generator" content="Hugo 0.16" />
+          <link href="https://pascallemerrer.github.io/blog/post/index.xml" rel="alternate" type="application/rss+xml" title="Pascal&#39;s dev blog" />
+          <link href="https://pascallemerrer.github.io/blog/post/index.xml" rel="feed" type="application/rss+xml" title="Pascal&#39;s dev blog" />
+        <link href='//fonts.googleapis.com/css?family=Roboto:400,300,700|Noto+Serif:400,400italic,700,700italic' rel='stylesheet' type='text/css'>
+        <link rel="stylesheet" href="https://pascallemerrer.github.io/blog/css/styles.css">
+        <link rel="stylesheet" href="https://pascallemerrer.github.io/blog/css/custom_styles.css">
+        <link rel="icon" href="https://pascallemerrer.github.io/blog/favicon.ico">
+        <link rel="apple-touch-icon" href="https://pascallemerrer.github.io/blog/apple-touch-icon.png" />
+        <link rel="stylesheet" href="https://pascallemerrer.github.io/blog/css/highlightjs/monokai.css">
+        <script src="https://pascallemerrer.github.io/blog/js/vendor/modernizr-2.8.0.min.js"></script>
+        <style>
+        .site-header h2 .logo {
+        background: url(https://pascallemerrer.github.io/blog/img/header.jpg) no-repeat 0 0;
+        }
+        @media (min--moz-device-pixel-ratio: 1.3), (-o-min-device-pixel-ratio: 2.6 / 2), (-webkit-min-device-pixel-ratio: 1.3), (min-device-pixel-ratio: 1.3), (min-resolution: 1.3dppx) {
+          .site-header h2 .logo {
+            background-image: url(https://pascallemerrer.github.io/blog/img/header.jpg);
+        }}
+       .site-header {
+         background: #2a373d url(https://pascallemerrer.github.io/blog/img/header.jpg) no-repeat center center;
+         z-index: -1;
+        }
+        </style>
+    </head>
+    <body>
+        
+        <header class="site-header">
+          <div class="transparent-layer">
+              <h2>Pascal&#39;s Dev Blog</h2>
+          </div>
+        </header>
+
+
+<div class="container clearfix">
+    <main role="main" class="content">
+        <article class="post">
+            <a class="btn home" href="https://pascallemerrer.github.io/blog/" title="Back to home">&laquo; Back to home</a>
+            
+<h1><a href="https://pascallemerrer.github.io/blog/post/react-native-1/" title="Creating a mobile application with React Native - part 1">Creating a mobile application with React Native - part 1</a></h1>
+
+<footer class="post-info">Posted on <span class="post-meta"><time datetime="2016.08.15">2016.08.15</time>
+
+    &middot; Tagged in
+        
+        <a href="https://pascallemerrer.github.io/blog/tags/development">development</a>, 
+        
+        <a href="https://pascallemerrer.github.io/blog/tags/tutorial">tutorial</a>, 
+        
+        <a href="https://pascallemerrer.github.io/blog/tags/mobile">mobile</a>, 
+        
+        <a href="https://pascallemerrer.github.io/blog/tags/react">react</a>
+        
+    
+
+</span>
+</footer>
+
+            
+
+<p>These is the first post of a series dedicated to the creation of a mobile application for both Android and iOS.</p>
+
+<p>Developing for both OS using their respective native technologies would require a lot of time, especially for me who doesn&rsquo;t know them. I do not consider myself as a mobile developer, although I built a mobile game and some apps a few years ago using another multiplatform technology, Adobe Air. That&rsquo;s why I will use React Native.</p>
+
+<h2 id="what-is-react-native">What is React Native?</h2>
+
+<p>React Native is a set of tools and a framework to create <strong>native</strong> mobile application with Javascript, HTML and CSS.
+This open source technology is developed mainly by Facebook, but they have succeeded in gathering a large community.</p>
+
+<p>According to me, React Native has a realistic approach of multiplatform development. First, it does not try to use the same UI components for both iOS and Android. Second, it uses native UI components, to provide a really nice user experience - this is where technologies using a webview for rendering, like Cordova or Ionic, usually show their limitations.</p>
+
+<h2 id="hardware">Hardware</h2>
+
+<p>I code using a Macbook. That&rsquo;s my computer of choice for programming since a few yers ago (but definitely not for playing games^^). Moreover OSX is mandatory for creating iOS apps.</p>
+
+<p>I&rsquo;ve got two Android phones: an Orange Nura running Android KitKat (4.4.2), and a Nexus 4 with Android Marshmallow (5.x). I will target the Android 4.4 phone first, assuming it will be easier to make the app running on more recent versions, than doing it the other way.</p>
+
+<p>My wife and I also have several iOS devices: iPhone 4 and 5, two iPads, with iOS versions ranging from 7 to 9. So I will try to make an app running on these devices, assuming React-Native allows it (I did not check it yet).</p>
+
+<p>I will focus on the Android version from now, and will come back later to iOS.</p>
+
+<p>NB: you may have to <a href="http://www.androidcentral.com/how-enable-developer-settings-android-42">activate the developer mode</a> on your Android phone and allow USB debugging in the related menu.</p>
+
+<h2 id="environment">Environment</h2>
+
+<h3 id="nodejs">NodeJS</h3>
+
+<p><a href="https://nodejs.org/en/">NodeJS</a> &gt;= 4.0 and npm &gt;= 3.0 are required.
+Type &ldquo;npm version&rdquo; to check which versions you are running.</p>
+
+<h3 id="install-the-android-sdk">Install the Android SDK</h3>
+
+<p>Installing <a href="https://developer.android.com/studio/index.html">Android Studio</a> seemed a bit heavy to me, but I did not find a link to download the Android SDK only. <em>Let me know if I missed something</em>.</p>
+
+<p>Then I used Android Studio to install the SDKs:</p>
+
+<p><em>Android Studio &gt; Preferences &gt; Apparence and Behavior &gt; System Settings &gt; Android SDK</em></p>
+
+<p>
+<figure >
+    
+        <img src="https://PascalLeMerrer.github.io/blog/post/img/react-native-1/SDK1.png"  />
+    
+    
+</figure>
+
+
+<figure >
+    
+        <img src="https://PascalLeMerrer.github.io/blog/post/img/react-native-1/SDK2.png"  />
+    
+    
+</figure>
+</p>
+
+<p>It&rsquo;s rather long, but once it&rsquo;s done, you can close Android Studio.</p>
+
+<h3 id="install-react-native">Install React Native</h3>
+
+<p>To install React-Native on OSX for producing Android apps:</p>
+
+<pre><code>brew install node
+brew install watchman
+npm install -g react-native-cli
+</code></pre>
+
+<p>If your OS is different, just follow the <a href="https://facebook.github.io/react-native/docs/getting-started.html">documentation provided by Facebook</a>.
+Display the instructions related to your environment, by selecting a mobile OS and a development OS:</p>
+
+
+<figure >
+    
+        <img src="https://PascalLeMerrer.github.io/blog/post/img/react-native-1/install-react.png"  />
+    
+    
+</figure>
+
+
+<h2 id="create-a-basic-application">Create a basic application</h2>
+
+<p>At first you have to create a React Native application:</p>
+
+<pre><code>react-native init AwesomeNativeBase
+</code></pre>
+
+<p>This will generate a basic app in a directory named AwesomeNativeBase.</p>
+
+<h2 id="run-the-app-on-an-android-device">Run the app on an Android device</h2>
+
+<p>In the terminal, type:</p>
+
+<pre><code>react-native run-android
+</code></pre>
+
+<p>I choose not to use an Android emulator, as it had a poor reputation a couple of years ago. <em>If it has improved, let me know</em>. Moreover, I know from my own experience it’s better to test your application on a real device as soon as possible. No emulator is perfect.</p>
+
+<p>At the first launch I’ve got an error message on my device (an Android 4.4.2 phone):</p>
+
+
+<figure >
+    
+        <img src="https://PascalLeMerrer.github.io/blog/post/img/react-native-1/androidbug.png"  />
+    
+    
+</figure>
+
+
+<p><em>If you&rsquo;re luckier than me, you may skip directly to the testing part.</em></p>
+
+<p>I solved it by replacing the &ldquo;scripts&rdquo; node in the package.json file with the following lines:</p>
+<div class="highlight"><pre><code class="language-json" data-lang="json"><span></span>  <span class="s2">&quot;scripts&quot;</span><span class="err">:</span> <span class="p">{</span>
+    <span class="nt">&quot;build&quot;</span><span class="p">:</span> <span class="s2">&quot;(cd android/ &amp;&amp; ./gradlew assembleDebug)&quot;</span><span class="p">,</span>
+    <span class="nt">&quot;start&quot;</span><span class="p">:</span> <span class="s2">&quot;node node_modules/react-native/local-cli/cli.js start&quot;</span><span class="p">,</span>
+    <span class="nt">&quot;bundle-android&quot;</span><span class="p">:</span> <span class="s2">&quot;react-native bundle --platform android --dev false --entry-file index.android.js --bundle-output android/app/src/main/assets/index.android.bundle --sourcemap-output android/app/src/main/assets/index.android.map --assets-dest android/app/src/main/res/&quot;</span>
+  <span class="p">}</span><span class="err">,</span>
+</code></pre></div>
+
+<p>This adds two commands that you can run to produce an app: <code>npm run build</code> and <code>npm run bundle-android</code>.</p>
+
+<p>Create the assets directory, then compile your application:</p>
+
+<pre><code>mkdir android/app/src/main/assets
+npm run bundle-android
+npm run build
+</code></pre>
+
+<p>Launch the react packager in another terminal and let it running as long as you work on your app:</p>
+
+<pre><code>npm run start
+</code></pre>
+
+<p>Then you have to copy your APK from `AwesomeNativeBase/android/app/build/outputs/apk to your phone.
+To copy easily the file I use <a href="https://android.com/filetransfer/">Android File Transfer</a>. Open it, then drop the APK in the destination folder.</p>
+
+<p>On your phone use an explorer to access the APK and tap it to start the installation.</p>
+
+<p>Your app should be up running!</p>
+
+<h3 id="testing">Testing</h3>
+
+<p>Fortunately, you don&rsquo;t have to go through this whole process each time you want to test your devs. In fact, and it&rsquo;s a strong point in React Native, you just have to reload the app just after you saved a modification for getting the new version on your device.</p>
+
+<p>The first way to reload the app is to tap the menu button to open the developer menu
+ and hit &ldquo;reload&rdquo;. This menu also offers a &ldquo;live reload&rdquo; feature, so you don&rsquo;t even have to anually trigger the reloading (although it not always work).</p>
+
+<p>Before reloading the app, you must enter the IP address of your development computer. It must be reachable by the device (the easiest way being both of them are connected to the same local network through Wifi).</p>
+
+<p>Open the developer menu, select &ldquo;Dev settings &gt; Debug server host &amp; port for device&rdquo;, then enter:</p>
+
+<pre><code>192.168.x.y:8081
+</code></pre>
+
+<p>8081 is the default port for the packager you should have launched with &ldquo;npm run start&rdquo;.</p>
+
+<h2 id="conclusion">Conclusion</h2>
+
+<p>This was the hard part: installing the environment, and getting the application running on a real device. Now comes something more pleasant for me: developping the app. But that&rsquo;s another story :)</p>
+
+            <ul class="share-buttons">
+    <li>Share this article:</li>
+    <li>
+        <a class="icon-facebook-squared" href="https://www.facebook.com/sharer/sharer.php?u=https%3a%2f%2fpascallemerrer.github.io%2fblog%2fpost%2freact-native-1%2f" onclick="window.open(this.href, 'facebook-share','width=580,height=296');return false;" title="Share on Facebook"></a>
+    </li>
+    <li>
+        <a class="icon-twitter" href="https://twitter.com/share?text=Creating%20a%20mobile%20application%20with%20React%20Native%20-%20part%201&amp;url=https%3a%2f%2fpascallemerrer.github.io%2fblog%2fpost%2freact-native-1%2f" onclick="window.open(this.href, 'twitter-share', 'width=550,height=235');return false;" title="Tweet this article"></a>
+    </li>
+    <li>
+        <a class="icon-gplus" href="https://plus.google.com/share?url=https%3a%2f%2fpascallemerrer.github.io%2fblog%2fpost%2freact-native-1%2f" onclick="window.open(this.href, 'google-plus-share', 'width=490,height=530');return false;" title="Share on Google&#43;"></a>
+    </li>
+    <li>
+        <a class="icon-linkedin" href="https://www.linkedin.com/shareArticle?mini=true&url=https%3a%2f%2fpascallemerrer.github.io%2fblog%2fpost%2freact-native-1%2f&title=Creating%20a%20mobile%20application%20with%20React%20Native%20-%20part%201" onclick="window.open(this.href, 'linkedin-share', 'width=600,height=494');return false;" title="Share on Linkedin"></a>
+    </li>
+</ul>
+
+        </article>
+        <div class="comments">
+            <h3>Comments</h3>
+            <div id="disqus_thread"></div>
+<script type="text/javascript">
+    var disqus_shortname = 'pascallemerrer';
+    var disqus_identifier = 'https:\/\/pascallemerrer.github.io\/blog\/post\/react-native-1\/';
+    var disqus_title = 'Creating a mobile application with React Native - part 1';
+    var disqus_url = 'https:\/\/pascallemerrer.github.io\/blog\/post\/react-native-1\/';
+
+    (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+        </div>
+    </main>
+    <aside class="author">
+  <img class="profile-image" src="https://pascallemerrer.github.io/blog/img/profile-image.jpg" alt="" />
+  <p class="name">by Pascal Le Merrer 
+  <strong></strong></p>
+  <p class="address">Somewhere on Earth</p>
+  <p class="link"></p>
+  <ul class="social">
+    
+<li><a href="//twitter.com/pascallemerrer" class="icon-twitter" target="_blank" title="Twitter"></a></li>
+
+
+
+
+
+<li><a href="//linkedin.com/in/pascal-le-merrer-872a478" class="icon-linkedin" target="_blank" title="Linkedin"></a></li>
+
+
+
+
+
+
+
+
+
+<li><a href="//github.com/pascallemerrer" class="icon-github" target="_blank" title="Github"></a></li>
+
+
+
+
+<li><a href="https://pascallemerrer.github.io/blog/post/index.xml" class="icon-rss" target="_blank" title="RSS"></a></li>
+
+  </ul>
+  <br><br>
+</aside>
+
+</div>
+
+<footer class="main-footer">
+  <div class="container clearfix">
+        <a class="icon-rss" href="https://pascallemerrer.github.io/blog/post/index.xml" title="RSS"></a>
+        <p>&copy; 2016 &middot; Powered by <a href="http://gohugo.io">Hugo</a>. All contents licensed under <a href="https://creativecommons.org/licenses/by-sa/4.0/">CC BY-SA 4.0</a></p>
+  </div>
+</footer>
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.8.0/highlight.min.js"></script>
+<script>hljs.initHighlightingOnLoad();</script>
+<script>window.jQuery || document.write('<script src="https:\/\/pascallemerrer.github.io\/blog\/js/vendor/jquery-1.11.0.min.js"><\/script>')</script>
+<script src="https://pascallemerrer.github.io/blog/js/plugins.js"></script>
+
+</body>
+</html>
+

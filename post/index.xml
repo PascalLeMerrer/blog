@@ -1,0 +1,199 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Posts on Pascal&#39;s dev blog</title>
+    <link>https://PascalLeMerrer.github.io/blog/post/</link>
+    <description>Recent content in Posts on Pascal&#39;s dev blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Mon, 15 Aug 2016 00:18:02 +0200</lastBuildDate>
+    <atom:link href="https://PascalLeMerrer.github.io/blog/post/index.xml" rel="self" type="application/rss+xml" />
+    
+    <item>
+      <title>Creating a mobile application with React Native - part 1</title>
+      <link>https://pascallemerrer.github.io/blog/post/react-native-1/</link>
+      <pubDate>Mon, 15 Aug 2016 00:18:02 +0200</pubDate>
+      
+      <guid>https://pascallemerrer.github.io/blog/post/react-native-1/</guid>
+      <description>
+
+&lt;p&gt;These is the first post of a series dedicated to the creation of a mobile application for both Android and iOS.&lt;/p&gt;
+
+&lt;p&gt;Developing for both OS using their respective native technologies would require a lot of time, especially for me who doesn&amp;rsquo;t know them. I do not consider myself as a mobile developer, although I built a mobile game and some apps a few years ago using another multiplatform technology, Adobe Air. That&amp;rsquo;s why I will use React Native.&lt;/p&gt;
+
+&lt;h2 id=&#34;what-is-react-native&#34;&gt;What is React Native?&lt;/h2&gt;
+
+&lt;p&gt;React Native is a set of tools and a framework to create &lt;strong&gt;native&lt;/strong&gt; mobile application with Javascript, HTML and CSS.
+This open source technology is developed mainly by Facebook, but they have succeeded in gathering a large community.&lt;/p&gt;
+
+&lt;p&gt;According to me, React Native has a realistic approach of multiplatform development. First, it does not try to use the same UI components for both iOS and Android. Second, it uses native UI components, to provide a really nice user experience - this is where technologies using a webview for rendering, like Cordova or Ionic, usually show their limitations.&lt;/p&gt;
+
+&lt;h2 id=&#34;hardware&#34;&gt;Hardware&lt;/h2&gt;
+
+&lt;p&gt;I code using a Macbook. That&amp;rsquo;s my computer of choice for programming since a few yers ago (but definitely not for playing games^^). Moreover OSX is mandatory for creating iOS apps.&lt;/p&gt;
+
+&lt;p&gt;I&amp;rsquo;ve got two Android phones: an Orange Nura running Android KitKat (4.4.2), and a Nexus 4 with Android Marshmallow (5.x). I will target the Android 4.4 phone first, assuming it will be easier to make the app running on more recent versions, than doing it the other way.&lt;/p&gt;
+
+&lt;p&gt;My wife and I also have several iOS devices: iPhone 4 and 5, two iPads, with iOS versions ranging from 7 to 9. So I will try to make an app running on these devices, assuming React-Native allows it (I did not check it yet).&lt;/p&gt;
+
+&lt;p&gt;I will focus on the Android version from now, and will come back later to iOS.&lt;/p&gt;
+
+&lt;p&gt;NB: you may have to &lt;a href=&#34;http://www.androidcentral.com/how-enable-developer-settings-android-42&#34;&gt;activate the developer mode&lt;/a&gt; on your Android phone and allow USB debugging in the related menu.&lt;/p&gt;
+
+&lt;h2 id=&#34;environment&#34;&gt;Environment&lt;/h2&gt;
+
+&lt;h3 id=&#34;nodejs&#34;&gt;NodeJS&lt;/h3&gt;
+
+&lt;p&gt;&lt;a href=&#34;https://nodejs.org/en/&#34;&gt;NodeJS&lt;/a&gt; &amp;gt;= 4.0 and npm &amp;gt;= 3.0 are required.
+Type &amp;ldquo;npm version&amp;rdquo; to check which versions you are running.&lt;/p&gt;
+
+&lt;h3 id=&#34;install-the-android-sdk&#34;&gt;Install the Android SDK&lt;/h3&gt;
+
+&lt;p&gt;Installing &lt;a href=&#34;https://developer.android.com/studio/index.html&#34;&gt;Android Studio&lt;/a&gt; seemed a bit heavy to me, but I did not find a link to download the Android SDK only. &lt;em&gt;Let me know if I missed something&lt;/em&gt;.&lt;/p&gt;
+
+&lt;p&gt;Then I used Android Studio to install the SDKs:&lt;/p&gt;
+
+&lt;p&gt;&lt;em&gt;Android Studio &amp;gt; Preferences &amp;gt; Apparence and Behavior &amp;gt; System Settings &amp;gt; Android SDK&lt;/em&gt;&lt;/p&gt;
+
+&lt;p&gt;
+&lt;figure &gt;
+    
+        &lt;img src=&#34;https://PascalLeMerrer.github.io/blog/post/img/react-native-1/SDK1.png&#34;  /&gt;
+    
+    
+&lt;/figure&gt;
+
+
+&lt;figure &gt;
+    
+        &lt;img src=&#34;https://PascalLeMerrer.github.io/blog/post/img/react-native-1/SDK2.png&#34;  /&gt;
+    
+    
+&lt;/figure&gt;
+&lt;/p&gt;
+
+&lt;p&gt;It&amp;rsquo;s rather long, but once it&amp;rsquo;s done, you can close Android Studio.&lt;/p&gt;
+
+&lt;h3 id=&#34;install-react-native&#34;&gt;Install React Native&lt;/h3&gt;
+
+&lt;p&gt;To install React-Native on OSX for producing Android apps:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;brew install node
+brew install watchman
+npm install -g react-native-cli
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;If your OS is different, just follow the &lt;a href=&#34;https://facebook.github.io/react-native/docs/getting-started.html&#34;&gt;documentation provided by Facebook&lt;/a&gt;.
+Display the instructions related to your environment, by selecting a mobile OS and a development OS:&lt;/p&gt;
+
+
+&lt;figure &gt;
+    
+        &lt;img src=&#34;https://PascalLeMerrer.github.io/blog/post/img/react-native-1/install-react.png&#34;  /&gt;
+    
+    
+&lt;/figure&gt;
+
+
+&lt;h2 id=&#34;create-a-basic-application&#34;&gt;Create a basic application&lt;/h2&gt;
+
+&lt;p&gt;At first you have to create a React Native application:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;react-native init AwesomeNativeBase
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;This will generate a basic app in a directory named AwesomeNativeBase.&lt;/p&gt;
+
+&lt;h2 id=&#34;run-the-app-on-an-android-device&#34;&gt;Run the app on an Android device&lt;/h2&gt;
+
+&lt;p&gt;In the terminal, type:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;react-native run-android
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;I choose not to use an Android emulator, as it had a poor reputation a couple of years ago. &lt;em&gt;If it has improved, let me know&lt;/em&gt;. Moreover, I know from my own experience it’s better to test your application on a real device as soon as possible. No emulator is perfect.&lt;/p&gt;
+
+&lt;p&gt;At the first launch I’ve got an error message on my device (an Android 4.4.2 phone):&lt;/p&gt;
+
+
+&lt;figure &gt;
+    
+        &lt;img src=&#34;https://PascalLeMerrer.github.io/blog/post/img/react-native-1/androidbug.png&#34;  /&gt;
+    
+    
+&lt;/figure&gt;
+
+
+&lt;p&gt;&lt;em&gt;If you&amp;rsquo;re luckier than me, you may skip directly to the testing part.&lt;/em&gt;&lt;/p&gt;
+
+&lt;p&gt;I solved it by replacing the &amp;ldquo;scripts&amp;rdquo; node in the package.json file with the following lines:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre&gt;&lt;code class=&#34;language-json&#34; data-lang=&#34;json&#34;&gt;&lt;span&gt;&lt;/span&gt;  &lt;span class=&#34;s2&#34;&gt;&amp;quot;scripts&amp;quot;&lt;/span&gt;&lt;span class=&#34;err&#34;&gt;:&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;{&lt;/span&gt;
+    &lt;span class=&#34;nt&#34;&gt;&amp;quot;build&amp;quot;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt; &lt;span class=&#34;s2&#34;&gt;&amp;quot;(cd android/ &amp;amp;&amp;amp; ./gradlew assembleDebug)&amp;quot;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt;
+    &lt;span class=&#34;nt&#34;&gt;&amp;quot;start&amp;quot;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt; &lt;span class=&#34;s2&#34;&gt;&amp;quot;node node_modules/react-native/local-cli/cli.js start&amp;quot;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt;
+    &lt;span class=&#34;nt&#34;&gt;&amp;quot;bundle-android&amp;quot;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt; &lt;span class=&#34;s2&#34;&gt;&amp;quot;react-native bundle --platform android --dev false --entry-file index.android.js --bundle-output android/app/src/main/assets/index.android.bundle --sourcemap-output android/app/src/main/assets/index.android.map --assets-dest android/app/src/main/res/&amp;quot;&lt;/span&gt;
+  &lt;span class=&#34;p&#34;&gt;}&lt;/span&gt;&lt;span class=&#34;err&#34;&gt;,&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;This adds two commands that you can run to produce an app: &lt;code&gt;npm run build&lt;/code&gt; and &lt;code&gt;npm run bundle-android&lt;/code&gt;.&lt;/p&gt;
+
+&lt;p&gt;Create the assets directory, then compile your application:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;mkdir android/app/src/main/assets
+npm run bundle-android
+npm run build
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Launch the react packager in another terminal and let it running as long as you work on your app:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;npm run start
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Then you have to copy your APK from `AwesomeNativeBase/android/app/build/outputs/apk to your phone.
+To copy easily the file I use &lt;a href=&#34;https://android.com/filetransfer/&#34;&gt;Android File Transfer&lt;/a&gt;. Open it, then drop the APK in the destination folder.&lt;/p&gt;
+
+&lt;p&gt;On your phone use an explorer to access the APK and tap it to start the installation.&lt;/p&gt;
+
+&lt;p&gt;Your app should be up running!&lt;/p&gt;
+
+&lt;h3 id=&#34;testing&#34;&gt;Testing&lt;/h3&gt;
+
+&lt;p&gt;Fortunately, you don&amp;rsquo;t have to go through this whole process each time you want to test your devs. In fact, and it&amp;rsquo;s a strong point in React Native, you just have to reload the app just after you saved a modification for getting the new version on your device.&lt;/p&gt;
+
+&lt;p&gt;The first way to reload the app is to tap the menu button to open the developer menu
+ and hit &amp;ldquo;reload&amp;rdquo;. This menu also offers a &amp;ldquo;live reload&amp;rdquo; feature, so you don&amp;rsquo;t even have to anually trigger the reloading (although it not always work).&lt;/p&gt;
+
+&lt;p&gt;Before reloading the app, you must enter the IP address of your development computer. It must be reachable by the device (the easiest way being both of them are connected to the same local network through Wifi).&lt;/p&gt;
+
+&lt;p&gt;Open the developer menu, select &amp;ldquo;Dev settings &amp;gt; Debug server host &amp;amp; port for device&amp;rdquo;, then enter:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;192.168.x.y:8081
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;8081 is the default port for the packager you should have launched with &amp;ldquo;npm run start&amp;rdquo;.&lt;/p&gt;
+
+&lt;h2 id=&#34;conclusion&#34;&gt;Conclusion&lt;/h2&gt;
+
+&lt;p&gt;This was the hard part: installing the environment, and getting the application running on a real device. Now comes something more pleasant for me: developping the app. But that&amp;rsquo;s another story :)&lt;/p&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>Hello World!</title>
+      <link>https://pascallemerrer.github.io/blog/post/Hi/</link>
+      <pubDate>Mon, 15 Aug 2016 00:08:02 +0200</pubDate>
+      
+      <guid>https://pascallemerrer.github.io/blog/post/Hi/</guid>
+      <description>&lt;p&gt;Hi!&lt;/p&gt;
+
+&lt;p&gt;On this new blog I will talk about software development. I will share things I learned, sometimes the hard way^^, and maybe some thoughts about technology and/or methodology.&lt;/p&gt;
+
+&lt;p&gt;The site is powered by &lt;a href=&#34;http://gohugo.io&#34;&gt;Hugo&lt;/a&gt;, a static site generator written in &lt;a href=&#34;http://golang.org&#34;&gt;Go&lt;/a&gt;. I started with it this morning, and I&amp;rsquo;m really pleased with the result. I can write my posts in markdown, and publish them easily on Github pages, that&amp;rsquo;s (almost) all I need!&lt;/p&gt;
+
+&lt;p&gt;A few words about me: I started software development in 1982, at the age of 15. After 12 years working as an automation engineer, I joined the IT industry in 1999. Since 2003 I work for a major Telco operator in France, as a software developer.&lt;/p&gt;
+
+&lt;p&gt;Pascal&lt;/p&gt;
+</description>
+    </item>
+    
+  </channel>
+</rss>
