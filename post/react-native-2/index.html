@@ -1,0 +1,410 @@
+<!doctype html>
+<html class="no-js">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <title>Pascal&#39;s dev blog</title>
+        <meta name="author">
+        <meta name="description" content="Pascal&#39;s blog about software development.">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="generator" content="Hugo 0.16" />
+          <link href="https://pascallemerrer.github.io/blog/post/index.xml" rel="alternate" type="application/rss+xml" title="Pascal&#39;s dev blog" />
+          <link href="https://pascallemerrer.github.io/blog/post/index.xml" rel="feed" type="application/rss+xml" title="Pascal&#39;s dev blog" />
+        <link href='//fonts.googleapis.com/css?family=Roboto:400,300,700|Noto+Serif:400,400italic,700,700italic' rel='stylesheet' type='text/css'>
+        <link rel="stylesheet" href="https://pascallemerrer.github.io/blog/css/styles.css">
+        <link rel="stylesheet" href="https://pascallemerrer.github.io/blog/css/custom_styles.css">
+        <link rel="icon" href="https://pascallemerrer.github.io/blog/favicon.ico">
+        <link rel="apple-touch-icon" href="https://pascallemerrer.github.io/blog/apple-touch-icon.png" />
+        <link rel="stylesheet" href="https://pascallemerrer.github.io/blog/css/highlightjs/monokai.css">
+        <script src="https://pascallemerrer.github.io/blog/js/vendor/modernizr-2.8.0.min.js"></script>
+        <style>
+        .site-header h2 .logo {
+        background: url(https://pascallemerrer.github.io/blog/img/header.jpg) no-repeat 0 0;
+        }
+        @media (min--moz-device-pixel-ratio: 1.3), (-o-min-device-pixel-ratio: 2.6 / 2), (-webkit-min-device-pixel-ratio: 1.3), (min-device-pixel-ratio: 1.3), (min-resolution: 1.3dppx) {
+          .site-header h2 .logo {
+            background-image: url(https://pascallemerrer.github.io/blog/img/header.jpg);
+        }}
+       .site-header {
+         background: #2a373d url(https://pascallemerrer.github.io/blog/img/header.jpg) no-repeat center center;
+         z-index: -1;
+        }
+        </style>
+    </head>
+    <body>
+        
+        <header class="site-header">
+          <div class="transparent-layer">
+              <h2>Pascal&#39;s Dev Blog</h2>
+          </div>
+        </header>
+
+
+<div class="container clearfix">
+    <main role="main" class="content">
+        <article class="post">
+            <a class="btn home" href="https://pascallemerrer.github.io/blog/" title="Back to home">&laquo; Back to home</a>
+            
+<h1><a href="https://pascallemerrer.github.io/blog/post/react-native-2/" title="Creating a mobile application with React Native - part 2">Creating a mobile application with React Native - part 2</a></h1>
+
+<footer class="post-info">Posted on <span class="post-meta"><time datetime="2016.08.28">2016.08.28</time>
+
+    &middot; Tagged in
+        
+        <a href="https://pascallemerrer.github.io/blog/tags/development">development</a>, 
+        
+        <a href="https://pascallemerrer.github.io/blog/tags/tutorial">tutorial</a>, 
+        
+        <a href="https://pascallemerrer.github.io/blog/tags/mobile">mobile</a>, 
+        
+        <a href="https://pascallemerrer.github.io/blog/tags/react">react</a>, 
+        
+        <a href="https://pascallemerrer.github.io/blog/tags/react-native">react native</a>
+        
+    
+
+</span>
+</footer>
+
+            
+
+<p>This article is the second in a series started with <a href="https://pascallemerrer.github.io/blog/post/react-native-1/">Creating a mobile application with React Native - part 1</a>.</p>
+
+<p>Today, we will enrich our basic app with a list of albums provided by the deezer API. We will use <a href="http://nativebase.io">Native Base</a>, which is a complement to React Native. It provides higher level, polished components and layouts, for both iOS and Android.</p>
+
+<p>With Native Base you have much less boilerplate code to write than with React Native alone. At first sight, it looks like a kind of <a href="http://getbootstrap.com/">Twitter Bootstrap</a> for mobile development with React Native.</p>
+
+<h2 id="install-native-base">Install Native Base</h2>
+
+<p>First thing first, download NativeBase and add it to the dependencies in package.json:</p>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span></span><span class="nb">cd</span> AwesomeNativeBase
+npm install native-base --save
+</code></pre></div>
+
+<p>Then, includeinto the app the icon fonts provided by React Native:</p>
+
+<pre><code>mkdir android/apps/src/main/assets/fonts
+cp node_modules/react-native-vector-icons/Fonts/*.ttf android/app/src/main/assets/fonts/
+</code></pre>
+
+<p>Edit <code>android/settings.gradle</code> and add the following lines:</p>
+
+<pre><code>include ':react-native-vector-icons'
+project(':react-native-vector-icons').projectDir = new File(rootProject.projectDir, '../node_modules/react-native-vector-icons/android')
+</code></pre>
+
+<p>Edit <code>android/app/build.gradle</code> and add the following line to the <code>dependencies</code> node:</p>
+
+<pre><code>compile project(':react-native-vector-icons')
+</code></pre>
+
+<p>Finally build the app:</p>
+
+<pre><code>npm run build
+</code></pre>
+
+<h2 id="create-a-native-base-gui">Create a Native Base GUI</h2>
+
+<p>Replace the content of <code>index.android.js</code> with:</p>
+<div class="highlight"><pre><code class="language-html" data-lang="html"><span></span>import React, { Component } from &#39;react&#39;;
+import { AppRegistry } from &#39;react-native&#39;;
+import { Content, Container, Header, Text, Title } from &#39;native-base&#39;;
+
+class AwesomeNativeBase extends Component {
+    render() {
+        return (
+            <span class="p">&lt;</span><span class="nt">Container</span><span class="p">&gt;</span>
+                <span class="p">&lt;</span><span class="nt">Header</span><span class="p">&gt;</span>
+                    <span class="p">&lt;</span><span class="nt">Title</span><span class="p">&gt;</span>Albums<span class="p">&lt;/</span><span class="nt">Title</span><span class="p">&gt;</span>
+                <span class="p">&lt;/</span><span class="nt">Header</span><span class="p">&gt;</span>
+
+                <span class="p">&lt;</span><span class="nt">Content</span><span class="p">&gt;</span>
+                  <span class="p">&lt;</span><span class="nt">Text</span><span class="p">&gt;</span>
+                    Hello World!
+                  <span class="p">&lt;/</span><span class="nt">Text</span><span class="p">&gt;</span>
+                <span class="p">&lt;/</span><span class="nt">Content</span><span class="p">&gt;</span>
+            <span class="p">&lt;/</span><span class="nt">Container</span><span class="p">&gt;</span>
+        );
+    }
+}
+
+AppRegistry.registerComponent(&#39;AwesomeNativeBase&#39;, () =&gt; AwesomeNativeBase);
+</code></pre></div>
+
+<p>The import directives list all the React, React Native and NativeBase components used.
+Several React Native basic components are replaced by their Native Base counterparts in the render function.</p>
+
+<p>You should be able to run the app and see the &ldquo;Hello World!&rdquo; message under the header.
+Refer to the <a href="https://pascallemerrer.github.io/blog/post/react-native-1/">first part</a> if you need some explanation to run it.</p>
+
+
+<figure >
+    
+        <img src="https://PascalLeMerrer.github.io/blog/post/img/react-native-2/screenshot_1.png"  />
+    
+    
+</figure>
+
+
+<h2 id="create-the-albumlist-component">Create the AlbumList component</h2>
+
+<p>Now let&rsquo;s create a file named <code>albumlist.js</code>, at the same level than <code>index.android.js</code>. It will contain the description for a basic list component:</p>
+<div class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span></span><span class="kr">import</span> <span class="nx">React</span><span class="p">,</span> <span class="p">{</span> <span class="nx">Component</span> <span class="p">}</span> <span class="nx">from</span> <span class="s1">&#39;react&#39;</span><span class="p">;</span>
+<span class="kr">import</span> <span class="p">{</span> <span class="nx">ListItem</span><span class="p">,</span> <span class="nx">List</span><span class="p">,</span> <span class="nx">Text</span> <span class="p">}</span> <span class="nx">from</span> <span class="s1">&#39;native-base&#39;</span><span class="p">;</span>
+
+<span class="kr">export</span> <span class="k">default</span> <span class="kr">class</span> <span class="nx">AlbumList</span> <span class="kr">extends</span> <span class="nx">Component</span> <span class="p">{</span>
+
+  <span class="nx">constructor</span><span class="p">(</span><span class="nx">props</span><span class="p">)</span> <span class="p">{</span>
+    <span class="kr">super</span><span class="p">(</span><span class="nx">props</span><span class="p">);</span>
+    <span class="k">this</span><span class="p">.</span><span class="nx">state</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="nx">albums</span><span class="o">:</span> <span class="p">[</span><span class="s2">&quot;foo&quot;</span><span class="p">,</span> <span class="s2">&quot;bar&quot;</span><span class="p">,</span> <span class="s2">&quot;baz&quot;</span><span class="p">]</span>
+    <span class="p">}</span>
+  <span class="p">}</span>
+
+  <span class="nx">render</span><span class="p">()</span> <span class="p">{</span>
+    <span class="k">return</span><span class="p">(</span>
+      <span class="o">&lt;</span><span class="nx">List</span> <span class="nx">dataArray</span><span class="o">=</span><span class="p">{</span><span class="k">this</span><span class="p">.</span><span class="nx">state</span><span class="p">.</span><span class="nx">albums</span><span class="p">}</span>
+            <span class="nx">renderRow</span><span class="o">=</span><span class="p">{(</span><span class="nx">item</span><span class="p">)</span> <span class="o">=&gt;</span>
+                <span class="o">&lt;</span><span class="nx">ListItem</span><span class="o">&gt;</span>
+                    <span class="o">&lt;</span><span class="nx">Text</span><span class="o">&gt;</span><span class="p">{</span><span class="nx">item</span><span class="p">}</span><span class="o">&lt;</span><span class="err">/Text&gt;</span>
+                <span class="o">&lt;</span><span class="err">/ListItem&gt;</span>
+            <span class="p">}</span><span class="o">&gt;</span>
+      <span class="o">&lt;</span><span class="err">/List&gt;</span>
+    <span class="p">);</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div>
+
+<p>The constructor is used to define the states of the component. At this stage, the list of albums is just a list of strings. The Native Base List component iterates on these strings and render a ListItem for each of them.</p>
+
+<p>Then change the content of <code>index.android.js</code>, to include the AlbumList component:</p>
+
+<div class="highlight"><pre><code class="language-html" data-lang="html"><span></span><span class="lineno"> 1 </span>import React, { Component } from &#39;react&#39;;
+<span class="lineno"> 2 </span>import { AppRegistry } from &#39;react-native&#39;;
+<span class="lineno"> 3 </span>import { Button, Content, Container, Footer, Header, Icon, Title } from &#39;native-base&#39;;
+<span class="lineno"> 4 </span>
+<span class="lineno"> 5 </span>import AlbumList from &#39;./albumlist&#39;;
+<span class="lineno"> 6 </span>
+<span class="lineno"> 7 </span>class AwesomeNativeBase extends Component {
+<span class="lineno"> 8 </span>
+<span class="lineno"> 9 </span>    render() {
+<span class="lineno">10 </span>        return (
+<span class="lineno">11 </span>            <span class="p">&lt;</span><span class="nt">Container</span><span class="p">&gt;</span>
+<span class="lineno">12 </span>                <span class="p">&lt;</span><span class="nt">Header</span><span class="p">&gt;</span>
+<span class="lineno">13 </span>                   <span class="p">&lt;</span><span class="nt">Title</span><span class="p">&gt;</span>Albums<span class="p">&lt;/</span><span class="nt">Title</span><span class="p">&gt;</span>
+<span class="lineno">14 </span>                <span class="p">&lt;/</span><span class="nt">Header</span><span class="p">&gt;</span>
+<span class="lineno">15 </span>                <span class="p">&lt;</span><span class="nt">Content</span><span class="p">&gt;</span>
+<span class="lineno">16 </span>                  <span class="p">&lt;</span><span class="nt">AlbumList</span> <span class="p">/&gt;</span>
+<span class="lineno">17 </span>                <span class="p">&lt;/</span><span class="nt">Content</span><span class="p">&gt;</span>
+<span class="lineno">18 </span>            <span class="p">&lt;/</span><span class="nt">Container</span><span class="p">&gt;</span>
+<span class="lineno">19 </span>        );
+<span class="lineno">20 </span>    }
+<span class="lineno">21 </span>}
+<span class="lineno">22 </span>
+<span class="lineno">23 </span>AppRegistry.registerComponent(&#39;AwesomeNativeBase&#39;, () =&gt; AwesomeNativeBase);
+</code></pre></div>
+
+
+<p>We imported the component (line 5), and replaced the content of the main container (line 16).
+If you reload the app, it should look like this:</p>
+
+
+<figure >
+    
+        <img src="https://PascalLeMerrer.github.io/blog/post/img/react-native-2/screenshot_2.png"  />
+    
+    
+</figure>
+
+
+<h2 id="install-superagent">Install Superagent</h2>
+
+<p><a href="https://facebook.github.io/react-native/docs/network.html">Fetch</a> is the default API in React Native for making HTTP requests. It&rsquo;s still in experimental status, so maybe that&rsquo;s why I had an annoying bug with it: the request was not executed unless I tap the device screen. So I replaced it with a more mature library, <a href="http://visionmedia.github.io/superagent/">Superagent</a>.</p>
+
+<p>Integrating Superagent in a ReactNative app is dead simple. First download it and add it to the dependencies of the project:</p>
+
+<pre><code>npm install superagent --save
+</code></pre>
+
+<p>Then you add this line to albumlist.js, just after the imports:</p>
+<div class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span></span><span class="kd">var</span> <span class="nx">superagent</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">&#39;superagent&#39;</span><span class="p">);</span>
+</code></pre></div>
+
+<p>That&rsquo;s all! Now we are ready to make HTTP requests.</p>
+
+<p>Replace the constructor into <code>albumlist.js</code> by these three functions:</p>
+<div class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span></span>    <span class="nx">constructor</span><span class="p">(</span><span class="nx">props</span><span class="p">)</span> <span class="p">{</span>
+      <span class="kr">super</span><span class="p">(</span><span class="nx">props</span><span class="p">);</span>
+      <span class="k">this</span><span class="p">.</span><span class="nx">state</span> <span class="o">=</span> <span class="p">{</span>
+          <span class="nx">loading</span><span class="o">:</span> <span class="kc">false</span><span class="p">,</span>
+          <span class="nx">albums</span><span class="o">:</span> <span class="kc">null</span>
+      <span class="p">}</span>
+    <span class="p">}</span>
+
+    <span class="nx">componentDidMount</span><span class="p">()</span> <span class="p">{</span>
+      <span class="k">this</span><span class="p">.</span><span class="nx">load</span><span class="p">();</span>
+    <span class="p">}</span>
+
+    <span class="nx">load</span><span class="p">()</span> <span class="p">{</span>
+      <span class="nx">superagent</span><span class="p">.</span><span class="nx">get</span><span class="p">(</span><span class="s1">&#39;http://api.deezer.com/album/&#39;</span> <span class="o">+</span> <span class="k">this</span><span class="p">.</span><span class="nx">props</span><span class="p">.</span><span class="nx">albumId</span> <span class="o">+</span> <span class="s1">&#39;/tracks&#39;</span><span class="p">)</span>
+        <span class="p">.</span><span class="nx">set</span><span class="p">(</span><span class="s1">&#39;Accept&#39;</span><span class="p">,</span> <span class="s1">&#39;application/json&#39;</span><span class="p">)</span>
+        <span class="p">.</span><span class="nx">end</span><span class="p">((</span><span class="nx">err</span><span class="p">,</span> <span class="nx">response</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="p">{</span>
+            <span class="k">if</span> <span class="p">(</span><span class="nx">response</span><span class="p">.</span><span class="nx">ok</span><span class="p">)</span> <span class="p">{</span>
+              <span class="k">this</span><span class="p">.</span><span class="nx">setState</span><span class="p">({</span>
+                  <span class="nx">loading</span><span class="o">:</span> <span class="kc">false</span><span class="p">,</span>
+                  <span class="nx">tracks</span><span class="o">:</span> <span class="nx">response</span><span class="p">.</span><span class="nx">body</span><span class="p">.</span><span class="nx">data</span>
+              <span class="p">});</span>
+            <span class="p">}</span>
+            <span class="k">else</span> <span class="p">{</span>
+              <span class="k">this</span><span class="p">.</span><span class="nx">setState</span><span class="p">({</span>
+                  <span class="nx">loading</span><span class="o">:</span> <span class="kc">false</span>
+              <span class="p">});</span>
+            <span class="p">}</span>
+        <span class="p">})</span>
+    <span class="p">}</span>
+</code></pre></div>
+
+<p>This will automatically make a request to the Deezer API in order to load a list of albums for the artist with id 27 (Daft Punk). The result of the request is then put in the &ldquo;albums&rdquo; state.</p>
+
+<p>During the request execution, the &ldquo;loading&rdquo; state is set to true to display the spinner.</p>
+
+<p>Note how we use ES6 arrow notation for the request callback (the parameter of the <code>end</code> function). It allows us to use <code>this</code> in the callback. We do not need to write something like <code>var self=this;</code> and then using <code>self</code> instead of <code>this</code>.</p>
+
+<p>Now replace the render function with the following code:</p>
+<div class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span></span>    <span class="nx">render</span><span class="p">()</span> <span class="p">{</span>
+        <span class="k">if</span><span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">state</span><span class="p">.</span><span class="nx">loading</span><span class="p">)</span> <span class="p">{</span>
+          <span class="k">return</span> <span class="p">(</span>
+            <span class="o">&lt;</span><span class="nx">Spinner</span> <span class="nx">color</span><span class="o">=</span><span class="s2">&quot;#440099&quot;</span><span class="o">/&gt;</span>
+          <span class="p">);</span>
+        <span class="p">}</span>
+        <span class="k">else</span> <span class="p">{</span>
+          <span class="k">return</span><span class="p">(</span>
+            <span class="o">&lt;</span><span class="nx">List</span> <span class="nx">dataArray</span><span class="o">=</span><span class="p">{</span><span class="k">this</span><span class="p">.</span><span class="nx">state</span><span class="p">.</span><span class="nx">albums</span><span class="p">}</span>
+                  <span class="nx">renderRow</span><span class="o">=</span><span class="p">{(</span><span class="nx">item</span><span class="p">)</span> <span class="o">=&gt;</span>
+                      <span class="o">&lt;</span><span class="nx">ListItem</span><span class="o">&gt;</span>
+                          <span class="o">&lt;</span><span class="nx">Thumbnail</span> <span class="nx">square</span> <span class="nx">size</span><span class="o">=</span><span class="p">{</span><span class="mi">60</span><span class="p">}</span> <span class="nx">source</span><span class="o">=</span><span class="p">{{</span><span class="nx">uri</span><span class="o">:</span> <span class="nx">item</span><span class="p">.</span><span class="nx">cover_small</span><span class="p">}}</span> <span class="o">/&gt;</span>
+                          <span class="o">&lt;</span><span class="nx">Text</span><span class="o">&gt;</span><span class="p">{</span><span class="nx">item</span><span class="p">.</span><span class="nx">title</span><span class="p">}</span><span class="o">&lt;</span><span class="err">/Text&gt;</span>
+                      <span class="o">&lt;</span><span class="err">/ListItem&gt;</span>
+                  <span class="p">}</span><span class="o">&gt;</span>
+            <span class="o">&lt;</span><span class="err">/List&gt;</span>
+          <span class="p">);</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+</code></pre></div>
+
+<p>This new implementation displays a spinner during the request execution. After the response is received, it hides the spinner and replaces it with a list of albums, represented by their cover and title.</p>
+
+
+<figure >
+    
+        <img src="https://PascalLeMerrer.github.io/blog/post/img/react-native-2/screenshot_3.png"  />
+    
+    
+</figure>
+
+
+<p>The source code for the app is available <a href="https://github.com/PascalLeMerrer/react-native-tuto/tree/step2">on Github</a>.</p>
+
+<h2 id="conclusion">Conclusion</h2>
+
+<p>At this stage my feelings about React Native are mixed:</p>
+
+<ul>
+<li>it produces very easily a working application, and until now It did not require from me any knowledge about Android development (although it won&rsquo;t prevent me to learn Google&rsquo;s guidelines to create an app with a good UX);</li>
+<li>the Fetch API seems buggy;</li>
+<li>React error messages often left me without any clue about what is causing them;</li>
+<li>sometimes the error messages appears in the app, sometimes in the terminal running the packager (which I tend to forget as it runs in background) ; sometimes I even have to stop the packager to make the message appear in the app.</li>
+</ul>
+
+<p>To sum up, the result looks very good (by now), but the tooling is still immature, which is understandable for a rather young technology.</p>
+
+<p>This concludes the second part in this journey to discover React Native. In the next one, we&rsquo;ll add a detailed view for each album.</p>
+
+            <ul class="share-buttons">
+    <li>Share this article:</li>
+    <li>
+        <a class="icon-facebook-squared" href="https://www.facebook.com/sharer/sharer.php?u=https%3a%2f%2fpascallemerrer.github.io%2fblog%2fpost%2freact-native-2%2f" onclick="window.open(this.href, 'facebook-share','width=580,height=296');return false;" title="Share on Facebook"></a>
+    </li>
+    <li>
+        <a class="icon-twitter" href="https://twitter.com/share?text=Creating%20a%20mobile%20application%20with%20React%20Native%20-%20part%202&amp;url=https%3a%2f%2fpascallemerrer.github.io%2fblog%2fpost%2freact-native-2%2f" onclick="window.open(this.href, 'twitter-share', 'width=550,height=235');return false;" title="Tweet this article"></a>
+    </li>
+    <li>
+        <a class="icon-gplus" href="https://plus.google.com/share?url=https%3a%2f%2fpascallemerrer.github.io%2fblog%2fpost%2freact-native-2%2f" onclick="window.open(this.href, 'google-plus-share', 'width=490,height=530');return false;" title="Share on Google&#43;"></a>
+    </li>
+    <li>
+        <a class="icon-linkedin" href="https://www.linkedin.com/shareArticle?mini=true&url=https%3a%2f%2fpascallemerrer.github.io%2fblog%2fpost%2freact-native-2%2f&title=Creating%20a%20mobile%20application%20with%20React%20Native%20-%20part%202" onclick="window.open(this.href, 'linkedin-share', 'width=600,height=494');return false;" title="Share on Linkedin"></a>
+    </li>
+</ul>
+
+        </article>
+        <div class="comments">
+            <h3>Comments</h3>
+            <div id="disqus_thread"></div>
+<script type="text/javascript">
+    var disqus_shortname = 'pascals-dev-blog';
+    var disqus_identifier = 'https:\/\/pascallemerrer.github.io\/blog\/post\/react-native-2\/';
+    var disqus_title = 'Creating a mobile application with React Native - part 2';
+    var disqus_url = 'https:\/\/pascallemerrer.github.io\/blog\/post\/react-native-2\/';
+
+    (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+        </div>
+    </main>
+    <aside class="author">
+  <img class="profile-image" src="https://pascallemerrer.github.io/blog/img/profile-image.jpg" alt="" />
+  <p class="name">by Pascal Le Merrer 
+  <strong></strong></p>
+  <p class="address">Somewhere on Earth</p>
+  <p class="link"></p>
+  <ul class="social">
+    
+<li><a href="//twitter.com/pascallemerrer" class="icon-twitter" target="_blank" title="Twitter"></a></li>
+
+
+
+
+
+<li><a href="//linkedin.com/in/pascal-le-merrer-872a478" class="icon-linkedin" target="_blank" title="Linkedin"></a></li>
+
+
+
+
+
+
+
+
+
+<li><a href="//github.com/pascallemerrer" class="icon-github" target="_blank" title="Github"></a></li>
+
+
+
+
+<li><a href="https://pascallemerrer.github.io/blog/post/index.xml" class="icon-rss" target="_blank" title="RSS"></a></li>
+
+  </ul>
+  <br><br>
+</aside>
+
+</div>
+
+<footer class="main-footer">
+  <div class="container clearfix">
+        <a class="icon-rss" href="https://pascallemerrer.github.io/blog/post/index.xml" title="RSS"></a>
+        <p>&copy; 2016 &middot; Powered by <a href="http://gohugo.io">Hugo</a>. All contents licensed under <a href="https://creativecommons.org/licenses/by-sa/4.0/">CC BY-SA 4.0</a></p>
+  </div>
+</footer>
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.8.0/highlight.min.js"></script>
+<script>hljs.initHighlightingOnLoad();</script>
+<script>window.jQuery || document.write('<script src="https:\/\/pascallemerrer.github.io\/blog\/js/vendor/jquery-1.11.0.min.js"><\/script>')</script>
+<script src="https://pascallemerrer.github.io/blog/js/plugins.js"></script>
+
+</body>
+</html>
+

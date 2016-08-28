@@ -6,8 +6,908 @@
     <description>Recent content on Pascal&#39;s dev blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Mon, 15 Aug 2016 00:18:02 +0200</lastBuildDate>
+    <lastBuildDate>Sun, 28 Aug 2016 21:54:34 +0200</lastBuildDate>
     <atom:link href="https://PascalLeMerrer.github.io/blog/index.xml" rel="self" type="application/rss+xml" />
+    
+    <item>
+      <title>Creating a mobile application with React Native - part 2</title>
+      <link>https://pascallemerrer.github.io/blog/post/react-native-2/</link>
+      <pubDate>Sun, 28 Aug 2016 21:54:34 +0200</pubDate>
+      
+      <guid>https://pascallemerrer.github.io/blog/post/react-native-2/</guid>
+      <description>
+
+&lt;p&gt;This article is the second in a series started with &lt;a href=&#34;https://pascallemerrer.github.io/blog/post/react-native-1/&#34;&gt;Creating a mobile application with React Native - part 1&lt;/a&gt;.&lt;/p&gt;
+
+&lt;p&gt;Today, we will enrich our basic app with a list of albums provided by the deezer API. We will use &lt;a href=&#34;http://nativebase.io&#34;&gt;Native Base&lt;/a&gt;, which is a complement to React Native. It provides higher level, polished components and layouts, for both iOS and Android.&lt;/p&gt;
+
+&lt;p&gt;With Native Base you have much less boilerplate code to write than with React Native alone. At first sight, it looks like a kind of &lt;a href=&#34;http://getbootstrap.com/&#34;&gt;Twitter Bootstrap&lt;/a&gt; for mobile development with React Native.&lt;/p&gt;
+
+&lt;h2 id=&#34;install-native-base&#34;&gt;Install Native Base&lt;/h2&gt;
+
+&lt;p&gt;First thing first, download NativeBase and add it to the dependencies in package.json:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span&gt;&lt;/span&gt;&lt;span class=&#34;nb&#34;&gt;cd&lt;/span&gt; AwesomeNativeBase
+npm install native-base --save
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;Then, includeinto the app the icon fonts provided by React Native:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;mkdir android/apps/src/main/assets/fonts
+cp node_modules/react-native-vector-icons/Fonts/*.ttf android/app/src/main/assets/fonts/
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Edit &lt;code&gt;android/settings.gradle&lt;/code&gt; and add the following lines:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;include &#39;:react-native-vector-icons&#39;
+project(&#39;:react-native-vector-icons&#39;).projectDir = new File(rootProject.projectDir, &#39;../node_modules/react-native-vector-icons/android&#39;)
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Edit &lt;code&gt;android/app/build.gradle&lt;/code&gt; and add the following line to the &lt;code&gt;dependencies&lt;/code&gt; node:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;compile project(&#39;:react-native-vector-icons&#39;)
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Finally build the app:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;npm run build
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h2 id=&#34;create-a-native-base-gui&#34;&gt;Create a Native Base GUI&lt;/h2&gt;
+
+&lt;p&gt;Replace the content of &lt;code&gt;index.android.js&lt;/code&gt; with:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre&gt;&lt;code class=&#34;language-html&#34; data-lang=&#34;html&#34;&gt;&lt;span&gt;&lt;/span&gt;import React, { Component } from &amp;#39;react&amp;#39;;
+import { AppRegistry } from &amp;#39;react-native&amp;#39;;
+import { Content, Container, Header, Text, Title } from &amp;#39;native-base&amp;#39;;
+
+class AwesomeNativeBase extends Component {
+    render() {
+        return (
+            &lt;span class=&#34;p&#34;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&#34;nt&#34;&gt;Container&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;&amp;gt;&lt;/span&gt;
+                &lt;span class=&#34;p&#34;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&#34;nt&#34;&gt;Header&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;&amp;gt;&lt;/span&gt;
+                    &lt;span class=&#34;p&#34;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&#34;nt&#34;&gt;Title&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;&amp;gt;&lt;/span&gt;Albums&lt;span class=&#34;p&#34;&gt;&amp;lt;/&lt;/span&gt;&lt;span class=&#34;nt&#34;&gt;Title&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;&amp;gt;&lt;/span&gt;
+                &lt;span class=&#34;p&#34;&gt;&amp;lt;/&lt;/span&gt;&lt;span class=&#34;nt&#34;&gt;Header&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;&amp;gt;&lt;/span&gt;
+
+                &lt;span class=&#34;p&#34;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&#34;nt&#34;&gt;Content&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;&amp;gt;&lt;/span&gt;
+                  &lt;span class=&#34;p&#34;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&#34;nt&#34;&gt;Text&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;&amp;gt;&lt;/span&gt;
+                    Hello World!
+                  &lt;span class=&#34;p&#34;&gt;&amp;lt;/&lt;/span&gt;&lt;span class=&#34;nt&#34;&gt;Text&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;&amp;gt;&lt;/span&gt;
+                &lt;span class=&#34;p&#34;&gt;&amp;lt;/&lt;/span&gt;&lt;span class=&#34;nt&#34;&gt;Content&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;&amp;gt;&lt;/span&gt;
+            &lt;span class=&#34;p&#34;&gt;&amp;lt;/&lt;/span&gt;&lt;span class=&#34;nt&#34;&gt;Container&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;&amp;gt;&lt;/span&gt;
+        );
+    }
+}
+
+AppRegistry.registerComponent(&amp;#39;AwesomeNativeBase&amp;#39;, () =&amp;gt; AwesomeNativeBase);
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;The import directives list all the React, React Native and NativeBase components used.
+Several React Native basic components are replaced by their Native Base counterparts in the render function.&lt;/p&gt;
+
+&lt;p&gt;You should be able to run the app and see the &amp;ldquo;Hello World!&amp;rdquo; message under the header.
+Refer to the &lt;a href=&#34;https://pascallemerrer.github.io/blog/post/react-native-1/&#34;&gt;first part&lt;/a&gt; if you need some explanation to run it.&lt;/p&gt;
+
+
+&lt;figure &gt;
+    
+        &lt;img src=&#34;https://PascalLeMerrer.github.io/blog/post/img/react-native-2/screenshot_1.png&#34;  /&gt;
+    
+    
+&lt;/figure&gt;
+
+
+&lt;h2 id=&#34;create-the-albumlist-component&#34;&gt;Create the AlbumList component&lt;/h2&gt;
+
+&lt;p&gt;Now let&amp;rsquo;s create a file named &lt;code&gt;albumlist.js&lt;/code&gt;, at the same level than &lt;code&gt;index.android.js&lt;/code&gt;. It will contain the description for a basic list component:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre&gt;&lt;code class=&#34;language-javascript&#34; data-lang=&#34;javascript&#34;&gt;&lt;span&gt;&lt;/span&gt;&lt;span class=&#34;kr&#34;&gt;import&lt;/span&gt; &lt;span class=&#34;nx&#34;&gt;React&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;{&lt;/span&gt; &lt;span class=&#34;nx&#34;&gt;Component&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;}&lt;/span&gt; &lt;span class=&#34;nx&#34;&gt;from&lt;/span&gt; &lt;span class=&#34;s1&#34;&gt;&amp;#39;react&amp;#39;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;;&lt;/span&gt;
+&lt;span class=&#34;kr&#34;&gt;import&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;{&lt;/span&gt; &lt;span class=&#34;nx&#34;&gt;ListItem&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;nx&#34;&gt;List&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;nx&#34;&gt;Text&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;}&lt;/span&gt; &lt;span class=&#34;nx&#34;&gt;from&lt;/span&gt; &lt;span class=&#34;s1&#34;&gt;&amp;#39;native-base&amp;#39;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;;&lt;/span&gt;
+
+&lt;span class=&#34;kr&#34;&gt;export&lt;/span&gt; &lt;span class=&#34;k&#34;&gt;default&lt;/span&gt; &lt;span class=&#34;kr&#34;&gt;class&lt;/span&gt; &lt;span class=&#34;nx&#34;&gt;AlbumList&lt;/span&gt; &lt;span class=&#34;kr&#34;&gt;extends&lt;/span&gt; &lt;span class=&#34;nx&#34;&gt;Component&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;{&lt;/span&gt;
+
+  &lt;span class=&#34;nx&#34;&gt;constructor&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;nx&#34;&gt;props&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;{&lt;/span&gt;
+    &lt;span class=&#34;kr&#34;&gt;super&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;nx&#34;&gt;props&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;);&lt;/span&gt;
+    &lt;span class=&#34;k&#34;&gt;this&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;nx&#34;&gt;state&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;{&lt;/span&gt;
+        &lt;span class=&#34;nx&#34;&gt;albums&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;:&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;[&lt;/span&gt;&lt;span class=&#34;s2&#34;&gt;&amp;quot;foo&amp;quot;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;s2&#34;&gt;&amp;quot;bar&amp;quot;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;s2&#34;&gt;&amp;quot;baz&amp;quot;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;]&lt;/span&gt;
+    &lt;span class=&#34;p&#34;&gt;}&lt;/span&gt;
+  &lt;span class=&#34;p&#34;&gt;}&lt;/span&gt;
+
+  &lt;span class=&#34;nx&#34;&gt;render&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;()&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;{&lt;/span&gt;
+    &lt;span class=&#34;k&#34;&gt;return&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;
+      &lt;span class=&#34;o&#34;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&#34;nx&#34;&gt;List&lt;/span&gt; &lt;span class=&#34;nx&#34;&gt;dataArray&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;{&lt;/span&gt;&lt;span class=&#34;k&#34;&gt;this&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;nx&#34;&gt;state&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;nx&#34;&gt;albums&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;}&lt;/span&gt;
+            &lt;span class=&#34;nx&#34;&gt;renderRow&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;{(&lt;/span&gt;&lt;span class=&#34;nx&#34;&gt;item&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&amp;gt;&lt;/span&gt;
+                &lt;span class=&#34;o&#34;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&#34;nx&#34;&gt;ListItem&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;&amp;gt;&lt;/span&gt;
+                    &lt;span class=&#34;o&#34;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&#34;nx&#34;&gt;Text&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;&amp;gt;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;{&lt;/span&gt;&lt;span class=&#34;nx&#34;&gt;item&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;}&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&#34;err&#34;&gt;/Text&amp;gt;&lt;/span&gt;
+                &lt;span class=&#34;o&#34;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&#34;err&#34;&gt;/ListItem&amp;gt;&lt;/span&gt;
+            &lt;span class=&#34;p&#34;&gt;}&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;&amp;gt;&lt;/span&gt;
+      &lt;span class=&#34;o&#34;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&#34;err&#34;&gt;/List&amp;gt;&lt;/span&gt;
+    &lt;span class=&#34;p&#34;&gt;);&lt;/span&gt;
+  &lt;span class=&#34;p&#34;&gt;}&lt;/span&gt;
+&lt;span class=&#34;p&#34;&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;The constructor is used to define the states of the component. At this stage, the list of albums is just a list of strings. The Native Base List component iterates on these strings and render a ListItem for each of them.&lt;/p&gt;
+
+&lt;p&gt;Then change the content of &lt;code&gt;index.android.js&lt;/code&gt;, to include the AlbumList component:&lt;/p&gt;
+
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre&gt;&lt;code class=&#34;language-html&#34; data-lang=&#34;html&#34;&gt;&lt;span&gt;&lt;/span&gt;&lt;span class=&#34;lineno&#34;&gt; 1 &lt;/span&gt;import React, { Component } from &amp;#39;react&amp;#39;;
+&lt;span class=&#34;lineno&#34;&gt; 2 &lt;/span&gt;import { AppRegistry } from &amp;#39;react-native&amp;#39;;
+&lt;span class=&#34;lineno&#34;&gt; 3 &lt;/span&gt;import { Button, Content, Container, Footer, Header, Icon, Title } from &amp;#39;native-base&amp;#39;;
+&lt;span class=&#34;lineno&#34;&gt; 4 &lt;/span&gt;
+&lt;span class=&#34;lineno&#34;&gt; 5 &lt;/span&gt;import AlbumList from &amp;#39;./albumlist&amp;#39;;
+&lt;span class=&#34;lineno&#34;&gt; 6 &lt;/span&gt;
+&lt;span class=&#34;lineno&#34;&gt; 7 &lt;/span&gt;class AwesomeNativeBase extends Component {
+&lt;span class=&#34;lineno&#34;&gt; 8 &lt;/span&gt;
+&lt;span class=&#34;lineno&#34;&gt; 9 &lt;/span&gt;    render() {
+&lt;span class=&#34;lineno&#34;&gt;10 &lt;/span&gt;        return (
+&lt;span class=&#34;lineno&#34;&gt;11 &lt;/span&gt;            &lt;span class=&#34;p&#34;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&#34;nt&#34;&gt;Container&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;&amp;gt;&lt;/span&gt;
+&lt;span class=&#34;lineno&#34;&gt;12 &lt;/span&gt;                &lt;span class=&#34;p&#34;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&#34;nt&#34;&gt;Header&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;&amp;gt;&lt;/span&gt;
+&lt;span class=&#34;lineno&#34;&gt;13 &lt;/span&gt;                   &lt;span class=&#34;p&#34;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&#34;nt&#34;&gt;Title&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;&amp;gt;&lt;/span&gt;Albums&lt;span class=&#34;p&#34;&gt;&amp;lt;/&lt;/span&gt;&lt;span class=&#34;nt&#34;&gt;Title&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;&amp;gt;&lt;/span&gt;
+&lt;span class=&#34;lineno&#34;&gt;14 &lt;/span&gt;                &lt;span class=&#34;p&#34;&gt;&amp;lt;/&lt;/span&gt;&lt;span class=&#34;nt&#34;&gt;Header&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;&amp;gt;&lt;/span&gt;
+&lt;span class=&#34;lineno&#34;&gt;15 &lt;/span&gt;                &lt;span class=&#34;p&#34;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&#34;nt&#34;&gt;Content&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;&amp;gt;&lt;/span&gt;
+&lt;span class=&#34;lineno&#34;&gt;16 &lt;/span&gt;                  &lt;span class=&#34;p&#34;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&#34;nt&#34;&gt;AlbumList&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;/&amp;gt;&lt;/span&gt;
+&lt;span class=&#34;lineno&#34;&gt;17 &lt;/span&gt;                &lt;span class=&#34;p&#34;&gt;&amp;lt;/&lt;/span&gt;&lt;span class=&#34;nt&#34;&gt;Content&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;&amp;gt;&lt;/span&gt;
+&lt;span class=&#34;lineno&#34;&gt;18 &lt;/span&gt;            &lt;span class=&#34;p&#34;&gt;&amp;lt;/&lt;/span&gt;&lt;span class=&#34;nt&#34;&gt;Container&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;&amp;gt;&lt;/span&gt;
+&lt;span class=&#34;lineno&#34;&gt;19 &lt;/span&gt;        );
+&lt;span class=&#34;lineno&#34;&gt;20 &lt;/span&gt;    }
+&lt;span class=&#34;lineno&#34;&gt;21 &lt;/span&gt;}
+&lt;span class=&#34;lineno&#34;&gt;22 &lt;/span&gt;
+&lt;span class=&#34;lineno&#34;&gt;23 &lt;/span&gt;AppRegistry.registerComponent(&amp;#39;AwesomeNativeBase&amp;#39;, () =&amp;gt; AwesomeNativeBase);
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;We imported the component (line 5), and replaced the content of the main container (line 16).
+If you reload the app, it should look like this:&lt;/p&gt;
+
+
+&lt;figure &gt;
+    
+        &lt;img src=&#34;https://PascalLeMerrer.github.io/blog/post/img/react-native-2/screenshot_2.png&#34;  /&gt;
+    
+    
+&lt;/figure&gt;
+
+
+&lt;h2 id=&#34;install-superagent&#34;&gt;Install Superagent&lt;/h2&gt;
+
+&lt;p&gt;&lt;a href=&#34;https://facebook.github.io/react-native/docs/network.html&#34;&gt;Fetch&lt;/a&gt; is the default API in React Native for making HTTP requests. It&amp;rsquo;s still in experimental status, so maybe that&amp;rsquo;s why I had an annoying bug with it: the request was not executed unless I tap the device screen. So I replaced it with a more mature library, &lt;a href=&#34;http://visionmedia.github.io/superagent/&#34;&gt;Superagent&lt;/a&gt;.&lt;/p&gt;
+
+&lt;p&gt;Integrating Superagent in a ReactNative app is dead simple. First download it and add it to the dependencies of the project:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;npm install superagent --save
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Then you add this line to albumlist.js, just after the imports:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre&gt;&lt;code class=&#34;language-javascript&#34; data-lang=&#34;javascript&#34;&gt;&lt;span&gt;&lt;/span&gt;&lt;span class=&#34;kd&#34;&gt;var&lt;/span&gt; &lt;span class=&#34;nx&#34;&gt;superagent&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;nx&#34;&gt;require&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;s1&#34;&gt;&amp;#39;superagent&amp;#39;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;);&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;That&amp;rsquo;s all! Now we are ready to make HTTP requests.&lt;/p&gt;
+
+&lt;p&gt;Replace the constructor into &lt;code&gt;albumlist.js&lt;/code&gt; by these three functions:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre&gt;&lt;code class=&#34;language-javascript&#34; data-lang=&#34;javascript&#34;&gt;&lt;span&gt;&lt;/span&gt;    &lt;span class=&#34;nx&#34;&gt;constructor&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;nx&#34;&gt;props&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;{&lt;/span&gt;
+      &lt;span class=&#34;kr&#34;&gt;super&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;nx&#34;&gt;props&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;);&lt;/span&gt;
+      &lt;span class=&#34;k&#34;&gt;this&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;nx&#34;&gt;state&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;{&lt;/span&gt;
+          &lt;span class=&#34;nx&#34;&gt;loading&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;:&lt;/span&gt; &lt;span class=&#34;kc&#34;&gt;false&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt;
+          &lt;span class=&#34;nx&#34;&gt;albums&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;:&lt;/span&gt; &lt;span class=&#34;kc&#34;&gt;null&lt;/span&gt;
+      &lt;span class=&#34;p&#34;&gt;}&lt;/span&gt;
+    &lt;span class=&#34;p&#34;&gt;}&lt;/span&gt;
+
+    &lt;span class=&#34;nx&#34;&gt;componentDidMount&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;()&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;{&lt;/span&gt;
+      &lt;span class=&#34;k&#34;&gt;this&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;nx&#34;&gt;load&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;();&lt;/span&gt;
+    &lt;span class=&#34;p&#34;&gt;}&lt;/span&gt;
+
+    &lt;span class=&#34;nx&#34;&gt;load&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;()&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;{&lt;/span&gt;
+      &lt;span class=&#34;nx&#34;&gt;superagent&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;nx&#34;&gt;get&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;s1&#34;&gt;&amp;#39;http://api.deezer.com/album/&amp;#39;&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;+&lt;/span&gt; &lt;span class=&#34;k&#34;&gt;this&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;nx&#34;&gt;props&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;nx&#34;&gt;albumId&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;+&lt;/span&gt; &lt;span class=&#34;s1&#34;&gt;&amp;#39;/tracks&amp;#39;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
+        &lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;nx&#34;&gt;set&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;s1&#34;&gt;&amp;#39;Accept&amp;#39;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;s1&#34;&gt;&amp;#39;application/json&amp;#39;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
+        &lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;nx&#34;&gt;end&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;((&lt;/span&gt;&lt;span class=&#34;nx&#34;&gt;err&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;nx&#34;&gt;response&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&amp;gt;&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;{&lt;/span&gt;
+            &lt;span class=&#34;k&#34;&gt;if&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;nx&#34;&gt;response&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;nx&#34;&gt;ok&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;{&lt;/span&gt;
+              &lt;span class=&#34;k&#34;&gt;this&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;nx&#34;&gt;setState&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;({&lt;/span&gt;
+                  &lt;span class=&#34;nx&#34;&gt;loading&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;:&lt;/span&gt; &lt;span class=&#34;kc&#34;&gt;false&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt;
+                  &lt;span class=&#34;nx&#34;&gt;tracks&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;:&lt;/span&gt; &lt;span class=&#34;nx&#34;&gt;response&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;nx&#34;&gt;body&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;nx&#34;&gt;data&lt;/span&gt;
+              &lt;span class=&#34;p&#34;&gt;});&lt;/span&gt;
+            &lt;span class=&#34;p&#34;&gt;}&lt;/span&gt;
+            &lt;span class=&#34;k&#34;&gt;else&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;{&lt;/span&gt;
+              &lt;span class=&#34;k&#34;&gt;this&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;nx&#34;&gt;setState&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;({&lt;/span&gt;
+                  &lt;span class=&#34;nx&#34;&gt;loading&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;:&lt;/span&gt; &lt;span class=&#34;kc&#34;&gt;false&lt;/span&gt;
+              &lt;span class=&#34;p&#34;&gt;});&lt;/span&gt;
+            &lt;span class=&#34;p&#34;&gt;}&lt;/span&gt;
+        &lt;span class=&#34;p&#34;&gt;})&lt;/span&gt;
+    &lt;span class=&#34;p&#34;&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;This will automatically make a request to the Deezer API in order to load a list of albums for the artist with id 27 (Daft Punk). The result of the request is then put in the &amp;ldquo;albums&amp;rdquo; state.&lt;/p&gt;
+
+&lt;p&gt;During the request execution, the &amp;ldquo;loading&amp;rdquo; state is set to true to display the spinner.&lt;/p&gt;
+
+&lt;p&gt;Note how we use ES6 arrow notation for the request callback (the parameter of the &lt;code&gt;end&lt;/code&gt; function). It allows us to use &lt;code&gt;this&lt;/code&gt; in the callback. We do not need to write something like &lt;code&gt;var self=this;&lt;/code&gt; and then using &lt;code&gt;self&lt;/code&gt; instead of &lt;code&gt;this&lt;/code&gt;.&lt;/p&gt;
+
+&lt;p&gt;Now replace the render function with the following code:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre&gt;&lt;code class=&#34;language-javascript&#34; data-lang=&#34;javascript&#34;&gt;&lt;span&gt;&lt;/span&gt;    &lt;span class=&#34;nx&#34;&gt;render&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;()&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;{&lt;/span&gt;
+        &lt;span class=&#34;k&#34;&gt;if&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;k&#34;&gt;this&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;nx&#34;&gt;state&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;nx&#34;&gt;loading&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;{&lt;/span&gt;
+          &lt;span class=&#34;k&#34;&gt;return&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;
+            &lt;span class=&#34;o&#34;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&#34;nx&#34;&gt;Spinner&lt;/span&gt; &lt;span class=&#34;nx&#34;&gt;color&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;&lt;span class=&#34;s2&#34;&gt;&amp;quot;#440099&amp;quot;&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;/&amp;gt;&lt;/span&gt;
+          &lt;span class=&#34;p&#34;&gt;);&lt;/span&gt;
+        &lt;span class=&#34;p&#34;&gt;}&lt;/span&gt;
+        &lt;span class=&#34;k&#34;&gt;else&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;{&lt;/span&gt;
+          &lt;span class=&#34;k&#34;&gt;return&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;
+            &lt;span class=&#34;o&#34;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&#34;nx&#34;&gt;List&lt;/span&gt; &lt;span class=&#34;nx&#34;&gt;dataArray&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;{&lt;/span&gt;&lt;span class=&#34;k&#34;&gt;this&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;nx&#34;&gt;state&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;nx&#34;&gt;albums&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;}&lt;/span&gt;
+                  &lt;span class=&#34;nx&#34;&gt;renderRow&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;{(&lt;/span&gt;&lt;span class=&#34;nx&#34;&gt;item&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&amp;gt;&lt;/span&gt;
+                      &lt;span class=&#34;o&#34;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&#34;nx&#34;&gt;ListItem&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;&amp;gt;&lt;/span&gt;
+                          &lt;span class=&#34;o&#34;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&#34;nx&#34;&gt;Thumbnail&lt;/span&gt; &lt;span class=&#34;nx&#34;&gt;square&lt;/span&gt; &lt;span class=&#34;nx&#34;&gt;size&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;{&lt;/span&gt;&lt;span class=&#34;mi&#34;&gt;60&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;}&lt;/span&gt; &lt;span class=&#34;nx&#34;&gt;source&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;{{&lt;/span&gt;&lt;span class=&#34;nx&#34;&gt;uri&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;:&lt;/span&gt; &lt;span class=&#34;nx&#34;&gt;item&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;nx&#34;&gt;cover_small&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;}}&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;/&amp;gt;&lt;/span&gt;
+                          &lt;span class=&#34;o&#34;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&#34;nx&#34;&gt;Text&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;&amp;gt;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;{&lt;/span&gt;&lt;span class=&#34;nx&#34;&gt;item&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;nx&#34;&gt;title&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;}&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&#34;err&#34;&gt;/Text&amp;gt;&lt;/span&gt;
+                      &lt;span class=&#34;o&#34;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&#34;err&#34;&gt;/ListItem&amp;gt;&lt;/span&gt;
+                  &lt;span class=&#34;p&#34;&gt;}&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;&amp;gt;&lt;/span&gt;
+            &lt;span class=&#34;o&#34;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&#34;err&#34;&gt;/List&amp;gt;&lt;/span&gt;
+          &lt;span class=&#34;p&#34;&gt;);&lt;/span&gt;
+        &lt;span class=&#34;p&#34;&gt;}&lt;/span&gt;
+    &lt;span class=&#34;p&#34;&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;This new implementation displays a spinner during the request execution. After the response is received, it hides the spinner and replaces it with a list of albums, represented by their cover and title.&lt;/p&gt;
+
+
+&lt;figure &gt;
+    
+        &lt;img src=&#34;https://PascalLeMerrer.github.io/blog/post/img/react-native-2/screenshot_3.png&#34;  /&gt;
+    
+    
+&lt;/figure&gt;
+
+
+&lt;p&gt;The source code for the app is available &lt;a href=&#34;https://github.com/PascalLeMerrer/react-native-tuto/tree/step2&#34;&gt;on Github&lt;/a&gt;.&lt;/p&gt;
+
+&lt;h2 id=&#34;conclusion&#34;&gt;Conclusion&lt;/h2&gt;
+
+&lt;p&gt;At this stage my feelings about React Native are mixed:&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;it produces very easily a working application, and until now It did not require from me any knowledge about Android development (although it won&amp;rsquo;t prevent me to learn Google&amp;rsquo;s guidelines to create an app with a good UX);&lt;/li&gt;
+&lt;li&gt;the Fetch API seems buggy;&lt;/li&gt;
+&lt;li&gt;React error messages often left me without any clue about what is causing them;&lt;/li&gt;
+&lt;li&gt;sometimes the error messages appears in the app, sometimes in the terminal running the packager (which I tend to forget as it runs in background) ; sometimes I even have to stop the packager to make the message appear in the app.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;To sum up, the result looks very good (by now), but the tooling is still immature, which is understandable for a rather young technology.&lt;/p&gt;
+
+&lt;p&gt;This concludes the second part in this journey to discover React Native. In the next one, we&amp;rsquo;ll add a detailed view for each album.&lt;/p&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>react native 6</title>
+      <link>https://pascallemerrer.github.io/blog/post/react-native-6/</link>
+      <pubDate>Sun, 21 Aug 2016 19:57:49 +0200</pubDate>
+      
+      <guid>https://pascallemerrer.github.io/blog/post/react-native-6/</guid>
+      <description>&lt;p&gt;The previous articles in this series were dedicated to create the Android version of a React Native application. You may have done all of them using linux or Windows. But for this one, you will need a Mac, with Xcode installed.&lt;/p&gt;
+
+&lt;p&gt;First:&lt;/p&gt;
+
+&lt;p&gt;react-native run-ios&lt;/p&gt;
+
+&lt;p&gt;It compiles the app and launches the iOS emulator.&lt;/p&gt;
+
+&lt;p&gt;You can specify the device the simulator should run with the &amp;ndash;simulator flag, followed by the device name as a string. The default is &amp;ldquo;iPhone 6&amp;rdquo;. If you wish to run your app on an iPhone 4s, just run react-native run-ios &amp;ndash;simulator &amp;ldquo;iPhone 4s&amp;rdquo;&lt;/p&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>react native 5</title>
+      <link>https://pascallemerrer.github.io/blog/post/react-native-5/</link>
+      <pubDate>Sat, 20 Aug 2016 16:24:44 +0200</pubDate>
+      
+      <guid>https://pascallemerrer.github.io/blog/post/react-native-5/</guid>
+      <description>
+
+&lt;p&gt;In this fifth part of the &lt;a href=&#34;https://pascallemerrer.github.io/blog/post/react-native-1/&#34;&gt;article series about React Native&lt;/a&gt;, we&amp;rsquo;ll see how to support the native back button on Android devices.&lt;/p&gt;
+
+&lt;p&gt;To support the back button, we only have to modify the main android file, &lt;code&gt;index.android.js&lt;/code&gt;.&lt;/p&gt;
+
+&lt;p&gt;React Native provides a module named &lt;code&gt;BackAndroid&lt;/code&gt;, that exposes an object on which you can register listeners. The  listeners are invoked when the back button is pressed. Then the app exits if there are no listeners or if none of the listeners returned true.&lt;/p&gt;
+
+&lt;p&gt;In our implementation, the listener checks how many views are in the navigator&amp;rsquo;s stack, by calling &lt;code&gt;navigator.getCurrentRoutes()&lt;/code&gt;:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre&gt;&lt;code class=&#34;language-javascript&#34; data-lang=&#34;javascript&#34;&gt;&lt;span&gt;&lt;/span&gt;&lt;span class=&#34;nx&#34;&gt;componentDidMount&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;()&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;{&lt;/span&gt;
+  &lt;span class=&#34;nx&#34;&gt;BackAndroid&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;nx&#34;&gt;addEventListener&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;s1&#34;&gt;&amp;#39;hardwareBackPress&amp;#39;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;()&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&amp;gt;&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;{&lt;/span&gt;
+    &lt;span class=&#34;k&#34;&gt;if&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;k&#34;&gt;this&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;nx&#34;&gt;navigator&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;&amp;amp;&amp;amp;&lt;/span&gt; &lt;span class=&#34;k&#34;&gt;this&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;nx&#34;&gt;navigator&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;nx&#34;&gt;getCurrentRoutes&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;().&lt;/span&gt;&lt;span class=&#34;nx&#34;&gt;length&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;&amp;gt;&lt;/span&gt; &lt;span class=&#34;mi&#34;&gt;1&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;{&lt;/span&gt;
+      &lt;span class=&#34;k&#34;&gt;this&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;nx&#34;&gt;navigator&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;nx&#34;&gt;pop&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;();&lt;/span&gt;
+      &lt;span class=&#34;k&#34;&gt;return&lt;/span&gt; &lt;span class=&#34;kc&#34;&gt;true&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;;&lt;/span&gt;
+    &lt;span class=&#34;p&#34;&gt;}&lt;/span&gt;
+    &lt;span class=&#34;k&#34;&gt;return&lt;/span&gt; &lt;span class=&#34;kc&#34;&gt;false&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;;&lt;/span&gt;
+  &lt;span class=&#34;p&#34;&gt;});&lt;/span&gt;
+&lt;span class=&#34;p&#34;&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;If there are more than one scene in the stack, it drops the top one so we get back to the previous view. Otherwise, it returns false, to exit the app.&lt;/p&gt;
+
+&lt;p&gt;To ensure this listener is registered only once, we do it in one of the &lt;a href=&#34;https://facebook.github.io/react/docs/component-specs.html#lifecycle-methods&#34;&gt;lifecycle methods&lt;/a&gt; offered by React Components: &lt;code&gt;componentDidMount&lt;/code&gt;. This method is invoked once, just after the first rendering of the component.&lt;/p&gt;
+
+&lt;p&gt;The listener uses the navigator. By default there is no simple way to access it outside of the rendering methods (&lt;code&gt;render&lt;/code&gt; and &lt;code&gt;renderScene&lt;/code&gt;). That&amp;rsquo;s why we declare a navigator property in the constructor (more for documentation than anything else, as it is not required from a technical point of view):&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre&gt;&lt;code class=&#34;language-javascript&#34; data-lang=&#34;javascript&#34;&gt;&lt;span&gt;&lt;/span&gt;  &lt;span class=&#34;nx&#34;&gt;constructor&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;nx&#34;&gt;props&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;{&lt;/span&gt;
+    &lt;span class=&#34;kr&#34;&gt;super&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;nx&#34;&gt;props&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;);&lt;/span&gt;
+    &lt;span class=&#34;k&#34;&gt;this&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;nx&#34;&gt;navigator&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;kc&#34;&gt;null&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;;&lt;/span&gt;
+  &lt;span class=&#34;p&#34;&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;And then we set this property in &lt;code&gt;renderScene&lt;/code&gt;:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre&gt;&lt;code class=&#34;language-javascript&#34; data-lang=&#34;javascript&#34;&gt;&lt;span&gt;&lt;/span&gt;  &lt;span class=&#34;nx&#34;&gt;renderScene&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;nx&#34;&gt;route&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;nx&#34;&gt;navigator&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;{&lt;/span&gt;
+    &lt;span class=&#34;k&#34;&gt;this&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;nx&#34;&gt;navigator&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;nx&#34;&gt;navigator&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;;&lt;/span&gt;
+    &lt;span class=&#34;p&#34;&gt;...&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;You could suppose this should do the trick. But running the app like this generates an error message:&lt;/p&gt;
+
+
+&lt;figure &gt;
+    
+        &lt;img src=&#34;https://PascalLeMerrer.github.io/blog/post/img/react-native-5/screenshot_1.png&#34;  /&gt;
+    
+    
+&lt;/figure&gt;
+
+
+&lt;p&gt;We made a very common mistake in javascript: &lt;code&gt;this&lt;/code&gt; in the &lt;code&gt;renderScene&lt;/code&gt; function does not point to the AwesomeNativeBase object, but the object that &amp;ldquo;owns&amp;rdquo; the function, that is to say the navigator itself.&lt;/p&gt;
+
+&lt;p&gt;To solve this, just replace&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre&gt;&lt;code class=&#34;language-javascript&#34; data-lang=&#34;javascript&#34;&gt;&lt;span&gt;&lt;/span&gt;&lt;span class=&#34;nx&#34;&gt;renderScene&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;{&lt;/span&gt; &lt;span class=&#34;k&#34;&gt;this&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;nx&#34;&gt;renderScene&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;with:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre&gt;&lt;code class=&#34;language-javascript&#34; data-lang=&#34;javascript&#34;&gt;&lt;span&gt;&lt;/span&gt;&lt;span class=&#34;nx&#34;&gt;renderScene&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;{&lt;/span&gt; &lt;span class=&#34;k&#34;&gt;this&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;nx&#34;&gt;renderScene&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;nx&#34;&gt;bind&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;k&#34;&gt;this&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;Here is the final code:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre&gt;&lt;code class=&#34;language-html&#34; data-lang=&#34;html&#34;&gt;&lt;span&gt;&lt;/span&gt;  constructor(props) {
+    super(props);
+    this.navigator = null;
+  }
+
+  componentDidMount() {
+    BackAndroid.addEventListener(&amp;#39;hardwareBackPress&amp;#39;, () =&amp;gt; {
+      if (this.navigator &lt;span class=&#34;err&#34;&gt;&amp;amp;&amp;amp;&lt;/span&gt; this.navigator.getCurrentRoutes().length &amp;gt; 1) {
+        this.navigator.pop();
+        return true;
+      }
+      return false;
+    });
+  }
+
+  renderScene(route, navigator) {
+    this.navigator = navigator;
+
+    var scenes = [
+      &lt;span class=&#34;p&#34;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&#34;nt&#34;&gt;AlbumList&lt;/span&gt; &lt;span class=&#34;na&#34;&gt;title&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;&lt;span class=&#34;s&#34;&gt;{&lt;/span&gt; &lt;span class=&#34;na&#34;&gt;route&lt;/span&gt;&lt;span class=&#34;err&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;na&#34;&gt;title&lt;/span&gt; &lt;span class=&#34;err&#34;&gt;}&lt;/span&gt; &lt;span class=&#34;na&#34;&gt;artistId&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;&lt;span class=&#34;s&#34;&gt;{&lt;/span&gt; &lt;span class=&#34;na&#34;&gt;route&lt;/span&gt;&lt;span class=&#34;err&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;na&#34;&gt;artistId&lt;/span&gt; &lt;span class=&#34;err&#34;&gt;}&lt;/span&gt; &lt;span class=&#34;na&#34;&gt;navigator&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;&lt;span class=&#34;s&#34;&gt;{&lt;/span&gt; &lt;span class=&#34;na&#34;&gt;navigator&lt;/span&gt; &lt;span class=&#34;err&#34;&gt;}&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;/&amp;gt;&lt;/span&gt;,
+      &lt;span class=&#34;p&#34;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&#34;nt&#34;&gt;TrackList&lt;/span&gt; &lt;span class=&#34;na&#34;&gt;title&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;&lt;span class=&#34;s&#34;&gt;{&lt;/span&gt; &lt;span class=&#34;na&#34;&gt;route&lt;/span&gt;&lt;span class=&#34;err&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;na&#34;&gt;title&lt;/span&gt; &lt;span class=&#34;err&#34;&gt;}&lt;/span&gt; &lt;span class=&#34;na&#34;&gt;albumId&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;&lt;span class=&#34;s&#34;&gt;{&lt;/span&gt; &lt;span class=&#34;na&#34;&gt;route&lt;/span&gt;&lt;span class=&#34;err&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;na&#34;&gt;albumId&lt;/span&gt; &lt;span class=&#34;err&#34;&gt;}&lt;/span&gt; &lt;span class=&#34;na&#34;&gt;navigator&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;&lt;span class=&#34;s&#34;&gt;{&lt;/span&gt; &lt;span class=&#34;na&#34;&gt;navigator&lt;/span&gt; &lt;span class=&#34;err&#34;&gt;}&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;/&amp;gt;&lt;/span&gt;,
+      &lt;span class=&#34;p&#34;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&#34;nt&#34;&gt;Search&lt;/span&gt; &lt;span class=&#34;na&#34;&gt;navigator&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;&lt;span class=&#34;s&#34;&gt;{&lt;/span&gt; &lt;span class=&#34;na&#34;&gt;navigator&lt;/span&gt; &lt;span class=&#34;err&#34;&gt;}&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;/&amp;gt;&lt;/span&gt;
+    ]
+    return(scenes[route.scene]);
+  }
+
+  render() {
+    return (&lt;span class=&#34;p&#34;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&#34;nt&#34;&gt;Navigator&lt;/span&gt;
+        &lt;span class=&#34;na&#34;&gt;initialRoute&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;&lt;span class=&#34;s&#34;&gt;{&lt;/span&gt; &lt;span class=&#34;err&#34;&gt;{&lt;/span&gt; &lt;span class=&#34;na&#34;&gt;scene:&lt;/span&gt; &lt;span class=&#34;na&#34;&gt;0&lt;/span&gt; &lt;span class=&#34;err&#34;&gt;}&lt;/span&gt; &lt;span class=&#34;err&#34;&gt;}&lt;/span&gt;
+        &lt;span class=&#34;na&#34;&gt;renderScene&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;&lt;span class=&#34;s&#34;&gt;{&lt;/span&gt; &lt;span class=&#34;na&#34;&gt;this&lt;/span&gt;&lt;span class=&#34;err&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;na&#34;&gt;renderScene&lt;/span&gt;&lt;span class=&#34;err&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;na&#34;&gt;bind&lt;/span&gt;&lt;span class=&#34;err&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;na&#34;&gt;this&lt;/span&gt;&lt;span class=&#34;err&#34;&gt;)&lt;/span&gt; &lt;span class=&#34;err&#34;&gt;}&lt;/span&gt;
+      &lt;span class=&#34;p&#34;&gt;/&amp;gt;&lt;/span&gt;);
+  }
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;As usual, the code of the app is available on github.&lt;/p&gt;
+
+&lt;h2 id=&#34;conclusion&#34;&gt;Conclusion&lt;/h2&gt;
+
+&lt;p&gt;React Native provides a simple way to reproduce this Android common feature.&lt;/p&gt;
+
+&lt;p&gt;In the suite of these series, I will stop adding features to the app.
+Now, it&amp;rsquo;s about time building an iOS version!&lt;/p&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>Creating a mobile application with React Native - part 4</title>
+      <link>https://pascallemerrer.github.io/blog/post/react-native-4/</link>
+      <pubDate>Sat, 20 Aug 2016 00:12:11 +0200</pubDate>
+      
+      <guid>https://pascallemerrer.github.io/blog/post/react-native-4/</guid>
+      <description>
+
+&lt;p&gt;This fourth part in the React Native &lt;a href=&#34;https://pascallemerrer.github.io/blog/post/react-native-1/&#34;&gt;article series&lt;/a&gt; will be dedicated to adding an artist search feature.&lt;/p&gt;
+
+&lt;h2 id=&#34;create-the-search-scene&#34;&gt;Create the search scene&lt;/h2&gt;
+
+&lt;p&gt;The initial scene will stay the album list, but we will add it a search button. A tap on this button will display a search screen on top of the album list. This last scene will be created in a file named &lt;code&gt;search.js&lt;/code&gt;:&lt;/p&gt;
+
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre&gt;&lt;code class=&#34;language-html&#34; data-lang=&#34;html&#34;&gt;&lt;span&gt;&lt;/span&gt;&lt;span class=&#34;lineno&#34;&gt;  1 &lt;/span&gt;import React, { Component } from &amp;#39;react&amp;#39;;
+&lt;span class=&#34;lineno&#34;&gt;  2 &lt;/span&gt;import { InteractionManager } from &amp;#39;react-native&amp;#39;
+&lt;span class=&#34;lineno&#34;&gt;  3 &lt;/span&gt;import { Button,
+&lt;span class=&#34;lineno&#34;&gt;  4 &lt;/span&gt;         Content,
+&lt;span class=&#34;lineno&#34;&gt;  5 &lt;/span&gt;         Container,
+&lt;span class=&#34;lineno&#34;&gt;  6 &lt;/span&gt;         Header,
+&lt;span class=&#34;lineno&#34;&gt;  7 &lt;/span&gt;         Input,
+&lt;span class=&#34;lineno&#34;&gt;  8 &lt;/span&gt;         InputGroup,
+&lt;span class=&#34;lineno&#34;&gt;  9 &lt;/span&gt;         List,
+&lt;span class=&#34;lineno&#34;&gt; 10 &lt;/span&gt;         ListItem,
+&lt;span class=&#34;lineno&#34;&gt; 11 &lt;/span&gt;         Icon,
+&lt;span class=&#34;lineno&#34;&gt; 12 &lt;/span&gt;         Spinner,
+&lt;span class=&#34;lineno&#34;&gt; 13 &lt;/span&gt;         Text,
+&lt;span class=&#34;lineno&#34;&gt; 14 &lt;/span&gt;         Thumbnail,
+&lt;span class=&#34;lineno&#34;&gt; 15 &lt;/span&gt;         Title } from &amp;#39;native-base&amp;#39;;
+&lt;span class=&#34;lineno&#34;&gt; 16 &lt;/span&gt;var superagent = require(&amp;#39;superagent&amp;#39;);
+&lt;span class=&#34;lineno&#34;&gt; 17 &lt;/span&gt;
+&lt;span class=&#34;lineno&#34;&gt; 18 &lt;/span&gt;export default class TrackList extends Component {
+&lt;span class=&#34;lineno&#34;&gt; 19 &lt;/span&gt;
+&lt;span class=&#34;lineno&#34;&gt; 20 &lt;/span&gt;    constructor(props) {
+&lt;span class=&#34;lineno&#34;&gt; 21 &lt;/span&gt;      super(props);
+&lt;span class=&#34;lineno&#34;&gt; 22 &lt;/span&gt;      this.state = {
+&lt;span class=&#34;lineno&#34;&gt; 23 &lt;/span&gt;          loading: false,
+&lt;span class=&#34;lineno&#34;&gt; 24 &lt;/span&gt;          results: null
+&lt;span class=&#34;lineno&#34;&gt; 25 &lt;/span&gt;      }
+&lt;span class=&#34;lineno&#34;&gt; 26 &lt;/span&gt;    }
+&lt;span class=&#34;lineno&#34;&gt; 27 &lt;/span&gt;
+&lt;span class=&#34;lineno&#34;&gt; 28 &lt;/span&gt;    search(name) {
+&lt;span class=&#34;lineno&#34;&gt; 29 &lt;/span&gt;      if(name.length &lt;span class=&#34;p&#34;&gt;&amp;lt;&lt;/span&gt; &lt;span class=&#34;nt&#34;&gt;3&lt;/span&gt;&lt;span class=&#34;err&#34;&gt;)&lt;/span&gt; &lt;span class=&#34;err&#34;&gt;{&lt;/span&gt;
+&lt;span class=&#34;lineno&#34;&gt; 30 &lt;/span&gt;        &lt;span class=&#34;na&#34;&gt;return&lt;/span&gt;
+&lt;span class=&#34;lineno&#34;&gt; 31 &lt;/span&gt;      &lt;span class=&#34;err&#34;&gt;}&lt;/span&gt;
+&lt;span class=&#34;lineno&#34;&gt; 32 &lt;/span&gt;      &lt;span class=&#34;na&#34;&gt;superagent&lt;/span&gt;&lt;span class=&#34;err&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;na&#34;&gt;get&lt;/span&gt;&lt;span class=&#34;err&#34;&gt;(&amp;#39;&lt;/span&gt;&lt;span class=&#34;na&#34;&gt;http:&lt;/span&gt;&lt;span class=&#34;err&#34;&gt;//&lt;/span&gt;&lt;span class=&#34;na&#34;&gt;api&lt;/span&gt;&lt;span class=&#34;err&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;na&#34;&gt;deezer&lt;/span&gt;&lt;span class=&#34;err&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;na&#34;&gt;com&lt;/span&gt;&lt;span class=&#34;err&#34;&gt;/&lt;/span&gt;&lt;span class=&#34;na&#34;&gt;search&lt;/span&gt;&lt;span class=&#34;err&#34;&gt;/&lt;/span&gt;&lt;span class=&#34;na&#34;&gt;artist&lt;/span&gt;&lt;span class=&#34;err&#34;&gt;?&lt;/span&gt;&lt;span class=&#34;na&#34;&gt;q&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;&lt;span class=&#34;s&#34;&gt;artist:&amp;#39;&lt;/span&gt; &lt;span class=&#34;err&#34;&gt;+&lt;/span&gt; &lt;span class=&#34;na&#34;&gt;name&lt;/span&gt;&lt;span class=&#34;err&#34;&gt;)&lt;/span&gt;
+&lt;span class=&#34;lineno&#34;&gt; 33 &lt;/span&gt;        &lt;span class=&#34;err&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;na&#34;&gt;set&lt;/span&gt;&lt;span class=&#34;err&#34;&gt;(&amp;#39;&lt;/span&gt;&lt;span class=&#34;na&#34;&gt;Accept&lt;/span&gt;&lt;span class=&#34;err&#34;&gt;&amp;#39;,&lt;/span&gt; &lt;span class=&#34;err&#34;&gt;&amp;#39;&lt;/span&gt;&lt;span class=&#34;na&#34;&gt;application&lt;/span&gt;&lt;span class=&#34;err&#34;&gt;/&lt;/span&gt;&lt;span class=&#34;na&#34;&gt;json&lt;/span&gt;&lt;span class=&#34;err&#34;&gt;&amp;#39;)&lt;/span&gt;
+&lt;span class=&#34;lineno&#34;&gt; 34 &lt;/span&gt;        &lt;span class=&#34;err&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;na&#34;&gt;end&lt;/span&gt;&lt;span class=&#34;err&#34;&gt;((&lt;/span&gt;&lt;span class=&#34;na&#34;&gt;err&lt;/span&gt;&lt;span class=&#34;err&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;na&#34;&gt;response&lt;/span&gt;&lt;span class=&#34;err&#34;&gt;)&lt;/span&gt; &lt;span class=&#34;err&#34;&gt;=&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;&amp;gt;&lt;/span&gt; {
+&lt;span class=&#34;lineno&#34;&gt; 35 &lt;/span&gt;            if (response.ok) {
+&lt;span class=&#34;lineno&#34;&gt; 36 &lt;/span&gt;              this.setState({
+&lt;span class=&#34;lineno&#34;&gt; 37 &lt;/span&gt;                  loading: false,
+&lt;span class=&#34;lineno&#34;&gt; 38 &lt;/span&gt;                  results: response.body.data
+&lt;span class=&#34;lineno&#34;&gt; 39 &lt;/span&gt;              });
+&lt;span class=&#34;lineno&#34;&gt; 40 &lt;/span&gt;            }
+&lt;span class=&#34;lineno&#34;&gt; 41 &lt;/span&gt;            else {
+&lt;span class=&#34;lineno&#34;&gt; 42 &lt;/span&gt;              this.setState({
+&lt;span class=&#34;lineno&#34;&gt; 43 &lt;/span&gt;                  loading: false
+&lt;span class=&#34;lineno&#34;&gt; 44 &lt;/span&gt;              });
+&lt;span class=&#34;lineno&#34;&gt; 45 &lt;/span&gt;            }
+&lt;span class=&#34;lineno&#34;&gt; 46 &lt;/span&gt;        })
+&lt;span class=&#34;lineno&#34;&gt; 47 &lt;/span&gt;    }
+&lt;span class=&#34;lineno&#34;&gt; 48 &lt;/span&gt;
+&lt;span class=&#34;lineno&#34;&gt; 49 &lt;/span&gt;    back() {
+&lt;span class=&#34;lineno&#34;&gt; 50 &lt;/span&gt;      this.props.navigator.pop();
+&lt;span class=&#34;lineno&#34;&gt; 51 &lt;/span&gt;    }
+&lt;span class=&#34;lineno&#34;&gt; 52 &lt;/span&gt;
+&lt;span class=&#34;lineno&#34;&gt; 53 &lt;/span&gt;    displayAlbums(artist) {
+&lt;span class=&#34;lineno&#34;&gt; 54 &lt;/span&gt;      var route = {
+&lt;span class=&#34;lineno&#34;&gt; 55 &lt;/span&gt;        scene: 0,
+&lt;span class=&#34;lineno&#34;&gt; 56 &lt;/span&gt;        title: artist.name,
+&lt;span class=&#34;lineno&#34;&gt; 57 &lt;/span&gt;        artistId: artist.id
+&lt;span class=&#34;lineno&#34;&gt; 58 &lt;/span&gt;      }
+&lt;span class=&#34;lineno&#34;&gt; 59 &lt;/span&gt;      this.props.navigator.replacePrevious(route)
+&lt;span class=&#34;lineno&#34;&gt; 60 &lt;/span&gt;      this.back();
+&lt;span class=&#34;lineno&#34;&gt; 61 &lt;/span&gt;    }
+&lt;span class=&#34;lineno&#34;&gt; 62 &lt;/span&gt;
+&lt;span class=&#34;lineno&#34;&gt; 63 &lt;/span&gt;    render() {
+&lt;span class=&#34;lineno&#34;&gt; 64 &lt;/span&gt;        if(this.state.loading) {
+&lt;span class=&#34;lineno&#34;&gt; 65 &lt;/span&gt;          return (
+&lt;span class=&#34;lineno&#34;&gt; 66 &lt;/span&gt;            &lt;span class=&#34;p&#34;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&#34;nt&#34;&gt;Container&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;&amp;gt;&lt;/span&gt;
+&lt;span class=&#34;lineno&#34;&gt; 67 &lt;/span&gt;                &lt;span class=&#34;p&#34;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&#34;nt&#34;&gt;Header&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;&amp;gt;&lt;/span&gt;
+&lt;span class=&#34;lineno&#34;&gt; 68 &lt;/span&gt;                  &lt;span class=&#34;p&#34;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&#34;nt&#34;&gt;Title&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;&amp;gt;&lt;/span&gt;search in progress...&lt;span class=&#34;p&#34;&gt;&amp;lt;/&lt;/span&gt;&lt;span class=&#34;nt&#34;&gt;Title&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;&amp;gt;&lt;/span&gt;
+&lt;span class=&#34;lineno&#34;&gt; 69 &lt;/span&gt;                &lt;span class=&#34;p&#34;&gt;&amp;lt;/&lt;/span&gt;&lt;span class=&#34;nt&#34;&gt;Header&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;&amp;gt;&lt;/span&gt;
+&lt;span class=&#34;lineno&#34;&gt; 70 &lt;/span&gt;              &lt;span class=&#34;p&#34;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&#34;nt&#34;&gt;Spinner&lt;/span&gt; &lt;span class=&#34;na&#34;&gt;color&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;&lt;span class=&#34;s&#34;&gt;&amp;quot;#440099&amp;quot;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;/&amp;gt;&lt;/span&gt;
+&lt;span class=&#34;lineno&#34;&gt; 71 &lt;/span&gt;            &lt;span class=&#34;p&#34;&gt;&amp;lt;/&lt;/span&gt;&lt;span class=&#34;nt&#34;&gt;Container&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;&amp;gt;&lt;/span&gt;
+&lt;span class=&#34;lineno&#34;&gt; 72 &lt;/span&gt;          );
+&lt;span class=&#34;lineno&#34;&gt; 73 &lt;/span&gt;        }
+&lt;span class=&#34;lineno&#34;&gt; 74 &lt;/span&gt;        else {
+&lt;span class=&#34;lineno&#34;&gt; 75 &lt;/span&gt;          return(
+&lt;span class=&#34;lineno&#34;&gt; 76 &lt;/span&gt;            &lt;span class=&#34;p&#34;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&#34;nt&#34;&gt;Container&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;&amp;gt;&lt;/span&gt;
+&lt;span class=&#34;lineno&#34;&gt; 77 &lt;/span&gt;                &lt;span class=&#34;p&#34;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&#34;nt&#34;&gt;Header&lt;/span&gt; &lt;span class=&#34;na&#34;&gt;searchBar&lt;/span&gt; &lt;span class=&#34;na&#34;&gt;rounded&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;&amp;gt;&lt;/span&gt;
+&lt;span class=&#34;lineno&#34;&gt; 78 &lt;/span&gt;                  &lt;span class=&#34;p&#34;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&#34;nt&#34;&gt;InputGroup&lt;/span&gt; &lt;span class=&#34;na&#34;&gt;borderType&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;&lt;span class=&#34;s&#34;&gt;&amp;quot;regular&amp;quot;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;&amp;gt;&lt;/span&gt;
+&lt;span class=&#34;lineno&#34;&gt; 79 &lt;/span&gt;                      &lt;span class=&#34;p&#34;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&#34;nt&#34;&gt;Icon&lt;/span&gt; &lt;span class=&#34;na&#34;&gt;name&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;&lt;span class=&#34;s&#34;&gt;&amp;quot;md-search&amp;quot;&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;/&amp;gt;&lt;/span&gt;
+&lt;span class=&#34;lineno&#34;&gt; 80 &lt;/span&gt;                      &lt;span class=&#34;p&#34;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&#34;nt&#34;&gt;Input&lt;/span&gt; &lt;span class=&#34;na&#34;&gt;placeholder&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;&lt;span class=&#34;s&#34;&gt;&amp;quot;Artist name&amp;quot;&lt;/span&gt; &lt;span class=&#34;na&#34;&gt;onChangeText&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;&lt;span class=&#34;s&#34;&gt;{(text)&lt;/span&gt; &lt;span class=&#34;err&#34;&gt;=&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;&amp;gt;&lt;/span&gt; this.search(text)}/&amp;gt;
+&lt;span class=&#34;lineno&#34;&gt; 81 &lt;/span&gt;                      &lt;span class=&#34;p&#34;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&#34;nt&#34;&gt;Icon&lt;/span&gt; &lt;span class=&#34;na&#34;&gt;name&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;&lt;span class=&#34;s&#34;&gt;&amp;quot;md-people&amp;quot;&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;/&amp;gt;&lt;/span&gt;
+&lt;span class=&#34;lineno&#34;&gt; 82 &lt;/span&gt;                  &lt;span class=&#34;p&#34;&gt;&amp;lt;/&lt;/span&gt;&lt;span class=&#34;nt&#34;&gt;InputGroup&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;&amp;gt;&lt;/span&gt;
+&lt;span class=&#34;lineno&#34;&gt; 83 &lt;/span&gt;                  &lt;span class=&#34;p&#34;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&#34;nt&#34;&gt;Button&lt;/span&gt; &lt;span class=&#34;na&#34;&gt;transparent&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;&amp;gt;&lt;/span&gt;
+&lt;span class=&#34;lineno&#34;&gt; 84 &lt;/span&gt;                      Search
+&lt;span class=&#34;lineno&#34;&gt; 85 &lt;/span&gt;                  &lt;span class=&#34;p&#34;&gt;&amp;lt;/&lt;/span&gt;&lt;span class=&#34;nt&#34;&gt;Button&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;&amp;gt;&lt;/span&gt;
+&lt;span class=&#34;lineno&#34;&gt; 86 &lt;/span&gt;                &lt;span class=&#34;p&#34;&gt;&amp;lt;/&lt;/span&gt;&lt;span class=&#34;nt&#34;&gt;Header&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;&amp;gt;&lt;/span&gt;
+&lt;span class=&#34;lineno&#34;&gt; 87 &lt;/span&gt;                &lt;span class=&#34;p&#34;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&#34;nt&#34;&gt;Content&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;&amp;gt;&lt;/span&gt;
+&lt;span class=&#34;lineno&#34;&gt; 88 &lt;/span&gt;                  &lt;span class=&#34;p&#34;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&#34;nt&#34;&gt;List&lt;/span&gt; &lt;span class=&#34;na&#34;&gt;dataArray&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;&lt;span class=&#34;s&#34;&gt;{this.state.results}&lt;/span&gt;
+&lt;span class=&#34;lineno&#34;&gt; 89 &lt;/span&gt;                        &lt;span class=&#34;na&#34;&gt;renderRow&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;&lt;span class=&#34;s&#34;&gt;{(item)&lt;/span&gt; &lt;span class=&#34;err&#34;&gt;=&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;&amp;gt;&lt;/span&gt;
+&lt;span class=&#34;lineno&#34;&gt; 90 &lt;/span&gt;                            &lt;span class=&#34;p&#34;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&#34;nt&#34;&gt;ListItem&lt;/span&gt; &lt;span class=&#34;na&#34;&gt;button&lt;/span&gt; &lt;span class=&#34;na&#34;&gt;onPress&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;&lt;span class=&#34;s&#34;&gt;{()=&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;&amp;gt;&lt;/span&gt;this.displayAlbums(item)}&amp;gt;
+&lt;span class=&#34;lineno&#34;&gt; 91 &lt;/span&gt;                                &lt;span class=&#34;p&#34;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&#34;nt&#34;&gt;Thumbnail&lt;/span&gt; &lt;span class=&#34;na&#34;&gt;square&lt;/span&gt; &lt;span class=&#34;na&#34;&gt;size&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;&lt;span class=&#34;s&#34;&gt;{56}&lt;/span&gt; &lt;span class=&#34;na&#34;&gt;source&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;&lt;span class=&#34;s&#34;&gt;{{uri:&lt;/span&gt; &lt;span class=&#34;na&#34;&gt;item&lt;/span&gt;&lt;span class=&#34;err&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;na&#34;&gt;picture_small&lt;/span&gt;&lt;span class=&#34;err&#34;&gt;}}&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;/&amp;gt;&lt;/span&gt;
+&lt;span class=&#34;lineno&#34;&gt; 92 &lt;/span&gt;                                &lt;span class=&#34;p&#34;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&#34;nt&#34;&gt;Text&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;&amp;gt;&lt;/span&gt;{item.name}&lt;span class=&#34;p&#34;&gt;&amp;lt;/&lt;/span&gt;&lt;span class=&#34;nt&#34;&gt;Text&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;&amp;gt;&lt;/span&gt;
+&lt;span class=&#34;lineno&#34;&gt; 93 &lt;/span&gt;                            &lt;span class=&#34;p&#34;&gt;&amp;lt;/&lt;/span&gt;&lt;span class=&#34;nt&#34;&gt;ListItem&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;&amp;gt;&lt;/span&gt;
+&lt;span class=&#34;lineno&#34;&gt; 94 &lt;/span&gt;                        }&amp;gt;
+&lt;span class=&#34;lineno&#34;&gt; 95 &lt;/span&gt;                  &lt;span class=&#34;p&#34;&gt;&amp;lt;/&lt;/span&gt;&lt;span class=&#34;nt&#34;&gt;List&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;&amp;gt;&lt;/span&gt;
+&lt;span class=&#34;lineno&#34;&gt; 96 &lt;/span&gt;                &lt;span class=&#34;p&#34;&gt;&amp;lt;/&lt;/span&gt;&lt;span class=&#34;nt&#34;&gt;Content&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;&amp;gt;&lt;/span&gt;
+&lt;span class=&#34;lineno&#34;&gt; 97 &lt;/span&gt;            &lt;span class=&#34;p&#34;&gt;&amp;lt;/&lt;/span&gt;&lt;span class=&#34;nt&#34;&gt;Container&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;&amp;gt;&lt;/span&gt;
+&lt;span class=&#34;lineno&#34;&gt; 98 &lt;/span&gt;          );
+&lt;span class=&#34;lineno&#34;&gt; 99 &lt;/span&gt;        }
+&lt;span class=&#34;lineno&#34;&gt;100 &lt;/span&gt;    }
+&lt;span class=&#34;lineno&#34;&gt;101 &lt;/span&gt;}
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;There are some specific parts in this scene, compared to TrackList and AlbumList:&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;first, the Header component (line 77) has an attribute &amp;ldquo;searchBar&amp;rdquo;, and contains the required components for displaying a search bar as defined by &lt;a href=&#34;http://nativebase.io/docs/v0.5.2/components#searchBar&#34;&gt;Native Base&lt;/a&gt;;&lt;/li&gt;
+&lt;li&gt;second, the main content of the scene is a list of artists (line 88), updated by the &lt;code&gt;search&lt;/code&gt; function (line 28) each time the content of the search field changes (as long as it contains at least three characters);&lt;/li&gt;
+&lt;li&gt;last but not least, a tap on an item in the result list (line 90) invokes the &lt;code&gt;displayAlbums&lt;/code&gt; function (line 53) that replaces the route for the underlying album list. The new route contains the reference of the artist on which the user tapped.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&#34;update-the-main-class-to-integrate-the-search-scene&#34;&gt;Update the main class to integrate the search scene&lt;/h2&gt;
+
+&lt;p&gt;Then we need, as usual, to import this new scene in the app. In &lt;code&gt;index.android/js&lt;/code&gt;, add:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre&gt;&lt;code class=&#34;language-javascript&#34; data-lang=&#34;javascript&#34;&gt;&lt;span&gt;&lt;/span&gt;&lt;span class=&#34;kr&#34;&gt;import&lt;/span&gt; &lt;span class=&#34;nx&#34;&gt;Search&lt;/span&gt; &lt;span class=&#34;nx&#34;&gt;from&lt;/span&gt; &lt;span class=&#34;s1&#34;&gt;&amp;#39;./search&amp;#39;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;;&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;We could add an &lt;code&gt;else if&lt;/code&gt; clause in the &lt;code&gt;renderScene&lt;/code&gt; function, or replace the existing &lt;code&gt;if...else&lt;/code&gt; with a &lt;code&gt;switch...case&lt;/code&gt;. But these solutions, although effective, will produce a code with a poor readability when the number of scenes continues to grow. That&amp;rsquo;s why I prefer the following form, with an array:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre&gt;&lt;code class=&#34;language-javascript&#34; data-lang=&#34;javascript&#34;&gt;&lt;span&gt;&lt;/span&gt;  &lt;span class=&#34;nx&#34;&gt;renderScene&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;nx&#34;&gt;route&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;nx&#34;&gt;navigator&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;{&lt;/span&gt;
+
+    &lt;span class=&#34;kd&#34;&gt;var&lt;/span&gt; &lt;span class=&#34;nx&#34;&gt;scenes&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;[&lt;/span&gt;
+      &lt;span class=&#34;o&#34;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&#34;nx&#34;&gt;AlbumList&lt;/span&gt; &lt;span class=&#34;nx&#34;&gt;title&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;{&lt;/span&gt; &lt;span class=&#34;nx&#34;&gt;route&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;nx&#34;&gt;title&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;}&lt;/span&gt; &lt;span class=&#34;nx&#34;&gt;artistId&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;{&lt;/span&gt; &lt;span class=&#34;nx&#34;&gt;route&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;nx&#34;&gt;artistId&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;}&lt;/span&gt; &lt;span class=&#34;nx&#34;&gt;navigator&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;{&lt;/span&gt; &lt;span class=&#34;nx&#34;&gt;navigator&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;}&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;/&amp;gt;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt;
+      &lt;span class=&#34;o&#34;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&#34;nx&#34;&gt;TrackList&lt;/span&gt; &lt;span class=&#34;nx&#34;&gt;title&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;{&lt;/span&gt; &lt;span class=&#34;nx&#34;&gt;route&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;nx&#34;&gt;title&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;}&lt;/span&gt; &lt;span class=&#34;nx&#34;&gt;albumId&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;{&lt;/span&gt; &lt;span class=&#34;nx&#34;&gt;route&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;nx&#34;&gt;albumId&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;}&lt;/span&gt; &lt;span class=&#34;nx&#34;&gt;navigator&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;{&lt;/span&gt; &lt;span class=&#34;nx&#34;&gt;navigator&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;}&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;/&amp;gt;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt;
+      &lt;span class=&#34;o&#34;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&#34;nx&#34;&gt;Search&lt;/span&gt; &lt;span class=&#34;nx&#34;&gt;navigator&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;{&lt;/span&gt; &lt;span class=&#34;nx&#34;&gt;navigator&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;}&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;/&amp;gt;&lt;/span&gt;
+    &lt;span class=&#34;p&#34;&gt;]&lt;/span&gt;
+    &lt;span class=&#34;k&#34;&gt;return&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;nx&#34;&gt;scenes&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;[&lt;/span&gt;&lt;span class=&#34;nx&#34;&gt;route&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;nx&#34;&gt;scene&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;]);&lt;/span&gt;
+  &lt;span class=&#34;p&#34;&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;We will now simplify the initial rendering: by default we not not display anything in the album view (Good bye Daft Punk!). Doing this just require to remove the album ID and title from the initial route:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;  render() {
+    return (&amp;lt;Navigator
+        initialRoute={ { scene: 0 } }
+        renderScene={ this.renderScene.bind(this) }
+      /&amp;gt;);
+  }
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;This results in a rather austere home screen for the app, but I&amp;rsquo;ll let the improvement of this screen as an exercise to the reader ^^.&lt;/p&gt;
+
+&lt;p&gt;
+&lt;figure &gt;
+    
+        &lt;img src=&#34;https://PascalLeMerrer.github.io/blog/post/img/react-native-4/screenshot_1.png&#34;  /&gt;
+    
+    
+&lt;/figure&gt;
+&lt;/p&gt;
+
+&lt;h2 id=&#34;adapt-the-albumlist-scene&#34;&gt;Adapt the AlbumList scene&lt;/h2&gt;
+
+&lt;p&gt;Finally, modify the &lt;code&gt;render&lt;/code&gt; function in &lt;code&gt;albumlist.js&lt;/code&gt; to add a search button in the header of the Album list:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre&gt;&lt;code class=&#34;language-html&#34; data-lang=&#34;html&#34;&gt;&lt;span&gt;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&#34;nt&#34;&gt;Header&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;&amp;gt;&lt;/span&gt;
+   &lt;span class=&#34;p&#34;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&#34;nt&#34;&gt;Button&lt;/span&gt; &lt;span class=&#34;na&#34;&gt;transparent&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;&amp;gt;&lt;/span&gt;
+      &lt;span class=&#34;p&#34;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&#34;nt&#34;&gt;Icon&lt;/span&gt; &lt;span class=&#34;na&#34;&gt;name&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;&lt;span class=&#34;s&#34;&gt;&amp;quot;md-disc&amp;quot;&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;/&amp;gt;&lt;/span&gt;
+  &lt;span class=&#34;p&#34;&gt;&amp;lt;/&lt;/span&gt;&lt;span class=&#34;nt&#34;&gt;Button&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;&amp;gt;&lt;/span&gt;
+   &lt;span class=&#34;p&#34;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&#34;nt&#34;&gt;Title&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;&amp;gt;&lt;/span&gt;{this.props.title}&lt;span class=&#34;p&#34;&gt;&amp;lt;/&lt;/span&gt;&lt;span class=&#34;nt&#34;&gt;Title&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;&amp;gt;&lt;/span&gt;
+   &lt;span class=&#34;p&#34;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&#34;nt&#34;&gt;Button&lt;/span&gt; &lt;span class=&#34;na&#34;&gt;transparent&lt;/span&gt; &lt;span class=&#34;na&#34;&gt;onPress&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;&lt;span class=&#34;s&#34;&gt;{()=&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;&amp;gt;&lt;/span&gt;this.displaySearch()}&amp;gt;
+      &lt;span class=&#34;p&#34;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&#34;nt&#34;&gt;Icon&lt;/span&gt; &lt;span class=&#34;na&#34;&gt;name&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;&lt;span class=&#34;s&#34;&gt;&amp;quot;md-search&amp;quot;&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;/&amp;gt;&lt;/span&gt;
+   &lt;span class=&#34;p&#34;&gt;&amp;lt;/&lt;/span&gt;&lt;span class=&#34;nt&#34;&gt;Button&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;&amp;gt;&lt;/span&gt;
+&lt;span class=&#34;p&#34;&gt;&amp;lt;/&lt;/span&gt;&lt;span class=&#34;nt&#34;&gt;Header&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;&amp;gt;&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;And add a &lt;code&gt;displaySearch&lt;/code&gt; function in this same file:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre&gt;&lt;code class=&#34;language-javascript&#34; data-lang=&#34;javascript&#34;&gt;&lt;span&gt;&lt;/span&gt;&lt;span class=&#34;c1&#34;&gt;// display the search scene&lt;/span&gt;
+&lt;span class=&#34;nx&#34;&gt;displaySearch&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;()&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;{&lt;/span&gt;
+  &lt;span class=&#34;kd&#34;&gt;var&lt;/span&gt; &lt;span class=&#34;nx&#34;&gt;route&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;{&lt;/span&gt;
+                &lt;span class=&#34;nx&#34;&gt;scene&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;:&lt;/span&gt; &lt;span class=&#34;mi&#34;&gt;2&lt;/span&gt;
+              &lt;span class=&#34;p&#34;&gt;}&lt;/span&gt;
+  &lt;span class=&#34;k&#34;&gt;this&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;nx&#34;&gt;props&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;nx&#34;&gt;navigator&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;nx&#34;&gt;push&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;nx&#34;&gt;route&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;);&lt;/span&gt;
+&lt;span class=&#34;p&#34;&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;A tap on the search button in the header will invoke &lt;code&gt;displaySearch&lt;/code&gt; and so display the search scene in front of the album list.&lt;/p&gt;
+
+&lt;p&gt;The search feature is now complete:&lt;/p&gt;
+
+
+&lt;figure &gt;
+    
+        &lt;img src=&#34;https://PascalLeMerrer.github.io/blog/post/img/react-native-4/screenshot_2.png&#34;  /&gt;
+    
+    
+&lt;/figure&gt;
+
+
+
+&lt;figure &gt;
+    
+        &lt;img src=&#34;https://PascalLeMerrer.github.io/blog/post/img/react-native-4/screenshot_3.png&#34;  /&gt;
+    
+    
+&lt;/figure&gt;
+
+
+
+&lt;figure &gt;
+    
+        &lt;img src=&#34;https://PascalLeMerrer.github.io/blog/post/img/react-native-4/screenshot_4.png&#34;  /&gt;
+    
+    
+&lt;/figure&gt;
+
+
+&lt;h2 id=&#34;conclusion&#34;&gt;Conclusion&lt;/h2&gt;
+
+&lt;p&gt;The array of scenes in the renderScene function could probably be replaced with a better solution. Maybe each scene could define it&amp;rsquo;s of rendering function and initialize it with data passed through the route. Some frameworks could  offer elegant solutions too. But for the sake of simplicity, we&amp;rsquo;ll stick to this implementation.&lt;/p&gt;
+
+&lt;p&gt;In the next part, we will add the support of the Android back button.&lt;/p&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>Creating a mobile application with React Native - part 3</title>
+      <link>https://pascallemerrer.github.io/blog/post/react-native-3/</link>
+      <pubDate>Thu, 18 Aug 2016 17:11:22 +0200</pubDate>
+      
+      <guid>https://pascallemerrer.github.io/blog/post/react-native-3/</guid>
+      <description>
+
+&lt;p&gt;In this third part of the &lt;a href=&#34;https://pascallemerrer.github.io/blog/post/react-native-1/&#34;&gt;series&lt;/a&gt; we will see of to navigate through different screens in the application.&lt;/p&gt;
+
+&lt;h2 id=&#34;add-a-navigator&#34;&gt;Add a Navigator&lt;/h2&gt;
+
+&lt;p&gt;We will use a navigator, which is a component for selecting the current scene to display.
+A scene is just a component rendered full screen.&lt;/p&gt;
+
+&lt;p&gt;The first thing to do is to transform the render function of the album list to make it a scene, and not just a component:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre&gt;&lt;code class=&#34;language-javascript&#34; data-lang=&#34;javascript&#34;&gt;&lt;span&gt;&lt;/span&gt;    &lt;span class=&#34;nx&#34;&gt;render&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;()&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;{&lt;/span&gt;
+        &lt;span class=&#34;k&#34;&gt;if&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;k&#34;&gt;this&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;nx&#34;&gt;state&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;nx&#34;&gt;loading&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;{&lt;/span&gt;
+          &lt;span class=&#34;k&#34;&gt;return&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;
+            &lt;span class=&#34;o&#34;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&#34;nx&#34;&gt;Container&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;&amp;gt;&lt;/span&gt;
+              &lt;span class=&#34;o&#34;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&#34;nx&#34;&gt;Spinner&lt;/span&gt; &lt;span class=&#34;nx&#34;&gt;color&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;&lt;span class=&#34;s2&#34;&gt;&amp;quot;#440099&amp;quot;&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;/&amp;gt;&lt;/span&gt;
+            &lt;span class=&#34;o&#34;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&#34;err&#34;&gt;/Container&amp;gt;&lt;/span&gt;
+          &lt;span class=&#34;p&#34;&gt;);&lt;/span&gt;
+        &lt;span class=&#34;p&#34;&gt;}&lt;/span&gt;
+        &lt;span class=&#34;k&#34;&gt;else&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;{&lt;/span&gt;
+          &lt;span class=&#34;k&#34;&gt;return&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;
+            &lt;span class=&#34;o&#34;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&#34;nx&#34;&gt;Container&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;&amp;gt;&lt;/span&gt;
+                &lt;span class=&#34;o&#34;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&#34;nx&#34;&gt;Header&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;&amp;gt;&lt;/span&gt;
+                    &lt;span class=&#34;o&#34;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&#34;nx&#34;&gt;Title&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;&amp;gt;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;{&lt;/span&gt;&lt;span class=&#34;k&#34;&gt;this&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;nx&#34;&gt;props&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;nx&#34;&gt;title&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;}&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&#34;err&#34;&gt;/Title&amp;gt;&lt;/span&gt;
+                &lt;span class=&#34;o&#34;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&#34;err&#34;&gt;/Header&amp;gt;&lt;/span&gt;
+                &lt;span class=&#34;o&#34;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&#34;nx&#34;&gt;Content&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;&amp;gt;&lt;/span&gt;
+                  &lt;span class=&#34;o&#34;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&#34;nx&#34;&gt;List&lt;/span&gt; &lt;span class=&#34;nx&#34;&gt;dataArray&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;{&lt;/span&gt;&lt;span class=&#34;k&#34;&gt;this&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;nx&#34;&gt;state&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;nx&#34;&gt;albums&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;}&lt;/span&gt;
+                        &lt;span class=&#34;nx&#34;&gt;renderRow&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;{(&lt;/span&gt;&lt;span class=&#34;nx&#34;&gt;item&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&amp;gt;&lt;/span&gt;
+                            &lt;span class=&#34;o&#34;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&#34;nx&#34;&gt;ListItem&lt;/span&gt; &lt;span class=&#34;nx&#34;&gt;onPress&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;{()&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&amp;gt;&lt;/span&gt;&lt;span class=&#34;k&#34;&gt;this&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;nx&#34;&gt;displayTracks&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;nx&#34;&gt;item&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;nx&#34;&gt;id&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)}&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;&amp;gt;&lt;/span&gt;
+                                &lt;span class=&#34;o&#34;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&#34;nx&#34;&gt;Thumbnail&lt;/span&gt; &lt;span class=&#34;nx&#34;&gt;square&lt;/span&gt; &lt;span class=&#34;nx&#34;&gt;size&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;{&lt;/span&gt;&lt;span class=&#34;mi&#34;&gt;60&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;}&lt;/span&gt; &lt;span class=&#34;nx&#34;&gt;source&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;{{&lt;/span&gt;&lt;span class=&#34;nx&#34;&gt;uri&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;:&lt;/span&gt; &lt;span class=&#34;nx&#34;&gt;item&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;nx&#34;&gt;cover_small&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;}}&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;/&amp;gt;&lt;/span&gt;
+                                &lt;span class=&#34;o&#34;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&#34;nx&#34;&gt;Text&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;&amp;gt;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;{&lt;/span&gt;&lt;span class=&#34;nx&#34;&gt;item&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;nx&#34;&gt;title&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;}&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&#34;err&#34;&gt;/Text&amp;gt;&lt;/span&gt;
+                            &lt;span class=&#34;o&#34;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&#34;err&#34;&gt;/ListItem&amp;gt;&lt;/span&gt;
+                        &lt;span class=&#34;p&#34;&gt;}&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;&amp;gt;&lt;/span&gt;
+                  &lt;span class=&#34;o&#34;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&#34;err&#34;&gt;/List&amp;gt;&lt;/span&gt;
+                &lt;span class=&#34;o&#34;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&#34;err&#34;&gt;/Content&amp;gt;&lt;/span&gt;
+            &lt;span class=&#34;o&#34;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&#34;err&#34;&gt;/Container&amp;gt;&lt;/span&gt;
+          &lt;span class=&#34;p&#34;&gt;);&lt;/span&gt;
+        &lt;span class=&#34;p&#34;&gt;}&lt;/span&gt;
+    &lt;span class=&#34;p&#34;&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;The Container definition is now included in the rendering function of the AlbumList component.
+Don&amp;rsquo;t forget to update the list of imported components for NativeBase, always in &lt;code&gt;albumlist.js&lt;/code&gt;:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;import { Content, Container, Header, List, ListItem, Spinner, Text, Thumbnail, Title } from &#39;native-base&#39;;
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;You may have noticed the Header content has changed too, in order to display a title which will be injected when mounting the album list.&lt;/p&gt;
+
+&lt;p&gt;Then, going back to the &lt;code&gt;index.android.js&lt;/code&gt; file, we need to update the list of imports, to remove those who were moved to AlbumList, and import the Navigator component:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;import { AppRegistry, Navigator } from &#39;react-native&#39;;
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Then we replace the render function with these lines:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre&gt;&lt;code class=&#34;language-html&#34; data-lang=&#34;html&#34;&gt;&lt;span&gt;&lt;/span&gt;renderScene(route, navigator) {
+  return(
+    &lt;span class=&#34;p&#34;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&#34;nt&#34;&gt;AlbumList&lt;/span&gt; &lt;span class=&#34;na&#34;&gt;title&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;&lt;span class=&#34;s&#34;&gt;{&lt;/span&gt; &lt;span class=&#34;na&#34;&gt;route&lt;/span&gt;&lt;span class=&#34;err&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;na&#34;&gt;title&lt;/span&gt; &lt;span class=&#34;err&#34;&gt;}&lt;/span&gt; &lt;span class=&#34;na&#34;&gt;artistId&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;&lt;span class=&#34;s&#34;&gt;{&lt;/span&gt; &lt;span class=&#34;na&#34;&gt;route&lt;/span&gt;&lt;span class=&#34;err&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;na&#34;&gt;artistId&lt;/span&gt; &lt;span class=&#34;err&#34;&gt;}&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;/&amp;gt;&lt;/span&gt;
+  )
+}
+
+render() {
+  return (
+    &lt;span class=&#34;p&#34;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&#34;nt&#34;&gt;Navigator&lt;/span&gt;
+      &lt;span class=&#34;na&#34;&gt;initialRoute&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;&lt;span class=&#34;s&#34;&gt;{{&lt;/span&gt; &lt;span class=&#34;na&#34;&gt;title:&lt;/span&gt; &lt;span class=&#34;err&#34;&gt;&amp;#39;&lt;/span&gt;&lt;span class=&#34;na&#34;&gt;Album&lt;/span&gt; &lt;span class=&#34;na&#34;&gt;List&lt;/span&gt; &lt;span class=&#34;na&#34;&gt;for&lt;/span&gt; &lt;span class=&#34;na&#34;&gt;Daft&lt;/span&gt; &lt;span class=&#34;na&#34;&gt;Punk&lt;/span&gt;&lt;span class=&#34;err&#34;&gt;&amp;#39;,&lt;/span&gt; &lt;span class=&#34;na&#34;&gt;artistId:27&lt;/span&gt; &lt;span class=&#34;err&#34;&gt;}}&lt;/span&gt;
+      &lt;span class=&#34;na&#34;&gt;renderScene&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;&lt;span class=&#34;s&#34;&gt;{&lt;/span&gt; &lt;span class=&#34;na&#34;&gt;this&lt;/span&gt;&lt;span class=&#34;err&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;na&#34;&gt;renderScene&lt;/span&gt; &lt;span class=&#34;err&#34;&gt;}&lt;/span&gt;
+    &lt;span class=&#34;p&#34;&gt;/&amp;gt;&lt;/span&gt;
+  );
+}
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;The initialRoute property represents the context for this first scene.
+Each scene is indeed associated to a &lt;em&gt;route&lt;/em&gt; (which is another name for a context in React Native). You can add any property on a route.
+In our example, we&amp;rsquo;ll include two properties in the routes:
+- an Id: albumId or artistId according to the type of the view;
+- the title to be displayed in the header.&lt;/p&gt;
+
+&lt;p&gt;So in &lt;code&gt;albumlist.js&lt;/code&gt; we change the URL to be requested, to use the ID of the artist injected when displaying the AlbumList component:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre&gt;&lt;code class=&#34;language-javascript&#34; data-lang=&#34;javascript&#34;&gt;&lt;span&gt;&lt;/span&gt;&lt;span class=&#34;nx&#34;&gt;superagent&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;nx&#34;&gt;get&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;s1&#34;&gt;&amp;#39;http://api.deezer.com/artist/&amp;#39;&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;+&lt;/span&gt; &lt;span class=&#34;k&#34;&gt;this&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;nx&#34;&gt;props&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;nx&#34;&gt;artistId&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;+&lt;/span&gt; &lt;span class=&#34;s1&#34;&gt;&amp;#39;/albums&amp;#39;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;At this stage your code should look like &lt;a href=&#34;https://github.com/PascalLeMerrer/react-native-tuto/tree/step3-1&#34;&gt;this&lt;/a&gt;.&lt;/p&gt;
+
+&lt;h2 id=&#34;add-the-track-list-scene&#34;&gt;Add the track list scene&lt;/h2&gt;
+
+&lt;p&gt;Next, create a new file named &lt;code&gt;tracklist.js&lt;/code&gt;, with the following content:&lt;/p&gt;
+
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre&gt;&lt;code class=&#34;language-html&#34; data-lang=&#34;html&#34;&gt;&lt;span&gt;&lt;/span&gt;&lt;span class=&#34;lineno&#34;&gt; 1 &lt;/span&gt;import React, { Component } from &amp;#39;react&amp;#39;;
+&lt;span class=&#34;lineno&#34;&gt; 2 &lt;/span&gt;import { Button, Content, Container, Header, List, ListItem, Icon, Spinner, Text, Title } from &amp;#39;native-base&amp;#39;;
+&lt;span class=&#34;lineno&#34;&gt; 3 &lt;/span&gt;var superagent = require(&amp;#39;superagent&amp;#39;);
+&lt;span class=&#34;lineno&#34;&gt; 4 &lt;/span&gt;
+&lt;span class=&#34;lineno&#34;&gt; 5 &lt;/span&gt;export default class TrackList extends Component {
+&lt;span class=&#34;lineno&#34;&gt; 6 &lt;/span&gt;
+&lt;span class=&#34;lineno&#34;&gt; 7 &lt;/span&gt;    constructor(props) {
+&lt;span class=&#34;lineno&#34;&gt; 8 &lt;/span&gt;      super(props);
+&lt;span class=&#34;lineno&#34;&gt; 9 &lt;/span&gt;      this.state = {
+&lt;span class=&#34;lineno&#34;&gt;10 &lt;/span&gt;          loading: true,
+&lt;span class=&#34;lineno&#34;&gt;11 &lt;/span&gt;          tracks: null
+&lt;span class=&#34;lineno&#34;&gt;12 &lt;/span&gt;      }
+&lt;span class=&#34;lineno&#34;&gt;13 &lt;/span&gt;    }
+&lt;span class=&#34;lineno&#34;&gt;14 &lt;/span&gt;
+&lt;span class=&#34;lineno&#34;&gt;15 &lt;/span&gt;    componentDidMount() {
+&lt;span class=&#34;lineno&#34;&gt;16 &lt;/span&gt;        this.load();
+&lt;span class=&#34;lineno&#34;&gt;17 &lt;/span&gt;    }
+&lt;span class=&#34;lineno&#34;&gt;18 &lt;/span&gt;
+&lt;span class=&#34;lineno&#34;&gt;19 &lt;/span&gt;    load() {
+&lt;span class=&#34;lineno&#34;&gt;20 &lt;/span&gt;      superagent.get(&amp;#39;http://api.deezer.com/album/&amp;#39; + this.props.albumId + &amp;#39;/tracks&amp;#39;)
+&lt;span class=&#34;lineno&#34;&gt;21 &lt;/span&gt;        .set(&amp;#39;Accept&amp;#39;, &amp;#39;application/json&amp;#39;)
+&lt;span class=&#34;lineno&#34;&gt;22 &lt;/span&gt;        .end((err, response) =&amp;gt; {
+&lt;span class=&#34;lineno&#34;&gt;23 &lt;/span&gt;            if (response.ok) {
+&lt;span class=&#34;lineno&#34;&gt;24 &lt;/span&gt;              this.setState({
+&lt;span class=&#34;lineno&#34;&gt;25 &lt;/span&gt;                  loading: false,
+&lt;span class=&#34;lineno&#34;&gt;26 &lt;/span&gt;                  tracks: response.body.data
+&lt;span class=&#34;lineno&#34;&gt;27 &lt;/span&gt;              });
+&lt;span class=&#34;lineno&#34;&gt;28 &lt;/span&gt;            }
+&lt;span class=&#34;lineno&#34;&gt;29 &lt;/span&gt;            else {
+&lt;span class=&#34;lineno&#34;&gt;30 &lt;/span&gt;              this.setState({
+&lt;span class=&#34;lineno&#34;&gt;31 &lt;/span&gt;                  loading: false
+&lt;span class=&#34;lineno&#34;&gt;32 &lt;/span&gt;              });
+&lt;span class=&#34;lineno&#34;&gt;33 &lt;/span&gt;            }
+&lt;span class=&#34;lineno&#34;&gt;34 &lt;/span&gt;        })
+&lt;span class=&#34;lineno&#34;&gt;35 &lt;/span&gt;    }
+&lt;span class=&#34;lineno&#34;&gt;36 &lt;/span&gt;
+&lt;span class=&#34;lineno&#34;&gt;37 &lt;/span&gt;    back() {
+&lt;span class=&#34;lineno&#34;&gt;38 &lt;/span&gt;      this.props.navigator.pop();
+&lt;span class=&#34;lineno&#34;&gt;39 &lt;/span&gt;    }
+&lt;span class=&#34;lineno&#34;&gt;40 &lt;/span&gt;
+&lt;span class=&#34;lineno&#34;&gt;41 &lt;/span&gt;    render() {
+&lt;span class=&#34;lineno&#34;&gt;42 &lt;/span&gt;        if(this.state.loading) {
+&lt;span class=&#34;lineno&#34;&gt;43 &lt;/span&gt;          return (
+&lt;span class=&#34;lineno&#34;&gt;44 &lt;/span&gt;            &lt;span class=&#34;p&#34;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&#34;nt&#34;&gt;Container&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;&amp;gt;&lt;/span&gt;
+&lt;span class=&#34;lineno&#34;&gt;45 &lt;/span&gt;                &lt;span class=&#34;p&#34;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&#34;nt&#34;&gt;Header&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;&amp;gt;&lt;/span&gt;
+&lt;span class=&#34;lineno&#34;&gt;46 &lt;/span&gt;                   &lt;span class=&#34;p&#34;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&#34;nt&#34;&gt;Button&lt;/span&gt; &lt;span class=&#34;na&#34;&gt;info&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;&amp;gt;&lt;/span&gt;
+&lt;span class=&#34;lineno&#34;&gt;47 &lt;/span&gt;                    &lt;span class=&#34;p&#34;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&#34;nt&#34;&gt;Icon&lt;/span&gt; &lt;span class=&#34;na&#34;&gt;name&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;&lt;span class=&#34;s&#34;&gt;&amp;quot;md-arrow-back&amp;quot;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;/&amp;gt;&lt;/span&gt;
+&lt;span class=&#34;lineno&#34;&gt;48 &lt;/span&gt;                   &lt;span class=&#34;p&#34;&gt;&amp;lt;/&lt;/span&gt;&lt;span class=&#34;nt&#34;&gt;Button&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;&amp;gt;&lt;/span&gt;
+&lt;span class=&#34;lineno&#34;&gt;49 &lt;/span&gt;                   &lt;span class=&#34;p&#34;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&#34;nt&#34;&gt;Title&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;&amp;gt;&lt;/span&gt;{this.props.title}&lt;span class=&#34;p&#34;&gt;&amp;lt;/&lt;/span&gt;&lt;span class=&#34;nt&#34;&gt;Title&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;&amp;gt;&lt;/span&gt;
+&lt;span class=&#34;lineno&#34;&gt;50 &lt;/span&gt;                &lt;span class=&#34;p&#34;&gt;&amp;lt;/&lt;/span&gt;&lt;span class=&#34;nt&#34;&gt;Header&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;&amp;gt;&lt;/span&gt;
+&lt;span class=&#34;lineno&#34;&gt;51 &lt;/span&gt;              &lt;span class=&#34;p&#34;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&#34;nt&#34;&gt;Spinner&lt;/span&gt; &lt;span class=&#34;na&#34;&gt;color&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;&lt;span class=&#34;s&#34;&gt;&amp;quot;#440099&amp;quot;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;/&amp;gt;&lt;/span&gt;
+&lt;span class=&#34;lineno&#34;&gt;52 &lt;/span&gt;            &lt;span class=&#34;p&#34;&gt;&amp;lt;/&lt;/span&gt;&lt;span class=&#34;nt&#34;&gt;Container&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;&amp;gt;&lt;/span&gt;
+&lt;span class=&#34;lineno&#34;&gt;53 &lt;/span&gt;          );
+&lt;span class=&#34;lineno&#34;&gt;54 &lt;/span&gt;        }
+&lt;span class=&#34;lineno&#34;&gt;55 &lt;/span&gt;        else {
+&lt;span class=&#34;lineno&#34;&gt;56 &lt;/span&gt;          return(
+&lt;span class=&#34;lineno&#34;&gt;57 &lt;/span&gt;            &lt;span class=&#34;p&#34;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&#34;nt&#34;&gt;Container&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;&amp;gt;&lt;/span&gt;
+&lt;span class=&#34;lineno&#34;&gt;58 &lt;/span&gt;                &lt;span class=&#34;p&#34;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&#34;nt&#34;&gt;Header&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;&amp;gt;&lt;/span&gt;
+&lt;span class=&#34;lineno&#34;&gt;59 &lt;/span&gt;                   &lt;span class=&#34;p&#34;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&#34;nt&#34;&gt;Button&lt;/span&gt; &lt;span class=&#34;na&#34;&gt;info&lt;/span&gt; &lt;span class=&#34;na&#34;&gt;onPress&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;&lt;span class=&#34;s&#34;&gt;{()=&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;&amp;gt;&lt;/span&gt;this.back()}&amp;gt;
+&lt;span class=&#34;lineno&#34;&gt;60 &lt;/span&gt;                    &lt;span class=&#34;p&#34;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&#34;nt&#34;&gt;Icon&lt;/span&gt; &lt;span class=&#34;na&#34;&gt;name&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;&lt;span class=&#34;s&#34;&gt;&amp;quot;md-arrow-back&amp;quot;&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;/&amp;gt;&lt;/span&gt;
+&lt;span class=&#34;lineno&#34;&gt;61 &lt;/span&gt;                   &lt;span class=&#34;p&#34;&gt;&amp;lt;/&lt;/span&gt;&lt;span class=&#34;nt&#34;&gt;Button&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;&amp;gt;&lt;/span&gt;
+&lt;span class=&#34;lineno&#34;&gt;62 &lt;/span&gt;                   &lt;span class=&#34;p&#34;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&#34;nt&#34;&gt;Title&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;&amp;gt;&lt;/span&gt;{this.props.title}&lt;span class=&#34;p&#34;&gt;&amp;lt;/&lt;/span&gt;&lt;span class=&#34;nt&#34;&gt;Title&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;&amp;gt;&lt;/span&gt;
+&lt;span class=&#34;lineno&#34;&gt;63 &lt;/span&gt;                &lt;span class=&#34;p&#34;&gt;&amp;lt;/&lt;/span&gt;&lt;span class=&#34;nt&#34;&gt;Header&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;&amp;gt;&lt;/span&gt;
+&lt;span class=&#34;lineno&#34;&gt;64 &lt;/span&gt;                &lt;span class=&#34;p&#34;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&#34;nt&#34;&gt;Content&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;&amp;gt;&lt;/span&gt;
+&lt;span class=&#34;lineno&#34;&gt;65 &lt;/span&gt;                  &lt;span class=&#34;p&#34;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&#34;nt&#34;&gt;List&lt;/span&gt; &lt;span class=&#34;na&#34;&gt;dataArray&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;&lt;span class=&#34;s&#34;&gt;{this.state.tracks}&lt;/span&gt;
+&lt;span class=&#34;lineno&#34;&gt;66 &lt;/span&gt;                        &lt;span class=&#34;na&#34;&gt;renderRow&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;&lt;span class=&#34;s&#34;&gt;{(item)&lt;/span&gt; &lt;span class=&#34;err&#34;&gt;=&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;&amp;gt;&lt;/span&gt;
+&lt;span class=&#34;lineno&#34;&gt;67 &lt;/span&gt;                            &lt;span class=&#34;p&#34;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&#34;nt&#34;&gt;ListItem&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;&amp;gt;&lt;/span&gt;
+&lt;span class=&#34;lineno&#34;&gt;68 &lt;/span&gt;                                &lt;span class=&#34;p&#34;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&#34;nt&#34;&gt;Text&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;&amp;gt;&lt;/span&gt;{item.title}&lt;span class=&#34;p&#34;&gt;&amp;lt;/&lt;/span&gt;&lt;span class=&#34;nt&#34;&gt;Text&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;&amp;gt;&lt;/span&gt;
+&lt;span class=&#34;lineno&#34;&gt;69 &lt;/span&gt;                            &lt;span class=&#34;p&#34;&gt;&amp;lt;/&lt;/span&gt;&lt;span class=&#34;nt&#34;&gt;ListItem&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;&amp;gt;&lt;/span&gt;
+&lt;span class=&#34;lineno&#34;&gt;70 &lt;/span&gt;                        }&amp;gt;
+&lt;span class=&#34;lineno&#34;&gt;71 &lt;/span&gt;                  &lt;span class=&#34;p&#34;&gt;&amp;lt;/&lt;/span&gt;&lt;span class=&#34;nt&#34;&gt;List&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;&amp;gt;&lt;/span&gt;
+&lt;span class=&#34;lineno&#34;&gt;72 &lt;/span&gt;                &lt;span class=&#34;p&#34;&gt;&amp;lt;/&lt;/span&gt;&lt;span class=&#34;nt&#34;&gt;Content&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;&amp;gt;&lt;/span&gt;
+&lt;span class=&#34;lineno&#34;&gt;73 &lt;/span&gt;            &lt;span class=&#34;p&#34;&gt;&amp;lt;/&lt;/span&gt;&lt;span class=&#34;nt&#34;&gt;Container&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;&amp;gt;&lt;/span&gt;
+&lt;span class=&#34;lineno&#34;&gt;74 &lt;/span&gt;          );
+&lt;span class=&#34;lineno&#34;&gt;75 &lt;/span&gt;        }
+&lt;span class=&#34;lineno&#34;&gt;76 &lt;/span&gt;    }
+&lt;span class=&#34;lineno&#34;&gt;77 &lt;/span&gt;}
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;This defines a new scene named TrackList, which displays the list of tracks for a given album.
+This new component is rather similar to the AlbumList.
+It loads a list of tracks for the album whose id will be provided as a property of the TrackList instance (line 20).
+It also expects the navigator instance to be passed as a property. It is used in the &lt;code&gt;back&lt;/code&gt; function (line 38) to drop this scene and go back to the AlbumList. The &lt;code&gt;back&lt;/code&gt; function is invoked when pressing the button in the header (line 59).&lt;/p&gt;
+
+&lt;p&gt;Now we must add an import directive in &lt;code&gt;index.android.js&lt;/code&gt; to be able to use this new scene:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre&gt;&lt;code class=&#34;language-javascript&#34; data-lang=&#34;javascript&#34;&gt;&lt;span&gt;&lt;/span&gt;&lt;span class=&#34;kr&#34;&gt;import&lt;/span&gt; &lt;span class=&#34;nx&#34;&gt;TrackList&lt;/span&gt; &lt;span class=&#34;nx&#34;&gt;from&lt;/span&gt; &lt;span class=&#34;s1&#34;&gt;&amp;#39;./tracklist&amp;#39;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;;&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;And then we change the rendering functions of the app:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;class AwesomeNativeBase extends Component {
+
+    renderScene(route, navigator) {
+      if (route.scene == 1) {
+        return(
+          &amp;lt;TrackList title={ route.title } albumId={ route.albumId } navigator={ navigator }/&amp;gt;
+        )
+      }
+      else {
+        return(
+          &amp;lt;AlbumList title={ route.title } artistId={ route.artistId } navigator={ navigator } /&amp;gt;
+        )
+      }
+    }
+
+    render() {
+
+      const routes = [ { scene: 0,
+                         title: &#39;Album List for Daft Punk&#39;,
+                         artistId: 27
+                       }
+                     ];
+      return (
+        &amp;lt;Navigator
+          initialRoute={ routes[0] }
+          renderScene={ this.renderScene }
+        /&amp;gt;
+      );
+    }
+}
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;The &lt;code&gt;renderScene&lt;/code&gt; function displays either an AlbumList or a TrackList, according to the selected route. It also provides the selected scene with contextual properties (a title, an artist or album ID) and injects the navigator instance. The scene property in the routes identifies the type of scene to render (AlbumList or TrackList).&lt;/p&gt;
+
+&lt;p&gt;Finally, we have to modify the album list, to make the list items interactive and trigger the display of the track list when one of them is tapped.&lt;/p&gt;
+
+&lt;p&gt;In &lt;code&gt;albumlist.js&lt;/code&gt;, add a function named &lt;code&gt;displayTracks&lt;/code&gt;:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre&gt;&lt;code class=&#34;language-javascript&#34; data-lang=&#34;javascript&#34;&gt;&lt;span&gt;&lt;/span&gt;&lt;span class=&#34;nx&#34;&gt;displayTracks&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;nx&#34;&gt;album&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;{&lt;/span&gt;
+    &lt;span class=&#34;kd&#34;&gt;var&lt;/span&gt; &lt;span class=&#34;nx&#34;&gt;route&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;{&lt;/span&gt;
+                  &lt;span class=&#34;nx&#34;&gt;albumId&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;:&lt;/span&gt; &lt;span class=&#34;nx&#34;&gt;album&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;nx&#34;&gt;id&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt;
+                  &lt;span class=&#34;nx&#34;&gt;title&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;:&lt;/span&gt; &lt;span class=&#34;nx&#34;&gt;album&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;nx&#34;&gt;title&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt;
+                  &lt;span class=&#34;nx&#34;&gt;scene&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;:&lt;/span&gt; &lt;span class=&#34;mi&#34;&gt;1&lt;/span&gt;
+                &lt;span class=&#34;p&#34;&gt;}&lt;/span&gt;
+    &lt;span class=&#34;k&#34;&gt;this&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;nx&#34;&gt;props&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;nx&#34;&gt;navigator&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;nx&#34;&gt;push&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;nx&#34;&gt;route&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;);&lt;/span&gt;
+&lt;span class=&#34;p&#34;&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;And in the render function, replace &lt;code&gt;&amp;lt;List Item&amp;gt;&lt;/code&gt; with&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre&gt;&lt;code class=&#34;language-html&#34; data-lang=&#34;html&#34;&gt;&lt;span&gt;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&#34;nt&#34;&gt;ListItem&lt;/span&gt; &lt;span class=&#34;na&#34;&gt;button&lt;/span&gt; &lt;span class=&#34;na&#34;&gt;onPress&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;&lt;span class=&#34;s&#34;&gt;{()=&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;&amp;gt;&lt;/span&gt;this.displayTracks(item)}&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;Adding the &lt;code&gt;button&lt;/code&gt; attribute to the &lt;code&gt;ListItem&lt;/code&gt; component makes it interactive. It allows it to detect the onPress event and so invoke &lt;code&gt;displayTracks&lt;/code&gt; when it is tapped. The camel case is important there, make sure to write &lt;code&gt;onPress&lt;/code&gt; and not &lt;code&gt;onpress&lt;/code&gt;.&lt;/p&gt;
+
+&lt;p&gt;You should now be able to go back and forth between the Album List and Track List.
+
+&lt;figure &gt;
+    
+        &lt;img src=&#34;https://PascalLeMerrer.github.io/blog/post/img/react-native-3/screenshot_1.png&#34;  /&gt;
+    
+    
+&lt;/figure&gt;
+&lt;/p&gt;
+
+&lt;h2 id=&#34;performance-issues&#34;&gt;Performance issues&lt;/h2&gt;
+
+&lt;p&gt;The display of the list of tracks works, but it is slow. It may even be very slow.
+To improve this, we have three easy steps to perform.&lt;/p&gt;
+
+&lt;p&gt;First, disable the remote debugging if it is active (press the menu button in the app). The remote debugger has a dramatic impact on transition performances.&lt;/p&gt;
+
+&lt;p&gt;Second, remove the console.log() calls you may have inserted. Their impact may be rather significant, as usual with logs.&lt;/p&gt;
+
+&lt;p&gt;And last but not least, wait for the transition to be finished before making a request to the Deezer API and displaying the response. To do this, we must import the InteractionManager in &lt;code&gt;tracklist.js&lt;/code&gt;:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre&gt;&lt;code class=&#34;language-javascript&#34; data-lang=&#34;javascript&#34;&gt;&lt;span&gt;&lt;/span&gt;&lt;span class=&#34;kr&#34;&gt;import&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;{&lt;/span&gt; &lt;span class=&#34;nx&#34;&gt;InteractionManager&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;}&lt;/span&gt; &lt;span class=&#34;nx&#34;&gt;from&lt;/span&gt; &lt;span class=&#34;s1&#34;&gt;&amp;#39;react-native&amp;#39;&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;And then replace the &lt;code&gt;componentDidMount&lt;/code&gt; function with:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre&gt;&lt;code class=&#34;language-javascript&#34; data-lang=&#34;javascript&#34;&gt;&lt;span&gt;&lt;/span&gt;&lt;span class=&#34;nx&#34;&gt;componentDidMount&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;()&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;{&lt;/span&gt;
+  &lt;span class=&#34;c1&#34;&gt;// delay the loading after the end of the transition&lt;/span&gt;
+  &lt;span class=&#34;nx&#34;&gt;InteractionManager&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;nx&#34;&gt;runAfterInteractions&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(()&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&amp;gt;&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;{&lt;/span&gt;
+    &lt;span class=&#34;k&#34;&gt;this&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;nx&#34;&gt;load&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;();&lt;/span&gt;
+  &lt;span class=&#34;p&#34;&gt;});&lt;/span&gt;
+&lt;span class=&#34;p&#34;&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;After these three simple modifications, the performance is quite good. It should be even better when we will package the application in release mode, after the development is finished.&lt;/p&gt;
+
+&lt;p&gt;The final code for this article is available &lt;a href=&#34;https://github.com/PascalLeMerrer/react-native-tuto/tree/step3-2&#34;&gt;here&lt;/a&gt;.&lt;/p&gt;
+
+&lt;h2 id=&#34;conclusion&#34;&gt;Conclusion&lt;/h2&gt;
+
+&lt;p&gt;The way to a working application wih several view using the basic Navigator component was not as easy as I thought it would be. I had to try several solutions, and did not find a way to do it without injecting the navigator into the scenes. I would have prefered to inject a fonction only, to avoid the scenes to be aware of the implementation details of the navigation. There are many alternative navigation components available, maybe it&amp;rsquo;s a sign there is some room for improvement on the basic one.&lt;/p&gt;
+
+&lt;p&gt;On the positive side, the &lt;a href=&#34;https://facebook.github.io/react-native/docs/performance.html&#34;&gt;documentation&lt;/a&gt; gives some simple and effective hints to improve the performance of your application.&lt;/p&gt;
+
+&lt;p&gt;In the next article, we will add a last scene to this marvelous application. It could be nice indeed, if the app was not limited to display Daft Punk album and track lists ;)&lt;/p&gt;
+</description>
+    </item>
     
     <item>
       <title>Creating a mobile application with React Native - part 1</title>
