@@ -6,8 +6,119 @@
     <description>Recent content in Posts on Pascal&#39;s dev blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Tue, 13 Sep 2016 00:08:30 +0200</lastBuildDate>
+    <lastBuildDate>Sun, 09 Oct 2016 10:24:44 +0200</lastBuildDate>
     <atom:link href="https://PascalLeMerrer.github.io/blog/post/index.xml" rel="self" type="application/rss+xml" />
+    
+    <item>
+      <title>Creating a mobile application with React Native - part 5</title>
+      <link>https://pascallemerrer.github.io/blog/post/react-native-5/</link>
+      <pubDate>Sun, 09 Oct 2016 10:24:44 +0200</pubDate>
+      
+      <guid>https://pascallemerrer.github.io/blog/post/react-native-5/</guid>
+      <description>
+
+&lt;p&gt;In this fifth part of the &lt;a href=&#34;https://pascallemerrer.github.io/blog/post/react-native-1/&#34;&gt;article series about React Native&lt;/a&gt;, we&amp;rsquo;ll see how to support the native back button on Android devices.&lt;/p&gt;
+
+&lt;p&gt;To support the back button, we only have to modify the main android file, &lt;code&gt;index.android.js&lt;/code&gt;.&lt;/p&gt;
+
+&lt;p&gt;React Native provides a module named &lt;code&gt;BackAndroid&lt;/code&gt;, that exposes an object on which you can register listeners. The  listeners are invoked when the back button is pressed. Then the app exits if there are no listeners or if none of the listeners returned true.&lt;/p&gt;
+
+&lt;p&gt;In our implementation, the listener checks how many views are in the navigator&amp;rsquo;s stack, by calling &lt;code&gt;navigator.getCurrentRoutes()&lt;/code&gt;:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre&gt;&lt;code class=&#34;language-javascript&#34; data-lang=&#34;javascript&#34;&gt;&lt;span&gt;&lt;/span&gt;&lt;span class=&#34;nx&#34;&gt;componentDidMount&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;()&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;{&lt;/span&gt;
+  &lt;span class=&#34;nx&#34;&gt;BackAndroid&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;nx&#34;&gt;addEventListener&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;s1&#34;&gt;&amp;#39;hardwareBackPress&amp;#39;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;()&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&amp;gt;&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;{&lt;/span&gt;
+    &lt;span class=&#34;k&#34;&gt;if&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;k&#34;&gt;this&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;nx&#34;&gt;navigator&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;&amp;amp;&amp;amp;&lt;/span&gt; &lt;span class=&#34;k&#34;&gt;this&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;nx&#34;&gt;navigator&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;nx&#34;&gt;getCurrentRoutes&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;().&lt;/span&gt;&lt;span class=&#34;nx&#34;&gt;length&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;&amp;gt;&lt;/span&gt; &lt;span class=&#34;mi&#34;&gt;1&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;{&lt;/span&gt;
+      &lt;span class=&#34;k&#34;&gt;this&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;nx&#34;&gt;navigator&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;nx&#34;&gt;pop&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;();&lt;/span&gt;
+      &lt;span class=&#34;k&#34;&gt;return&lt;/span&gt; &lt;span class=&#34;kc&#34;&gt;true&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;;&lt;/span&gt;
+    &lt;span class=&#34;p&#34;&gt;}&lt;/span&gt;
+    &lt;span class=&#34;k&#34;&gt;return&lt;/span&gt; &lt;span class=&#34;kc&#34;&gt;false&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;;&lt;/span&gt;
+  &lt;span class=&#34;p&#34;&gt;});&lt;/span&gt;
+&lt;span class=&#34;p&#34;&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;If there are more than one scene in the stack, it drops the top one so we get back to the previous view. Otherwise, it returns false, to exit the app.&lt;/p&gt;
+
+&lt;p&gt;To ensure this listener is registered only once, we do it in one of the &lt;a href=&#34;https://facebook.github.io/react/docs/component-specs.html#lifecycle-methods&#34;&gt;lifecycle methods&lt;/a&gt; offered by React Components: &lt;code&gt;componentDidMount&lt;/code&gt;. This method is invoked once, just after the first rendering of the component.&lt;/p&gt;
+
+&lt;p&gt;The listener uses the navigator. By default there is no simple way to access it outside of the rendering methods (&lt;code&gt;render&lt;/code&gt; and &lt;code&gt;renderScene&lt;/code&gt;). That&amp;rsquo;s why we declare a navigator property in the constructor (more for documentation than anything else, as it is not required from a technical point of view):&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre&gt;&lt;code class=&#34;language-javascript&#34; data-lang=&#34;javascript&#34;&gt;&lt;span&gt;&lt;/span&gt;  &lt;span class=&#34;nx&#34;&gt;constructor&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;nx&#34;&gt;props&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;{&lt;/span&gt;
+    &lt;span class=&#34;kr&#34;&gt;super&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;nx&#34;&gt;props&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;);&lt;/span&gt;
+    &lt;span class=&#34;k&#34;&gt;this&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;nx&#34;&gt;navigator&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;kc&#34;&gt;null&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;;&lt;/span&gt;
+  &lt;span class=&#34;p&#34;&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;And then we set this property in &lt;code&gt;renderScene&lt;/code&gt;:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre&gt;&lt;code class=&#34;language-javascript&#34; data-lang=&#34;javascript&#34;&gt;&lt;span&gt;&lt;/span&gt;  &lt;span class=&#34;nx&#34;&gt;renderScene&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;nx&#34;&gt;route&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;nx&#34;&gt;navigator&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;{&lt;/span&gt;
+    &lt;span class=&#34;k&#34;&gt;this&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;nx&#34;&gt;navigator&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;nx&#34;&gt;navigator&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;;&lt;/span&gt;
+    &lt;span class=&#34;p&#34;&gt;...&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;You could suppose this should do the trick. But running the app like this generates an error message:&lt;/p&gt;
+
+
+&lt;figure &gt;
+    
+        &lt;img src=&#34;https://PascalLeMerrer.github.io/blog/post/img/react-native-5/screenshot_1.png&#34;  /&gt;
+    
+    
+&lt;/figure&gt;
+
+
+&lt;p&gt;We made a very common mistake in javascript: &lt;code&gt;this&lt;/code&gt; in the &lt;code&gt;renderScene&lt;/code&gt; function does not point to the AwesomeNativeBase object, but the object that &amp;ldquo;owns&amp;rdquo; the function, that is to say the navigator itself.&lt;/p&gt;
+
+&lt;p&gt;To solve this, just replace&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre&gt;&lt;code class=&#34;language-javascript&#34; data-lang=&#34;javascript&#34;&gt;&lt;span&gt;&lt;/span&gt;&lt;span class=&#34;nx&#34;&gt;renderScene&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;{&lt;/span&gt; &lt;span class=&#34;k&#34;&gt;this&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;nx&#34;&gt;renderScene&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;with:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre&gt;&lt;code class=&#34;language-javascript&#34; data-lang=&#34;javascript&#34;&gt;&lt;span&gt;&lt;/span&gt;&lt;span class=&#34;nx&#34;&gt;renderScene&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;{&lt;/span&gt; &lt;span class=&#34;k&#34;&gt;this&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;nx&#34;&gt;renderScene&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;nx&#34;&gt;bind&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;k&#34;&gt;this&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;Here is the final code:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre&gt;&lt;code class=&#34;language-html&#34; data-lang=&#34;html&#34;&gt;&lt;span&gt;&lt;/span&gt;  constructor(props) {
+    super(props);
+    this.navigator = null;
+  }
+
+  componentDidMount() {
+    BackAndroid.addEventListener(&amp;#39;hardwareBackPress&amp;#39;, () =&amp;gt; {
+      if (this.navigator &lt;span class=&#34;err&#34;&gt;&amp;amp;&amp;amp;&lt;/span&gt; this.navigator.getCurrentRoutes().length &amp;gt; 1) {
+        this.navigator.pop();
+        return true;
+      }
+      return false;
+    });
+  }
+
+  renderScene(route, navigator) {
+    this.navigator = navigator;
+
+    var scenes = [
+      &lt;span class=&#34;p&#34;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&#34;nt&#34;&gt;AlbumList&lt;/span&gt; &lt;span class=&#34;na&#34;&gt;title&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;&lt;span class=&#34;s&#34;&gt;{&lt;/span&gt; &lt;span class=&#34;na&#34;&gt;route&lt;/span&gt;&lt;span class=&#34;err&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;na&#34;&gt;title&lt;/span&gt; &lt;span class=&#34;err&#34;&gt;}&lt;/span&gt; &lt;span class=&#34;na&#34;&gt;artistId&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;&lt;span class=&#34;s&#34;&gt;{&lt;/span&gt; &lt;span class=&#34;na&#34;&gt;route&lt;/span&gt;&lt;span class=&#34;err&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;na&#34;&gt;artistId&lt;/span&gt; &lt;span class=&#34;err&#34;&gt;}&lt;/span&gt; &lt;span class=&#34;na&#34;&gt;navigator&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;&lt;span class=&#34;s&#34;&gt;{&lt;/span&gt; &lt;span class=&#34;na&#34;&gt;navigator&lt;/span&gt; &lt;span class=&#34;err&#34;&gt;}&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;/&amp;gt;&lt;/span&gt;,
+      &lt;span class=&#34;p&#34;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&#34;nt&#34;&gt;TrackList&lt;/span&gt; &lt;span class=&#34;na&#34;&gt;title&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;&lt;span class=&#34;s&#34;&gt;{&lt;/span&gt; &lt;span class=&#34;na&#34;&gt;route&lt;/span&gt;&lt;span class=&#34;err&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;na&#34;&gt;title&lt;/span&gt; &lt;span class=&#34;err&#34;&gt;}&lt;/span&gt; &lt;span class=&#34;na&#34;&gt;albumId&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;&lt;span class=&#34;s&#34;&gt;{&lt;/span&gt; &lt;span class=&#34;na&#34;&gt;route&lt;/span&gt;&lt;span class=&#34;err&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;na&#34;&gt;albumId&lt;/span&gt; &lt;span class=&#34;err&#34;&gt;}&lt;/span&gt; &lt;span class=&#34;na&#34;&gt;navigator&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;&lt;span class=&#34;s&#34;&gt;{&lt;/span&gt; &lt;span class=&#34;na&#34;&gt;navigator&lt;/span&gt; &lt;span class=&#34;err&#34;&gt;}&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;/&amp;gt;&lt;/span&gt;,
+      &lt;span class=&#34;p&#34;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&#34;nt&#34;&gt;Search&lt;/span&gt; &lt;span class=&#34;na&#34;&gt;navigator&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;&lt;span class=&#34;s&#34;&gt;{&lt;/span&gt; &lt;span class=&#34;na&#34;&gt;navigator&lt;/span&gt; &lt;span class=&#34;err&#34;&gt;}&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;/&amp;gt;&lt;/span&gt;
+    ]
+    return(scenes[route.scene]);
+  }
+
+  render() {
+    return (&lt;span class=&#34;p&#34;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&#34;nt&#34;&gt;Navigator&lt;/span&gt;
+        &lt;span class=&#34;na&#34;&gt;initialRoute&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;&lt;span class=&#34;s&#34;&gt;{&lt;/span&gt; &lt;span class=&#34;err&#34;&gt;{&lt;/span&gt; &lt;span class=&#34;na&#34;&gt;scene:&lt;/span&gt; &lt;span class=&#34;na&#34;&gt;0&lt;/span&gt; &lt;span class=&#34;err&#34;&gt;}&lt;/span&gt; &lt;span class=&#34;err&#34;&gt;}&lt;/span&gt;
+        &lt;span class=&#34;na&#34;&gt;renderScene&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;&lt;span class=&#34;s&#34;&gt;{&lt;/span&gt; &lt;span class=&#34;na&#34;&gt;this&lt;/span&gt;&lt;span class=&#34;err&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;na&#34;&gt;renderScene&lt;/span&gt;&lt;span class=&#34;err&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;na&#34;&gt;bind&lt;/span&gt;&lt;span class=&#34;err&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;na&#34;&gt;this&lt;/span&gt;&lt;span class=&#34;err&#34;&gt;)&lt;/span&gt; &lt;span class=&#34;err&#34;&gt;}&lt;/span&gt;
+      &lt;span class=&#34;p&#34;&gt;/&amp;gt;&lt;/span&gt;);
+  }
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;As usual, the code of the app is available on github.&lt;/p&gt;
+
+&lt;h2 id=&#34;conclusion&#34;&gt;Conclusion&lt;/h2&gt;
+
+&lt;p&gt;Not so much to say on this part&amp;hellip;
+React Native provides a simple way to reproduce this Android basic feature.&lt;/p&gt;
+
+&lt;p&gt;In the suite of these series, I will stop adding features to the app.
+Now, it&amp;rsquo;s about time building an iOS version!&lt;/p&gt;
+</description>
+    </item>
     
     <item>
       <title>Creating a mobile application with React Native - part 4</title>
