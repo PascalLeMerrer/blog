@@ -2,12 +2,588 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Development on Pascal&#39;s dev blog</title>
-    <link>https://PascalLeMerrer.github.io/blog/tags/development/</link>
+    <link>https://pascallemerrer.github.io/blog/tags/development/index.xml</link>
     <description>Recent content in Development on Pascal&#39;s dev blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Sun, 09 Oct 2016 10:24:44 +0200</lastBuildDate>
-    <atom:link href="https://PascalLeMerrer.github.io/blog/tags/development/index.xml" rel="self" type="application/rss+xml" />
+    <copyright>Powered by [Hugo](http://gohugo.io). All contents licensed under [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0/)</copyright>
+    <atom:link href="https://pascallemerrer.github.io/blog/tags/development/index.xml" rel="self" type="application/rss+xml" />
+    
+    <item>
+      <title>Elm Europe 2017 - Day 2</title>
+      <link>https://pascallemerrer.github.io/blog/post/elm-europe-2017-day-2/</link>
+      <pubDate>Sun, 11 Jun 2017 22:42:27 +0200</pubDate>
+      
+      <guid>https://pascallemerrer.github.io/blog/post/elm-europe-2017-day-2/</guid>
+      <description>
+
+&lt;p&gt;&lt;a href=&#34;#english&#34;&gt;Go to the English version&lt;/a&gt;&lt;/p&gt;
+
+&lt;h2 id=&#34;keynote-jour-2-richard-feldman&#34;&gt;Keynote jour 2 : Richard Feldman&lt;/h2&gt;
+
+&lt;p&gt;Quand le code d&amp;rsquo;une application grossit, on peut se heurter à des problèmes :&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;difficulté à localiser le code qui réalise une fonction donnée&lt;/li&gt;
+&lt;li&gt;le code devient trop gros pour &amp;ldquo;tenir dans la tête&amp;rdquo;&lt;/li&gt;
+&lt;li&gt;duplication de code&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;Pour répondre à la difficulté de localisation, une réponse est d&amp;rsquo;organiser son code. Richard a publié sur github un &lt;a href=&#34;github.com/rtfeldman/example-spa-application&#34;&gt;exemple d&amp;rsquo;organisation d&amp;rsquo;une Single Page Application&lt;/a&gt;.&lt;/p&gt;
+
+&lt;p&gt;Concernant le problème de représentation mentale, Richard conseille de façon très classique de découper le code, et de faire en sorte qu&amp;rsquo;il réponde à une seule problématique à la fois, mais aussi de spécialiser les types.&lt;/p&gt;
+
+&lt;p&gt;Par exemple si un message comportent trop d&amp;rsquo;alternatives :&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;type Msg
+    = A
+    | B
+    | C
+    | D
+    | E
+    | F
+    | G
+    |... 18 autres messages
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;et si les types de A à F sont liés à la notion de Flux, vous pouvez réorganiser votre code de la façon suivante :&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;type FeedMsg
+    = A
+    | B
+    | C
+    | D
+    | E
+    | F
+
+type Msg
+    = FeedMsg
+    | G
+    | ... 18 autres messages
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Cela a de plus l&amp;rsquo;avantage de permettre de spécifier avec plus de précision le type de paramètre attendu par certaines fonctions.&lt;/p&gt;
+
+&lt;p&gt;Une troisième astuce qu&amp;rsquo;il recommande est d&amp;rsquo;écrire des fonctions qui prennent des &lt;a href=&#34;http://elm-lang.org/docs/records&#34;&gt;extensible records&lt;/a&gt; en paramètre.&lt;/p&gt;
+
+&lt;p&gt;Richard recommande la lecture de &lt;a href=&#34;http://tech.noredink.com/post/140646140878/data-structures-in-elm&#34;&gt;&amp;ldquo;Data structure in elm&amp;rdquo;&lt;/a&gt; par Tessa Kelly.&lt;/p&gt;
+
+&lt;h2 id=&#34;a-tool-for-telling-interactive-stories-jeff-schomay&#34;&gt;A tool for telling interactive stories - Jeff Schomay&lt;/h2&gt;
+
+&lt;p&gt;Jeff travaille chez Pivotal tracker, qui utilise du code Elm en production et en est très satisfait. On trouve d&amp;rsquo;ailleurs cette citation sur la page d&amp;rsquo;accueil du site &lt;a href=&#34;http://elm-lang.org&#34;&gt;elm-lang.org&lt;/a&gt; :&lt;/p&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;&amp;ldquo;We’ve had zero run-time failures, the filesize is ridiculously small, it
+runs faster than anything else in our code base. We’ve also had fewer bugs&amp;hellip;&lt;/p&gt;
+
+&lt;p&gt;To sum it up, our manager has mandated that all new code be written in Elm.&amp;rdquo;&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;Jeff a développé un &lt;a href=&#34;http://elmnarrativeengine.com/&#34;&gt;moteur d&amp;rsquo;histoires interactives&lt;/a&gt; en mode texte.&lt;/p&gt;
+
+&lt;p&gt;Il a utilisé le pattern &lt;a href=&#34;https://en.wikipedia.org/wiki/Entity_component_system&#34;&gt;Entity Component System&lt;/a&gt; pour rendre l&amp;rsquo;application configurable. Grâce à ce pattern, il a séparé complètement la logique, la présentation et le contenu de son application.&lt;/p&gt;
+
+&lt;p&gt;Pour implémenter ce pattern, il s&amp;rsquo;est basé sur des dictionnaires dont les clés sont des chaînes de caractères. Il y a gagné en flexibilité, mais perdu en sécurité le compilateur ne peut pas faire de vérification sur les chaînes de caractères, et détecter par exemple une faute de frappe.&lt;/p&gt;
+
+&lt;p&gt;Le fait d&amp;rsquo;avoir mis en place le pattern ECS lui a permis d&amp;rsquo;implémenter &lt;a href=&#34;http://blog.elmnarrativeengine.com/sample-stories/&#34;&gt;trois IHM très différentes&lt;/a&gt; pour la même histoire interactive. Il a notamment créé une version de son jeu en utilisant son moteur écrit en Elm avec le framework JS Phaser. Le couplage des deux technologies n&amp;rsquo;a pas posé de problème particulier.&lt;/p&gt;
+
+&lt;h2 id=&#34;manipulating-time-in-elm-vincent-billey&#34;&gt;Manipulating time in Elm - Vincent Billey&lt;/h2&gt;
+
+&lt;p&gt;Vincent présentait le package &lt;a href=&#34;https://github.com/rluiten/elm-date-extra&#34;&gt;rluiten/elm-date-extra&lt;/a&gt;, qui compense certaines lacunes du package date standard, comme l&amp;rsquo;absence de support pour l&amp;rsquo;internationalisation.&lt;/p&gt;
+
+&lt;p&gt;Le contenu de cette présentation est détaillé sur le &lt;a href=&#34;https://www.synbioz.com/blog/time-manipulation-in-elm&#34;&gt;blog de Synbioz&lt;/a&gt;&lt;/p&gt;
+
+&lt;h2 id=&#34;persistent-collections-how-they-work-and-when-to-use-them-robin-heggelund-hansen&#34;&gt;Persistent collections: How they work, and when to use them - Robin Heggelund Hansen&lt;/h2&gt;
+
+&lt;p&gt;Robin a présenté les princpales structures de données en ELM, avec les cas d&amp;rsquo;usages auxquels elles sont le mieux adaptées, en fonction de leur implémentation. Les collections immutables ont des challenges en termes de performance qui diffèrent de ceux de leur équivalent mutable.&lt;/p&gt;
+
+&lt;p&gt;Chaque élément d&amp;rsquo;une liste pointe sur le suivant. Les listes sont idéales :&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;pour travailler sur le premier élément de la liste&lt;/li&gt;
+&lt;li&gt;pour un parcours des éléments de gauche à droite&lt;/li&gt;
+&lt;li&gt;quand la chose la plus importante à faire est d&amp;rsquo;ajouter des éléments à la liste&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;Pour les autres usages, les listes ne sont pas optimisées. Par exemple pour certaines opérations, comme map, il va falloir parcourir la liste dans un sens, puis dans le sens inverse pour remettre les valeurs dans l&amp;rsquo;ordre initial.&lt;/p&gt;
+
+&lt;p&gt;Dans l&amp;rsquo;implémentation des dictionnaires, chaque élément pointe sur deux voisins : un avec une clé de valeur inférieure, l&amp;rsquo;autre avec une clé de valeur supérieure. C&amp;rsquo;est ce qui permet de naviguer dans le dictionnaire.
+Les dictionnaires ont les caractéristiques suivantes :&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;l&amp;rsquo;accès à une donnée via sa clé est rapide (recherche binaire)&lt;/li&gt;
+&lt;li&gt;chaque clé est unique&lt;/li&gt;
+&lt;li&gt;les valeurs sont triées en fonction de leur clé&lt;/li&gt;
+&lt;li&gt;ils requièrent que les clés soient comparables&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;En Elm, on ne peut pas étendre la définition de &amp;ldquo;comparable&amp;rdquo;, ce qui peut limiter l&amp;rsquo;emploi des dictionnaires.&lt;/p&gt;
+
+&lt;p&gt;Un ensemble (Set) est similaire à un dictionnaire dont les valeurs sont comparables. L&amp;rsquo;implémentation est donc assez similaire à celle du dictionnaire.&lt;/p&gt;
+
+&lt;p&gt;Les tableaux (Array) sont implémentés comme des arbres dont les feuilles sont des sous-tableaux de 32 élements. Cette implémentation possède les avantages suivants :&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;l&amp;rsquo;accès en lecture ou en écriture à n&amp;rsquo;importe quelle valeur du tableau est rapide, grace à l&amp;rsquo;index&lt;/li&gt;
+&lt;li&gt;les tableaux sont rapides [comparés aux autres structures de données du langage] lorsqu&amp;rsquo;il s&amp;rsquo;agit d&amp;rsquo;ajouter un élément à la fin&lt;/li&gt;
+&lt;li&gt;les fonctions map, filter, foldr et foldl sont également rapides&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;Robin recommande d&amp;rsquo;éviter les conversions juste pour bénéficier d&amp;rsquo;une opération plus rapide (par exemple convertir une liste en tableau pour exécuter map, puis revenir à une liste), et de faire à la place des compromis sur l&amp;rsquo;utilisation de la structure existante.&lt;/p&gt;
+
+&lt;p&gt;Elm nous guide dans le choix des structures de données en n&amp;rsquo;exposant pas d&amp;rsquo;opérations inefficaces, comme get/set sur des listes.&lt;/p&gt;
+
+&lt;p&gt;Robin a écrit une implémentation des tableaux plus efficace pour la recherche, et qui corrige certains bugs, implémentation qui sera intégrée dans la prochaine version de Elm.&lt;/p&gt;
+
+&lt;h2 id=&#34;elm-from-a-business-perspective-amitai-burstein&#34;&gt;Elm from a Business Perspective - Amitai Burstein&lt;/h2&gt;
+
+&lt;p&gt;Amitai Burstein était le second CTO à venir sur scène pour justifier le choix de Elm pour les développements dans son entreprise. Il nous a expliqué que leur application écrite en Elm comporte beaucoup moins de bugs que leur application Angular.&lt;/p&gt;
+
+&lt;p&gt;D&amp;rsquo;après lui, avec Elm vous aurez de meilleurs résultats financiers, moins de bugs et des développeurs plus heureux :)&lt;/p&gt;
+
+&lt;h2 id=&#34;elm-native-ui-in-production-josh-steiner&#34;&gt;Elm Native UI in Production - Josh Steiner&lt;/h2&gt;
+
+&lt;p&gt;&lt;a href=&#34;https://purpletrainapp.com/&#34;&gt;Purple Train&lt;/a&gt; est une application mobile simple, écrite initialement avec React Native.
+Les développeurs de &lt;a href=&#34;http://thoughtbot.com&#34;&gt;thoughtbot&lt;/a&gt; ont beaucoup apprécié cette techno qui leur a permis de développer trois fois plus vite qu&amp;rsquo;avec des technos natives iOS et Android, notamment grâce au hot-reloading.
+Mais React-Native possède un inconvénient majeur d&amp;rsquo;après Josh : il est basé sur Javascript. Avec React UI les erreurs à l&amp;rsquo;exécution sont très fréquentes (Red Screen of Death).&lt;/p&gt;
+
+&lt;p&gt;Elm Native UI s&amp;rsquo;appuie sur React Native, mais avec Elm Native UI, il n&amp;rsquo;y a plus d&amp;rsquo;erreur à l&amp;rsquo;exécution.&lt;/p&gt;
+
+&lt;p&gt;Naturellement, Elm native Ui n&amp;rsquo;est pas sans défaut. Ce n&amp;rsquo;est pas une solution prête pour la production. Elle est encore incomplète et ajoute une couche d&amp;rsquo;abstraction supplémentaire.&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&#34;https://robots.thoughtbot.com/elm-native-ui-in-production&#34;&gt;Plus d&amp;rsquo;infos&lt;/a&gt;&lt;/p&gt;
+
+&lt;h2 id=&#34;conclusion&#34;&gt;Conclusion&lt;/h2&gt;
+
+&lt;p&gt;La conférence était très agréable. Il s&amp;rsquo;en dégageait beaucoup d&amp;rsquo;énergie du fait de l&amp;rsquo;enthousiasme général pour le langage. Il y avait bien quelques petits problèmes d&amp;rsquo;organisation liés sans aucun doute au fait qu&amp;rsquo;il s&amp;rsquo;agissait d&amp;rsquo;une première (pas de thé pendant les pauses notamment !), mais nul doute que cela va aller en s&amp;rsquo;améliorant. Thibaut Assus, le principal organisateur, a déjà annoncé que l&amp;rsquo;édition 2018 se déroulerait également à Paris.&lt;/p&gt;
+
+&lt;p&gt;Quant à moi, je vais attaquer mon premier projet personnel en ELM très rapidement !&lt;/p&gt;
+
+&lt;p&gt;&lt;a name=&#34;english&#34;&gt;&lt;em&gt;English version below&lt;/em&gt;&lt;/a&gt;&lt;/p&gt;
+
+&lt;h1 id=&#34;elm-europe-2017-day-2&#34;&gt;Elm Europe 2017 - Day 2&lt;/h1&gt;
+
+&lt;h2 id=&#34;keynote-day-2-richard-feldman&#34;&gt;Keynote day 2 : Richard Feldman&lt;/h2&gt;
+
+&lt;p&gt;When an application grows, we may encounter some issues:&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;it may be difficult to identify the location of the code for a given feature&lt;/li&gt;
+&lt;li&gt;the code becomes &amp;ldquo;too big to fit in the head&amp;rdquo;&lt;/li&gt;
+&lt;li&gt;duplicated code&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;To address to the first issue, an answer is to organise the code. Richard put online &lt;a href=&#34;github.com/rtfeldman/example-spa-application&#34;&gt;an example of code organisation for a Single Page Application&lt;/a&gt;.&lt;/p&gt;
+
+&lt;p&gt;About the mental representation of the code, Richard made a very classical recommendation: split your code, and focus on one problem only. But he also add to specialize types.&lt;/p&gt;
+
+&lt;p&gt;By example if a message type has too many alternatives:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;type Msg
+    = A
+    | B
+    | C
+    | D
+    | E
+    | F
+    | G
+    |... 18 other messages types
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;and if A to F types are related to the notion of Feed, you can refactor your code like this:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;type FeedMsg
+    = A
+    | B
+    | C
+    | D
+    | E
+    | F
+
+type Msg
+    = FeedMsg
+    | G
+    | ... 18 other messages types
+
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;It also allows to be more accurate about the types expected by some functions as parameter.&lt;/p&gt;
+
+&lt;p&gt;A third tip he shared with us is to write functions using &lt;a href=&#34;http://elm-lang.org/docs/records&#34;&gt;extensible records&lt;/a&gt; as parameter.&lt;/p&gt;
+
+&lt;p&gt;Finally, Richard recommended the reading of &lt;a href=&#34;http://tech.noredink.com/post/140646140878/data-structures-in-elm&#34;&gt;&amp;ldquo;Data structure in elm&amp;rdquo;&lt;/a&gt; by Tessa Kelly.&lt;/p&gt;
+
+&lt;h2 id=&#34;a-tool-for-telling-interactive-stories-jeff-schomay-1&#34;&gt;A tool for telling interactive stories - Jeff Schomay&lt;/h2&gt;
+
+&lt;p&gt;Jeff works at Pivotal tracker, who uses Elm en production with a great satisfaction. &lt;em&gt;You can find this quote on the &lt;a href=&#34;http://elm-lang.org&#34;&gt;Elm language Home Page&lt;/a&gt;&lt;/em&gt;:&lt;/p&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;&amp;ldquo;We’ve had zero run-time failures, the filesize is ridiculously small, it
+runs faster than anything else in our code base. We’ve also had fewer bugs&amp;hellip;&lt;/p&gt;
+
+&lt;p&gt;To sum it up, our manager has mandated that all new code be written in Elm.&amp;rdquo;&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;Jeff created an &lt;a href=&#34;http://elmnarrativeengine.com/&#34;&gt;interactive story engine&lt;/a&gt; in text mode.&lt;/p&gt;
+
+&lt;p&gt;He used the &lt;a href=&#34;https://en.wikipedia.org/wiki/Entity_component_system&#34;&gt;Entity Component System&lt;/a&gt; pattern, for the application to be configurable. Using this pattern, logic, presentation and content are fully separated.&lt;/p&gt;
+
+&lt;p&gt;To implent the ECS pattern, he used dictionnaries whose keys are strings. He won flexibility, but lost some type safety, as the compiler cannot detect typos in these strings by example.&lt;/p&gt;
+
+&lt;p&gt;This pattern allowed him to implement &lt;a href=&#34;http://blog.elmnarrativeengine.com/sample-stories/&#34;&gt;three very different GUI&lt;/a&gt; for the same interactive story.&lt;/p&gt;
+
+&lt;p&gt;He especially created one of them using the &lt;a href=&#34;http://phaser.io/&#34;&gt;Phaser JS game framework&lt;/a&gt;. Combining both technologies was no big deal.&lt;/p&gt;
+
+&lt;h2 id=&#34;manipulating-time-in-elm-vincent-billey-1&#34;&gt;Manipulating time in Elm - Vincent Billey&lt;/h2&gt;
+
+&lt;p&gt;Vincent talked about the package &lt;a href=&#34;https://github.com/rluiten/elm-date-extra&#34;&gt;rluiten/elm-date-extra&lt;/a&gt;, which fixes some issues in the standard date package. like the missing i18n suppport.&lt;/p&gt;
+
+&lt;p&gt;The content of this presentation is detailed on &lt;a href=&#34;https://www.synbioz.com/blog/time-manipulation-in-elm&#34;&gt;Synbioz&amp;rsquo;s blog&lt;/a&gt;&lt;/p&gt;
+
+&lt;h2 id=&#34;persistent-collections-how-they-work-and-when-to-use-them-robin-heggelund-hansen-1&#34;&gt;Persistent collections: How they work, and when to use them - Robin Heggelund Hansen&lt;/h2&gt;
+
+&lt;p&gt;Robin presented the main data structure in ELM, with the use cases they fit best, according to their implementation.&lt;/p&gt;
+
+&lt;p&gt;Immutable collections have some performance challenges you won&amp;rsquo;t find in their mutable equivalent.&lt;/p&gt;
+
+&lt;p&gt;Each item of a &lt;strong&gt;list&lt;/strong&gt; points to the next one. Lists are ideal:&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;to work on the first item they contain&lt;/li&gt;
+&lt;li&gt;to iterate on items from left to right&lt;/li&gt;
+&lt;li&gt;when the most important thing to do is to add items to the list&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;For all other usages, lists are not optimal. By example, for some operations like map, they require two iterations: one to apply the mapped function, the other to restore the original order of the items.&lt;/p&gt;
+
+&lt;p&gt;In &lt;strong&gt;Dict&lt;/strong&gt; implementation, each item has pointers to two other elements: one with a key with an inferior value, one with a key with a greater value. This will allow to navigate quickly amongst the items.&lt;/p&gt;
+
+&lt;p&gt;Dicts have the following distinctive characteristics:&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;the access to an item through its key is fast (binary search)&lt;/li&gt;
+&lt;li&gt;each key is unique&lt;/li&gt;
+&lt;li&gt;items are ordered according the value of their keys&lt;/li&gt;
+&lt;li&gt;keys must be comparable&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;In Elm, you cannot extend the definition of &amp;ldquo;comparable&amp;rdquo;, and it can be a limitation to the usage of Dictionnaries.&lt;/p&gt;
+
+&lt;p&gt;A &lt;strong&gt;Set&lt;/strong&gt; is similar to a Dict whose values are comparable. So the implementation is quite similar to the one of Dict.&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;Arrays&lt;/strong&gt; are implemented as tree whose leaves are 32 item sub-arrays. This implementation has the following benefits:&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;reading and writing access to any value is fast, using the index;&lt;/li&gt;
+&lt;li&gt;arrays are fast too, compared to other data structures, when you have to add an item at the end&lt;/li&gt;
+&lt;li&gt;the map, filter, foldr and foldl functions are fast when applied to arrays&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;Robin recommends to avoid data structure temporary conversion, when the goal is just to benefit from a faster function (by example converting a list to an array, just to apply a map, and then convert it again to a list. It usually will be slower than applying map on the list).&lt;/p&gt;
+
+&lt;p&gt;Elm guides us to select the best data structure for our use cases, as it does not expose inefficient operation, like get/set on a list.&lt;/p&gt;
+
+&lt;p&gt;Robin wrote an implementation of arrays which is faster for search than the current standard one, and it will be integrated in next Elm release. It fixes some runtime issues too.&lt;/p&gt;
+
+&lt;h2 id=&#34;elm-from-a-business-perspective-amitai-burstein-1&#34;&gt;Elm from a Business Perspective - Amitai Burstein&lt;/h2&gt;
+
+&lt;p&gt;After Sébastien Crème, Amitai Burstein was the second CTO to come on stage to explain us why Elm is a good choice for &lt;a href=&#34;https://www.gizra.com/&#34;&gt;his company&lt;/a&gt;. In a quite funny talk, he explained that their Elm application has much less issues than their Angular one.&lt;/p&gt;
+
+&lt;p&gt;According to Amitai, with Elm you&amp;rsquo;ll get better financial results, less issues and happier developers :)&lt;/p&gt;
+
+&lt;h2 id=&#34;elm-native-ui-in-production-josh-steiner-1&#34;&gt;Elm Native UI in Production - Josh Steiner&lt;/h2&gt;
+
+&lt;p&gt;&lt;a href=&#34;https://purpletrainapp.com/&#34;&gt;Purple Train&lt;/a&gt; is a simple mobile application, initially written using React Native.&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&#34;http://thoughtbot.com&#34;&gt;thoughtbot&lt;/a&gt; developers really liked this technology. They believe it allowed them to develop the application three times faster than with native iOS and Android technologies. Hot-reloading was one of the key points in this, in addition to the shared code.&lt;/p&gt;
+
+&lt;p&gt;However, React Native has a major drawback according to Josh: it relies on Javascript. With React Native, runtime errors are very common (Red Screen of Death).&lt;/p&gt;
+
+&lt;p&gt;Elm Native UI is based on React Native. But with Elm Native UI, you have no runtime error.&lt;/p&gt;
+
+&lt;p&gt;Naturally, Elm Native UI is not perfect.
+It&amp;rsquo;s not production ready, still misses somes libraries, adds a new layer of abstraction&amp;hellip;&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&#34;https://robots.thoughtbot.com/elm-native-ui-in-production&#34;&gt;More info&lt;/a&gt;&lt;/p&gt;
+
+&lt;h2 id=&#34;conclusion-1&#34;&gt;Conclusion&lt;/h2&gt;
+
+&lt;p&gt;The conference was really nice. There was a lot of energy in the air, due to the general enthusiasm for the language. Of course there was a few organisation problems, certainly linked to the fact it was the first Elm Europe conference ever (I really would have appreciated some tea during the breaks!). But without any doubt, this will improve next year. Thibaut Assus, the main organizer, already announced the 2018 edition will take place in Paris.&lt;/p&gt;
+
+&lt;p&gt;As for me, I will start my first Elm project very soon!&lt;/p&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>Elm Europe 2017 day 1</title>
+      <link>https://pascallemerrer.github.io/blog/post/elm-europe-2017-day-1/</link>
+      <pubDate>Sun, 11 Jun 2017 09:42:27 +0200</pubDate>
+      
+      <guid>https://pascallemerrer.github.io/blog/post/elm-europe-2017-day-1/</guid>
+      <description>
+
+&lt;p&gt;&lt;a href=&#34;#english&#34;&gt;Go to the English version&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;Les 8 et 9 juin 2017 se déroulait la première conférence &lt;a href=&#34;http://elmeurope.org/&#34;&gt;Elm-Europe&lt;/a&gt;, à Villejuif, près de Paris.&lt;/p&gt;
+
+&lt;h2 id=&#34;qu-est-ce-que-elm&#34;&gt;Qu&amp;rsquo;est-ce que ELM ?&lt;/h2&gt;
+
+&lt;p&gt;Elm est un langage fonctionnel, qui peut se substituer à Javascript.
+Il permet de créer des applications robustes et performantes,
+dans lesquelles il n&amp;rsquo;y a pas de surprises en production (fini les &amp;ldquo;undefined is not a function&amp;rdquo;). Elm est la source d&amp;rsquo;inspiration derrière &lt;a href=&#34;http://redux.js.org/&#34;&gt;Redux&lt;/a&gt;, qui est souvent couplé à React.&lt;/p&gt;
+
+&lt;p&gt;En savoir plus :&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;http://vincent.jousse.org/tech/elm-lang-prochain-react-redux-angular/&#34;&gt;Elm lang, le prochain react/redux/angularjs ?&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://medium.com/elmlightments/10-reasons-why-you-should-give-elm-a-try-62b56d305643&#34;&gt;Pourquoi utiliser Elm ?&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;Le compilateur Elm est réputé pour la clarté de ses messages d&amp;rsquo;erreur.
+Ils fournissent des indices très pertinents qui aident à mettre au point son code, mais aussi à apprendre le langage pour les débutants.&lt;/p&gt;
+
+&lt;h2 id=&#34;la-conférence&#34;&gt;La conférence&lt;/h2&gt;
+
+&lt;p&gt;Les 230 participants se sont retrouvés pendant deux jours dans les locaux de l&amp;rsquo;Efrei, à Villejuif, près de Paris. Sans surprise, ils étaient en grande majorité jeunes, masculins, venus de l&amp;rsquo;étranger, et pour beaucoup équipés d&amp;rsquo;un Macbook. La parité dans ce type d&amp;rsquo;événement n&amp;rsquo;est pas pour demain.&lt;/p&gt;
+
+&lt;p&gt;Sans surprise non plus, le public était constitué d&amp;rsquo;enthousiastes. J&amp;rsquo;y ai rencontré des gens venus de l&amp;rsquo;étranger, juste pour la conférence, à titre personnel !&lt;/p&gt;
+
+&lt;p&gt;Dans la suite de ce billet, je ne vais pas évoquer toutes les présentations, mais seulement celles qui m&amp;rsquo;ont marqué le plus. Bien entendu cette sélection est très subjective, et reflète sans doute mon statut de débutant en Elm aussi bien que mes centres d&amp;rsquo;intérêt.&lt;/p&gt;
+
+&lt;h2 id=&#34;keynote-evan-czaplicki&#34;&gt;Keynote - Evan Czaplicki&lt;/h2&gt;
+
+&lt;p&gt;&lt;em&gt;Evan a créé Elm dans le cadre de sa thèse de doctorat. Depuis 2016, il travaille chez No Red Ink, qui, après qu&amp;rsquo;il ait passé quelques années chez Prezi, l&amp;rsquo;a embauché pour continuer à développer le langage à temps complet.&lt;/em&gt;&lt;/p&gt;
+
+&lt;p&gt;Le sujet de sa keynote était : comment faire grossir du code Elm ?&lt;/p&gt;
+
+&lt;p&gt;En javacript on recommande de faire des fichiers courts pour éviter des effets de bord involontaires, qui parfois sont difficiles à identifier. Par ailleurs, le refactoring dans ce langage peut être risqué. De plus, il faut choisir la bonne architecture dès le début, sous peine de rencontrer de sérieuses difficultés lorsque l&amp;rsquo;application va prendre de l&amp;rsquo;ampleur.&lt;/p&gt;
+
+&lt;p&gt;Avec Elm, la probabilité d&amp;rsquo;introduire des effets de bord involontaires est nulle.
+Le refactoring est facile et fun.&lt;/p&gt;
+
+&lt;p&gt;Voici quelques recommandations d&amp;rsquo;Evan :&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;p&gt;construisez vos fichiers autour des structures de données ; choisissez la plus adaptée et ne vous préoccupez pas du nombre de lignes dans le fichier avant qu&amp;rsquo;il ne devienne vraiment un problème.&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;Limitez l&amp;rsquo;API exposée publiquement. Testez là. Cela facilite le refactoring.&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;Evitez les get/set. Les modules cachent les détails tandis que les accesseurs les dévoilent. Utilisez plutôt un &lt;a href=&#34;http://elm-lang.org/docs/syntax#records&#34;&gt;record&lt;/a&gt;.&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;Ne faites pas d&amp;rsquo;over-engineering : pas la peine de rendre générique un module si vous n&amp;rsquo;en avez pas l&amp;rsquo;usage.&lt;/p&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;Evan Czaplicki travaille sur un nouveau livre en ligne : &lt;a href=&#34;https://www.gitbook.com/book/evancz/functional-programming-in-elm/details&#34;&gt;Functional Programming in Elm&lt;/a&gt;&lt;/p&gt;
+
+&lt;h2 id=&#34;rethinking-style-matthew-griffith&#34;&gt;Rethinking style - Matthew Griffith&lt;/h2&gt;
+
+&lt;p&gt;Mettre au point le layout en CSS est souvent pénible.
+Il est souvent réparti entre le HTML et les CSS, dans plusieurs fichiers.
+Il faut tenir compte de l&amp;rsquo;arborescence des noeuds dans le DOM, des CSS, des propriétés implicites (telle propriété ne s&amp;rsquo;applique que si le noeud A est un enfant d&amp;rsquo;un noeud de type B).&lt;/p&gt;
+
+&lt;p&gt;La librairie &lt;a href=&#34;http://github.com/mdgriffith/style-elements&#34;&gt;Style Elements&lt;/a&gt;, développée par Matthew Griffith, simplifie la mise au point de la mise en page en la définissant dans un fichier unique.&lt;/p&gt;
+
+&lt;p&gt;De plus elle apporte à l&amp;rsquo;écriture des styles toutes les garanties du langage ELM, comme la sûreté apportée par le typage fort.&lt;/p&gt;
+
+&lt;h2 id=&#34;elm-from-a-cto-perspective-sébastien-crème&#34;&gt;Elm from a CTO perspective - Sébastien Crème&lt;/h2&gt;
+
+&lt;p&gt;Sébastien est CTO chez Nomalab. Nomalab est une entreprise parisienne de 10 personnes, qui travaille pour les chaînes de TV. Ils utilisent ELM en production depuis 18 mois.&lt;/p&gt;
+
+&lt;p&gt;L&amp;rsquo;application de Nomalab est constituée de 35 000 lignes de code Elm : une grosse appli de 20 000 lignes côté client, et 15 000 côté serveur. Il s&amp;rsquo;agit d&amp;rsquo;une appli complexe pour uploader et afficher des vidéos parfois très lourdes (jusqu&amp;rsquo;à 500 Go) et leur métadatas.
+Cette appli est consitutué de plus de 220 modules.
+84.5% de leur code est en Elm, 14.5% en Javascript, 1% en d&amp;rsquo;autres langages (Rust notamment).
+Ils ont découvert ELM en 2016  et y ont vu un gain si important qu&amp;rsquo;ils ont basculé aussitôt sur ce langage.&lt;/p&gt;
+
+&lt;p&gt;Ils continuent à coder des prototypes en JS, pour tester très vite, avec du code de mauvaise qualité qui ne sera pas réutilisé en dehors du prototype.&lt;/p&gt;
+
+&lt;p&gt;Leur utilisation de ELM côté serveur est assez unique, mais ils estiment ne pas avoir les moyens de partager correctement leur expérience avec la communauté pour l&amp;rsquo;instant. Ils n&amp;rsquo;ont pas les ressources nécessaires pour assurer un support pour du code qu&amp;rsquo;ils mettraient en open source.&lt;/p&gt;
+
+&lt;p&gt;Les avantages de Elm selon Sébastien :&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;ils n&amp;rsquo;ont pas peur de changer les choses&lt;/li&gt;
+&lt;li&gt;la sureté apportée par le typage : quand on l&amp;rsquo;a testée on ne peut plus s&amp;rsquo;en passer&lt;/li&gt;
+&lt;li&gt;Elm est adaptée à la production, y compris pour de grosses applications&lt;/li&gt;
+&lt;li&gt;Elm est incroyablement fiable et clair&lt;/li&gt;
+&lt;li&gt;une seule journée est nécessaire pour devenir opérationnel en ELM&amp;hellip; à condition d&amp;rsquo;être à l&amp;rsquo;aise en programmation fonctionnelle !&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;em&gt;Ce dernier point ne semble pas partagé par tous, si l&amp;rsquo;on en croit les résultats du sondage State of Elm 2017, que j&amp;rsquo;évoque ci-dessous.&lt;/em&gt;&lt;/p&gt;
+
+&lt;h2 id=&#34;state-of-elm-2017-brian-hicks&#34;&gt;State of Elm 2017 - Brian Hicks&lt;/h2&gt;
+
+&lt;p&gt;Brian Hicks présentait les résultats du sondage &amp;ldquo;State of Elm 2017&amp;rdquo;. Le nombre de réponses a quasiment doublé en un an : 614 en 2016, 1170 en 2017.&lt;/p&gt;
+
+&lt;p&gt;Voici quelques enseignements que l&amp;rsquo;on peut tirer de ce sondage :&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Elm est évidemment très utilisé pour faire du développement Web, mais aussi un peu pour des jeux —moins toutefois en 2017 qu&amp;rsquo;en 2016 &lt;em&gt;(je soupçonne que c&amp;rsquo;est lié à l&amp;rsquo;absence de moteur de jeu écrit en ELM)&lt;/em&gt;.&lt;/li&gt;
+&lt;li&gt;Une large majorité des répondants a moins d&amp;rsquo;un an d&amp;rsquo;expérience avec ELM, ce qui confirme l&amp;rsquo;intérêt croissant pour ce langage&lt;/li&gt;
+&lt;li&gt;plus d&amp;rsquo;un quart des répondants l&amp;rsquo;utilisent en production ou sur un projet qui va partir en production&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;Les principaux points que les développeurs apprécient à propos d&amp;rsquo;ELM (par ordre décroissant) :&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;le système de type&lt;/li&gt;
+&lt;li&gt;les messages d&amp;rsquo;erreur du compilateur&lt;/li&gt;
+&lt;li&gt;le fait que ce soit un langage fonctionnel pur&lt;/li&gt;
+&lt;li&gt;l&amp;rsquo;architecture ELM&lt;/li&gt;
+&lt;li&gt;sa simplicité&lt;/li&gt;
+&lt;li&gt;&amp;ldquo;si ça compile, ça marche&amp;rdquo;&lt;/li&gt;
+&lt;li&gt;l&amp;rsquo;absence d&amp;rsquo;erreur à l&amp;rsquo;execution&lt;/li&gt;
+&lt;/ul&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;Les principales difficultés rencontrées (par ordre décroissant) :&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;l&amp;rsquo;apprentissage du langage&lt;/li&gt;
+&lt;li&gt;le décodage JSON&lt;/li&gt;
+&lt;li&gt;les interactions avec Javascript&lt;/li&gt;
+&lt;li&gt;des problèmes avec des packages de l&amp;rsquo;écosystème.&lt;/li&gt;
+&lt;/ul&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;Où trouver de l&amp;rsquo;aide sur ELM ?&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;elm slack&lt;/li&gt;
+&lt;li&gt;elm subreddit&lt;/li&gt;
+&lt;li&gt;elm-discuss mailing-list&lt;/li&gt;
+&lt;li&gt;Elm-town podcast&lt;/li&gt;
+&lt;li&gt;Elm Weekly newsletter&lt;/li&gt;
+&lt;/ul&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;A plusieurs reprises au cours de cette journée nous avons entendu d&amp;rsquo;excellents commentaires au sujet de l&amp;rsquo;aide apportée aux débutants par la communautée.&lt;/p&gt;
+
+&lt;p&gt;&lt;a name=&#34;english&#34;&gt;&lt;em&gt;English version below&lt;/em&gt;&lt;/a&gt;&lt;/p&gt;
+
+&lt;h1 id=&#34;elm-europe-2017-day-1&#34;&gt;Elm Europe 2017 - Day 1&lt;/h1&gt;
+
+&lt;p&gt;The 8th and 9th of June 2017 the first &lt;a href=&#34;http://elmeurope.org/&#34;&gt;Elm-Europe&lt;/a&gt; conference took place at Villejuif, near Paris (France).&lt;/p&gt;
+
+&lt;h2 id=&#34;what-is-elm&#34;&gt;What is ELM?&lt;/h2&gt;
+
+&lt;p&gt;Elm is a functional language, which can replace Javascript.
+It helps to create reliable and performant applications, in which there is no runtime error (no &amp;ldquo;undefined is not a function&amp;rdquo;). Elm inspired &lt;a href=&#34;http://redux.js.org/&#34;&gt;Redux&lt;/a&gt;, which is often used with React.&lt;/p&gt;
+
+&lt;p&gt;More info about Elm:
+&lt;a href=&#34;https://medium.com/elmlightments/10-reasons-why-you-should-give-elm-a-try-62b56d305643&#34;&gt;10 reasons why you should give Elm a try&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;The Elm compiler is famous for the clarity of its error messages, and the guidance it provides. It helps debugging your apps, but also learning the language when you&amp;rsquo;re a beginner.&lt;/p&gt;
+
+&lt;h2 id=&#34;the-conference&#34;&gt;The conference&lt;/h2&gt;
+
+&lt;p&gt;230 attendees gathered during two days at Efrei, a Computer Science School at Villejuif, near Paris. It was no surprise to me, most of the attendees were young men, coming from foreign countries, and for many of them, equipped with a MacBook. Parity is not for tomorrow in this kind of event.&lt;/p&gt;
+
+&lt;p&gt;Without any surprise, the attendance was consituted of enthusiastic persons. I met there some people coming from UK, just for the  conference, on their free time!&lt;/p&gt;
+
+&lt;p&gt;In this blog post, I won&amp;rsquo;t speak of all the talks, but only of a selection which probably reflects my current status of newbie in Elm.&lt;/p&gt;
+
+&lt;h2 id=&#34;keynote-evan-czaplicki-1&#34;&gt;Keynote - Evan Czaplicki&lt;/h2&gt;
+
+&lt;p&gt;Evan created Elm during his PhD. Since 2016, he works for No Red Ink, which recruited him to work full time on the language development.&lt;/p&gt;
+
+&lt;p&gt;The subject of his keynote was: how to make growing Elm code?&lt;/p&gt;
+
+&lt;p&gt;He started by reminding us that in Javascript, it is often recommended to write short files, to avoid unwanted and sometimes sneaky side effects.
+Morevover, the refactoring in Javascript may be risky. And last but not least, you must choose the right architecture from the start, otherwise you may be damned.&lt;/p&gt;
+
+&lt;p&gt;Using Elm, you cannot introduce side effets. The language prevents it. And the refactoring is fun and easy.&lt;/p&gt;
+
+&lt;p&gt;Here are some recommendantion made by Evan:&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;build your files around data structures ; select the best one to solve your problem, and don&amp;rsquo;t worry about the number of lines in the file, until it becomes a real issue.&lt;/li&gt;
+&lt;li&gt;limit the public exposed API. Test it. It makes refactoring easy.&lt;/li&gt;
+&lt;li&gt;avoid get/set. Modules hide the details, when the accessors reveal them. Use a &lt;a href=&#34;http://elm-lang.org/docs/syntax#records&#34;&gt;record&lt;/a&gt; instead.&lt;/li&gt;
+&lt;li&gt;don&amp;rsquo;t make over-engineering: it&amp;rsquo;s pointless to make a generic module, when you don&amp;rsquo;t need it.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;Evan Czaplicki is working on a new online book: &lt;a href=&#34;https://www.gitbook.com/book/evancz/functional-programming-in-elm/details&#34;&gt;Functional Programming in Elm&lt;/a&gt;&lt;/p&gt;
+
+&lt;h2 id=&#34;rethinking-style-matthew-griffith-1&#34;&gt;Rethinking style - Matthew Griffith&lt;/h2&gt;
+
+&lt;p&gt;Debugging CSS layout is usually a pain. The layout is often split between several HTML and CSS files. You have to take into account the hierarchy of nodes in the DOM, the CSS styles and the implicit properties (a property applies only if a given node is the child of a node of another given type).&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&#34;http://github.com/mdgriffith/style-elements&#34;&gt;Style Elements&lt;/a&gt;, is a library created by Matthew Griffith. It simplifies the debugging of the layout by defining it in a single file. Moreover, it brings to CSS styles the guarantees offered by ELM (like type safety).&lt;/p&gt;
+
+&lt;p&gt;It looks very promising, I definitely will try it!&lt;/p&gt;
+
+&lt;h2 id=&#34;elm-from-a-cto-perspective-sébastien-crème-1&#34;&gt;Elm from a CTO perspective - Sébastien Crème&lt;/h2&gt;
+
+&lt;p&gt;Sébastien is CTO at Nomalab. Nomalab is a French startup with 10 employees, whose customers are TV networks. They use Elm in production since 18 months.&lt;/p&gt;
+
+&lt;p&gt;Nomalabs&amp;rsquo; app consists in 35 000 lines of Elm code: 20 000 on client side, and 15 000 on server side. It&amp;rsquo;s a complex application to upload big video files (up to 500Go), view their metadata and insert ads in the video stream.
+This app is made of more than 220 Elm modules.&lt;/p&gt;
+
+&lt;p&gt;84.5% of their code is written in Elm, 14.5% in Javascript, and 1% in other languages (Rust in particular).
+They discovered Elm in 2016 and have seen so important benefits they switch almost immediately from JS to Elm.&lt;/p&gt;
+
+&lt;p&gt;They continue to code some prototypes in JS, to validate quickly an idea, but this JS code is never reused in production.&lt;/p&gt;
+
+&lt;p&gt;Their usage of Elm on server side is quite unique, but they don&amp;rsquo;t feel ready to share it with the community. It would require human resources they do no have, in order to provide support if they open sourced anything.&lt;/p&gt;
+
+&lt;p&gt;The pros of Elm according to Sébastien are:&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;they don&amp;rsquo;t fear to change things&lt;/li&gt;
+&lt;li&gt;type safety: once you taste it, you can&amp;rsquo;t do without it&lt;/li&gt;
+&lt;li&gt;Elm is ready for production, included for large applications&lt;/li&gt;
+&lt;li&gt;Elm is incredibly reliable and clear&lt;/li&gt;
+&lt;li&gt;one day is enough for a developer familiar with functional programming to be operational with Elm.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;em&gt;This last point does not seem to be shared with everybody, as we&amp;rsquo;ll see with the next talk.&lt;/em&gt;&lt;/p&gt;
+
+&lt;h2 id=&#34;state-of-elm-2017-brian-hicks-1&#34;&gt;State of Elm 2017 - Brian Hicks&lt;/h2&gt;
+
+&lt;p&gt;Brian Hicks presented the results of the &amp;ldquo;state of Elm 2017&amp;rdquo; poll. The number of responses nearly doubled in one year: 614 in 2016, 1170 in 2017.&lt;/p&gt;
+
+&lt;p&gt;Some lessons we can draw from this poll:&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;p&gt;Elm is of course mostly used to make Web development, but sometimes to make games too -less in 2017 than in 2016 &lt;em&gt;(I guess this is linked to the lack of game engine in Elm)&lt;/em&gt;&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;most of the respondents have less than one year of experience with Elm,
+&lt;em&gt;which confirms the growing interest for the language&lt;/em&gt;&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;more than one quarter of respondents use it in production, or on project which will go to production.&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;The main points people love in ELM (by decreasing order):&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;type system&lt;/li&gt;
+&lt;li&gt;the error messages of the compiler&lt;/li&gt;
+&lt;li&gt;it is a purely functional language&lt;/li&gt;
+&lt;li&gt;the Elm architecture&lt;/li&gt;
+&lt;li&gt;it simplicity&lt;/li&gt;
+&lt;li&gt;&amp;ldquo;if it commpiles, it works&amp;rdquo;&lt;/li&gt;
+&lt;li&gt;no runtime error&lt;/li&gt;
+&lt;/ul&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;The main difficulties with Elm (by decreasing order):&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;learning the language&lt;/li&gt;
+&lt;li&gt;decoding JSON&lt;/li&gt;
+&lt;li&gt;interactions with Javascript&lt;/li&gt;
+&lt;li&gt;issues with packages of the ecosystem.&lt;/li&gt;
+&lt;/ul&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;where to find help about Elm?&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;elm slack&lt;/li&gt;
+&lt;li&gt;elm subreddit&lt;/li&gt;
+&lt;li&gt;elm-discuss mailing-list&lt;/li&gt;
+&lt;li&gt;Elm-town podcast&lt;/li&gt;
+&lt;li&gt;Elm Weekly newsletter&lt;/li&gt;
+&lt;/ul&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;em&gt;Several times during this conference, we heard great feedbacks about the help provided by the community to newbies.&lt;/em&gt;&lt;/p&gt;
+</description>
+    </item>
     
     <item>
       <title>Creating a mobile application with React Native - part 5</title>
@@ -15,9 +591,9 @@
       <pubDate>Sun, 09 Oct 2016 10:24:44 +0200</pubDate>
       
       <guid>https://pascallemerrer.github.io/blog/post/react-native-5/</guid>
-      <description>
+      <description>&lt;p&gt;In this fifth part of the &lt;a href=&#34;https://pascallemerrer.github.io/blog/post/react-native-1/&#34;&gt;article series about React Native&lt;/a&gt;, we&amp;rsquo;ll see how to support the native back button on Android devices.&lt;/p&gt;
 
-&lt;p&gt;In this fifth part of the &lt;a href=&#34;https://pascallemerrer.github.io/blog/post/react-native-1/&#34;&gt;article series about React Native&lt;/a&gt;, we&amp;rsquo;ll see how to support the native back button on Android devices.&lt;/p&gt;
+&lt;p&gt;&lt;/p&gt;
 
 &lt;p&gt;To support the back button, we only have to modify the main android file, &lt;code&gt;index.android.js&lt;/code&gt;.&lt;/p&gt;
 
@@ -116,8 +692,7 @@
 React Native provides a simple way to reproduce this Android basic feature.&lt;/p&gt;
 
 &lt;p&gt;In the suite of these series, I will stop adding features to the app.
-Now, it&amp;rsquo;s about time building an iOS version!&lt;/p&gt;
-</description>
+Now, it&amp;rsquo;s about time building an iOS version!&lt;/p&gt;</description>
     </item>
     
     <item>
@@ -126,9 +701,9 @@ Now, it&amp;rsquo;s about time building an iOS version!&lt;/p&gt;
       <pubDate>Tue, 13 Sep 2016 00:08:30 +0200</pubDate>
       
       <guid>https://pascallemerrer.github.io/blog/post/react-native-4/</guid>
-      <description>
+      <description>&lt;p&gt;This fourth part in the React Native &lt;a href=&#34;https://pascallemerrer.github.io/blog/post/react-native-1/&#34;&gt;article series&lt;/a&gt; will be dedicated to adding an artist search feature.&lt;/p&gt;
 
-&lt;p&gt;This fourth part in the React Native &lt;a href=&#34;https://pascallemerrer.github.io/blog/post/react-native-1/&#34;&gt;article series&lt;/a&gt; will be dedicated to adding an artist search feature.&lt;/p&gt;
+&lt;p&gt;&lt;/p&gt;
 
 &lt;h2 id=&#34;create-the-search-scene&#34;&gt;Create the search scene&lt;/h2&gt;
 
@@ -344,8 +919,7 @@ Now, it&amp;rsquo;s about time building an iOS version!&lt;/p&gt;
 
 &lt;p&gt;The array of scenes in the renderScene function could probably be replaced with a better solution. Maybe each scene could define it&amp;rsquo;s of rendering function and initialize it with data passed through the route. Some frameworks could  offer elegant solutions too. But for the sake of simplicity, we&amp;rsquo;ll stick to this implementation.&lt;/p&gt;
 
-&lt;p&gt;In the next part, we will add the support of the Android back button.&lt;/p&gt;
-</description>
+&lt;p&gt;In the next part, we will add the support of the Android back button.&lt;/p&gt;</description>
     </item>
     
     <item>
@@ -354,9 +928,8 @@ Now, it&amp;rsquo;s about time building an iOS version!&lt;/p&gt;
       <pubDate>Mon, 05 Sep 2016 19:11:22 +0200</pubDate>
       
       <guid>https://pascallemerrer.github.io/blog/post/react-native-3/</guid>
-      <description>
-
-&lt;p&gt;In this third part of the &lt;a href=&#34;https://pascallemerrer.github.io/blog/post/react-native-1/&#34;&gt;series&lt;/a&gt; we will see of to navigate through different screens in the application.&lt;/p&gt;
+      <description>&lt;p&gt;In this third part of the &lt;a href=&#34;https://pascallemerrer.github.io/blog/post/react-native-1/&#34;&gt;series&lt;/a&gt; we will see of to navigate through different screens in the application.
+&lt;/p&gt;
 
 &lt;h2 id=&#34;add-a-navigator&#34;&gt;Add a Navigator&lt;/h2&gt;
 
@@ -626,8 +1199,7 @@ To improve this, we have three easy steps to perform.&lt;/p&gt;
 
 &lt;p&gt;On the positive side, the &lt;a href=&#34;https://facebook.github.io/react-native/docs/performance.html&#34;&gt;documentation&lt;/a&gt; gives some simple and effective hints to improve the performance of your application.&lt;/p&gt;
 
-&lt;p&gt;In the next article, we will add a last scene to this marvelous application. It could be nice indeed, if the app was not limited to display Daft Punk album and track lists ;)&lt;/p&gt;
-</description>
+&lt;p&gt;In the next article, we will add a last scene to this marvelous application. It could be nice indeed, if the app was not limited to display Daft Punk album and track lists ;)&lt;/p&gt;</description>
     </item>
     
     <item>
@@ -636,11 +1208,10 @@ To improve this, we have three easy steps to perform.&lt;/p&gt;
       <pubDate>Sun, 28 Aug 2016 21:54:34 +0200</pubDate>
       
       <guid>https://pascallemerrer.github.io/blog/post/react-native-2/</guid>
-      <description>
+      <description>&lt;p&gt;This article is the second in a series started with &lt;a href=&#34;https://pascallemerrer.github.io/blog/post/react-native-1/&#34;&gt;Creating a mobile application with React Native - part 1&lt;/a&gt;.&lt;/p&gt;
 
-&lt;p&gt;This article is the second in a series started with &lt;a href=&#34;https://pascallemerrer.github.io/blog/post/react-native-1/&#34;&gt;Creating a mobile application with React Native - part 1&lt;/a&gt;.&lt;/p&gt;
-
-&lt;p&gt;Today, we will enrich our basic app with a list of albums provided by the deezer API. We will use &lt;a href=&#34;http://nativebase.io&#34;&gt;Native Base&lt;/a&gt;, which is a complement to React Native. It provides higher level, polished components and layouts, for both iOS and Android.&lt;/p&gt;
+&lt;p&gt;Today, we will enrich our basic app with a list of albums provided by the deezer API. We will use &lt;a href=&#34;http://nativebase.io&#34;&gt;Native Base&lt;/a&gt;, which is a complement to React Native. It provides higher level, polished components and layouts, for both iOS and Android.
+&lt;/p&gt;
 
 &lt;p&gt;With Native Base you have much less boilerplate code to write than with React Native alone. At first sight, it looks like a kind of &lt;a href=&#34;http://getbootstrap.com/&#34;&gt;Twitter Bootstrap&lt;/a&gt; for mobile development with React Native.&lt;/p&gt;
 
@@ -888,8 +1459,7 @@ If you reload the app, it should look like this:&lt;/p&gt;
 
 &lt;p&gt;To sum up, the result looks very good (by now), but the tooling is still immature, which is understandable for a rather young technology.&lt;/p&gt;
 
-&lt;p&gt;This concludes the second part in this journey to discover React Native. In the next one, we&amp;rsquo;ll add a detailed view for each album.&lt;/p&gt;
-</description>
+&lt;p&gt;This concludes the second part in this journey to discover React Native. In the next one, we&amp;rsquo;ll add a detailed view for each album.&lt;/p&gt;</description>
     </item>
     
     <item>
@@ -898,11 +1468,9 @@ If you reload the app, it should look like this:&lt;/p&gt;
       <pubDate>Mon, 15 Aug 2016 00:18:02 +0200</pubDate>
       
       <guid>https://pascallemerrer.github.io/blog/post/react-native-1/</guid>
-      <description>
+      <description>&lt;p&gt;These is the first post of a series dedicated to the creation of a mobile application for both Android and iOS.
 
-&lt;p&gt;These is the first post of a series dedicated to the creation of a mobile application for both Android and iOS.&lt;/p&gt;
-
-&lt;p&gt;Developing for both OS using their respective native technologies would require a lot of time, especially for me who doesn&amp;rsquo;t know them. I do not consider myself as a mobile developer, although I built a mobile game and some apps a few years ago using another multiplatform technology, Adobe Air. That&amp;rsquo;s why I will use React Native.&lt;/p&gt;
+Developing for both OS using their respective native technologies would require a lot of time, especially for me who doesn&amp;rsquo;t know them. I do not consider myself as a mobile developer, although I built a mobile game and some apps a few years ago using another multiplatform technology, Adobe Air. That&amp;rsquo;s why I will use React Native.&lt;/p&gt;
 
 &lt;h2 id=&#34;what-is-react-native&#34;&gt;What is React Native?&lt;/h2&gt;
 
@@ -1056,8 +1624,7 @@ To copy easily the file I use &lt;a href=&#34;https://android.com/filetransfer/&
 
 &lt;h2 id=&#34;conclusion&#34;&gt;Conclusion&lt;/h2&gt;
 
-&lt;p&gt;This was the hard part: installing the environment, and getting the application running on a real device. Now comes something more pleasant for me: developping the app. But that&amp;rsquo;s another story :)&lt;/p&gt;
-</description>
+&lt;p&gt;This was the hard part: installing the environment, and getting the application running on a real device. Now comes something more pleasant for me: developping the app. But that&amp;rsquo;s another story :)&lt;/p&gt;</description>
     </item>
     
   </channel>

@@ -2,12 +2,12 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>React on Pascal&#39;s dev blog</title>
-    <link>https://PascalLeMerrer.github.io/blog/tags/react/</link>
+    <link>https://pascallemerrer.github.io/blog/tags/react/index.xml</link>
     <description>Recent content in React on Pascal&#39;s dev blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Sun, 09 Oct 2016 10:24:44 +0200</lastBuildDate>
-    <atom:link href="https://PascalLeMerrer.github.io/blog/tags/react/index.xml" rel="self" type="application/rss+xml" />
+    <copyright>Powered by [Hugo](http://gohugo.io). All contents licensed under [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0/)</copyright>
+    <atom:link href="https://pascallemerrer.github.io/blog/tags/react/index.xml" rel="self" type="application/rss+xml" />
     
     <item>
       <title>Creating a mobile application with React Native - part 5</title>
@@ -15,9 +15,9 @@
       <pubDate>Sun, 09 Oct 2016 10:24:44 +0200</pubDate>
       
       <guid>https://pascallemerrer.github.io/blog/post/react-native-5/</guid>
-      <description>
+      <description>&lt;p&gt;In this fifth part of the &lt;a href=&#34;https://pascallemerrer.github.io/blog/post/react-native-1/&#34;&gt;article series about React Native&lt;/a&gt;, we&amp;rsquo;ll see how to support the native back button on Android devices.&lt;/p&gt;
 
-&lt;p&gt;In this fifth part of the &lt;a href=&#34;https://pascallemerrer.github.io/blog/post/react-native-1/&#34;&gt;article series about React Native&lt;/a&gt;, we&amp;rsquo;ll see how to support the native back button on Android devices.&lt;/p&gt;
+&lt;p&gt;&lt;/p&gt;
 
 &lt;p&gt;To support the back button, we only have to modify the main android file, &lt;code&gt;index.android.js&lt;/code&gt;.&lt;/p&gt;
 
@@ -116,8 +116,7 @@
 React Native provides a simple way to reproduce this Android basic feature.&lt;/p&gt;
 
 &lt;p&gt;In the suite of these series, I will stop adding features to the app.
-Now, it&amp;rsquo;s about time building an iOS version!&lt;/p&gt;
-</description>
+Now, it&amp;rsquo;s about time building an iOS version!&lt;/p&gt;</description>
     </item>
     
     <item>
@@ -126,9 +125,9 @@ Now, it&amp;rsquo;s about time building an iOS version!&lt;/p&gt;
       <pubDate>Tue, 13 Sep 2016 00:08:30 +0200</pubDate>
       
       <guid>https://pascallemerrer.github.io/blog/post/react-native-4/</guid>
-      <description>
+      <description>&lt;p&gt;This fourth part in the React Native &lt;a href=&#34;https://pascallemerrer.github.io/blog/post/react-native-1/&#34;&gt;article series&lt;/a&gt; will be dedicated to adding an artist search feature.&lt;/p&gt;
 
-&lt;p&gt;This fourth part in the React Native &lt;a href=&#34;https://pascallemerrer.github.io/blog/post/react-native-1/&#34;&gt;article series&lt;/a&gt; will be dedicated to adding an artist search feature.&lt;/p&gt;
+&lt;p&gt;&lt;/p&gt;
 
 &lt;h2 id=&#34;create-the-search-scene&#34;&gt;Create the search scene&lt;/h2&gt;
 
@@ -344,8 +343,7 @@ Now, it&amp;rsquo;s about time building an iOS version!&lt;/p&gt;
 
 &lt;p&gt;The array of scenes in the renderScene function could probably be replaced with a better solution. Maybe each scene could define it&amp;rsquo;s of rendering function and initialize it with data passed through the route. Some frameworks could  offer elegant solutions too. But for the sake of simplicity, we&amp;rsquo;ll stick to this implementation.&lt;/p&gt;
 
-&lt;p&gt;In the next part, we will add the support of the Android back button.&lt;/p&gt;
-</description>
+&lt;p&gt;In the next part, we will add the support of the Android back button.&lt;/p&gt;</description>
     </item>
     
     <item>
@@ -354,9 +352,8 @@ Now, it&amp;rsquo;s about time building an iOS version!&lt;/p&gt;
       <pubDate>Mon, 05 Sep 2016 19:11:22 +0200</pubDate>
       
       <guid>https://pascallemerrer.github.io/blog/post/react-native-3/</guid>
-      <description>
-
-&lt;p&gt;In this third part of the &lt;a href=&#34;https://pascallemerrer.github.io/blog/post/react-native-1/&#34;&gt;series&lt;/a&gt; we will see of to navigate through different screens in the application.&lt;/p&gt;
+      <description>&lt;p&gt;In this third part of the &lt;a href=&#34;https://pascallemerrer.github.io/blog/post/react-native-1/&#34;&gt;series&lt;/a&gt; we will see of to navigate through different screens in the application.
+&lt;/p&gt;
 
 &lt;h2 id=&#34;add-a-navigator&#34;&gt;Add a Navigator&lt;/h2&gt;
 
@@ -626,8 +623,7 @@ To improve this, we have three easy steps to perform.&lt;/p&gt;
 
 &lt;p&gt;On the positive side, the &lt;a href=&#34;https://facebook.github.io/react-native/docs/performance.html&#34;&gt;documentation&lt;/a&gt; gives some simple and effective hints to improve the performance of your application.&lt;/p&gt;
 
-&lt;p&gt;In the next article, we will add a last scene to this marvelous application. It could be nice indeed, if the app was not limited to display Daft Punk album and track lists ;)&lt;/p&gt;
-</description>
+&lt;p&gt;In the next article, we will add a last scene to this marvelous application. It could be nice indeed, if the app was not limited to display Daft Punk album and track lists ;)&lt;/p&gt;</description>
     </item>
     
     <item>
@@ -636,11 +632,10 @@ To improve this, we have three easy steps to perform.&lt;/p&gt;
       <pubDate>Sun, 28 Aug 2016 21:54:34 +0200</pubDate>
       
       <guid>https://pascallemerrer.github.io/blog/post/react-native-2/</guid>
-      <description>
+      <description>&lt;p&gt;This article is the second in a series started with &lt;a href=&#34;https://pascallemerrer.github.io/blog/post/react-native-1/&#34;&gt;Creating a mobile application with React Native - part 1&lt;/a&gt;.&lt;/p&gt;
 
-&lt;p&gt;This article is the second in a series started with &lt;a href=&#34;https://pascallemerrer.github.io/blog/post/react-native-1/&#34;&gt;Creating a mobile application with React Native - part 1&lt;/a&gt;.&lt;/p&gt;
-
-&lt;p&gt;Today, we will enrich our basic app with a list of albums provided by the deezer API. We will use &lt;a href=&#34;http://nativebase.io&#34;&gt;Native Base&lt;/a&gt;, which is a complement to React Native. It provides higher level, polished components and layouts, for both iOS and Android.&lt;/p&gt;
+&lt;p&gt;Today, we will enrich our basic app with a list of albums provided by the deezer API. We will use &lt;a href=&#34;http://nativebase.io&#34;&gt;Native Base&lt;/a&gt;, which is a complement to React Native. It provides higher level, polished components and layouts, for both iOS and Android.
+&lt;/p&gt;
 
 &lt;p&gt;With Native Base you have much less boilerplate code to write than with React Native alone. At first sight, it looks like a kind of &lt;a href=&#34;http://getbootstrap.com/&#34;&gt;Twitter Bootstrap&lt;/a&gt; for mobile development with React Native.&lt;/p&gt;
 
@@ -888,8 +883,7 @@ If you reload the app, it should look like this:&lt;/p&gt;
 
 &lt;p&gt;To sum up, the result looks very good (by now), but the tooling is still immature, which is understandable for a rather young technology.&lt;/p&gt;
 
-&lt;p&gt;This concludes the second part in this journey to discover React Native. In the next one, we&amp;rsquo;ll add a detailed view for each album.&lt;/p&gt;
-</description>
+&lt;p&gt;This concludes the second part in this journey to discover React Native. In the next one, we&amp;rsquo;ll add a detailed view for each album.&lt;/p&gt;</description>
     </item>
     
     <item>
@@ -898,11 +892,9 @@ If you reload the app, it should look like this:&lt;/p&gt;
       <pubDate>Mon, 15 Aug 2016 00:18:02 +0200</pubDate>
       
       <guid>https://pascallemerrer.github.io/blog/post/react-native-1/</guid>
-      <description>
+      <description>&lt;p&gt;These is the first post of a series dedicated to the creation of a mobile application for both Android and iOS.
 
-&lt;p&gt;These is the first post of a series dedicated to the creation of a mobile application for both Android and iOS.&lt;/p&gt;
-
-&lt;p&gt;Developing for both OS using their respective native technologies would require a lot of time, especially for me who doesn&amp;rsquo;t know them. I do not consider myself as a mobile developer, although I built a mobile game and some apps a few years ago using another multiplatform technology, Adobe Air. That&amp;rsquo;s why I will use React Native.&lt;/p&gt;
+Developing for both OS using their respective native technologies would require a lot of time, especially for me who doesn&amp;rsquo;t know them. I do not consider myself as a mobile developer, although I built a mobile game and some apps a few years ago using another multiplatform technology, Adobe Air. That&amp;rsquo;s why I will use React Native.&lt;/p&gt;
 
 &lt;h2 id=&#34;what-is-react-native&#34;&gt;What is React Native?&lt;/h2&gt;
 
@@ -1056,8 +1048,7 @@ To copy easily the file I use &lt;a href=&#34;https://android.com/filetransfer/&
 
 &lt;h2 id=&#34;conclusion&#34;&gt;Conclusion&lt;/h2&gt;
 
-&lt;p&gt;This was the hard part: installing the environment, and getting the application running on a real device. Now comes something more pleasant for me: developping the app. But that&amp;rsquo;s another story :)&lt;/p&gt;
-</description>
+&lt;p&gt;This was the hard part: installing the environment, and getting the application running on a real device. Now comes something more pleasant for me: developping the app. But that&amp;rsquo;s another story :)&lt;/p&gt;</description>
     </item>
     
   </channel>
