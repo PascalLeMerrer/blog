@@ -15,7 +15,10 @@
       <pubDate>Sun, 11 Jun 2017 22:42:27 +0200</pubDate>
       
       <guid>https://pascallemerrer.github.io/blog/post/elm-europe-2017-day-2/</guid>
-      <description>
+      <description>&lt;p&gt;Ce billet est le second d&amp;rsquo;une série de deux consacrée à la conférence Elm Europe 2017.&lt;/p&gt;
+
+&lt;p&gt;This blog post is the second of a series of two about the Elm Europe 2017 conference.
+&lt;/p&gt;
 
 &lt;p&gt;&lt;a href=&#34;#english&#34;&gt;Go to the English version&lt;/a&gt;&lt;/p&gt;
 
@@ -310,8 +313,7 @@ It&amp;rsquo;s not production ready, still misses somes libraries, adds a new la
 
 &lt;p&gt;The conference was really nice. There was a lot of energy in the air, due to the general enthusiasm for the language. Of course there was a few organisation problems, certainly linked to the fact it was the first Elm Europe conference ever (I really would have appreciated some tea during the breaks!). But without any doubt, this will improve next year. Thibaut Assus, the main organizer, already announced the 2018 edition will take place in Paris.&lt;/p&gt;
 
-&lt;p&gt;As for me, I will start my first Elm project very soon!&lt;/p&gt;
-</description>
+&lt;p&gt;As for me, I will start my first Elm project very soon!&lt;/p&gt;</description>
     </item>
     
     <item>
@@ -320,7 +322,10 @@ It&amp;rsquo;s not production ready, still misses somes libraries, adds a new la
       <pubDate>Sun, 11 Jun 2017 09:42:27 +0200</pubDate>
       
       <guid>https://pascallemerrer.github.io/blog/post/elm-europe-2017-day-1/</guid>
-      <description>
+      <description>&lt;p&gt;Ce billet est le premier d&amp;rsquo;une série de deux consacrée à la conférence Elm Europe 2017.&lt;/p&gt;
+
+&lt;p&gt;This blog post is the first of a series of two about the Elm Europe 2017 conference.
+&lt;/p&gt;
 
 &lt;p&gt;&lt;a href=&#34;#english&#34;&gt;Go to the English version&lt;/a&gt;&lt;/p&gt;
 
@@ -581,8 +586,7 @@ They discovered Elm in 2016 and have seen so important benefits they switch almo
 &lt;/ul&gt;&lt;/li&gt;
 &lt;/ul&gt;
 
-&lt;p&gt;&lt;em&gt;Several times during this conference, we heard great feedbacks about the help provided by the community to newbies.&lt;/em&gt;&lt;/p&gt;
-</description>
+&lt;p&gt;&lt;em&gt;Several times during this conference, we heard great feedbacks about the help provided by the community to newbies.&lt;/em&gt;&lt;/p&gt;</description>
     </item>
     
   </channel>
