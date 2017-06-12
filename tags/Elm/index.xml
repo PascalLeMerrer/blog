@@ -41,7 +41,7 @@
 &lt;li&gt;duplication de code&lt;/li&gt;
 &lt;/ul&gt;
 
-&lt;p&gt;Pour répondre à la difficulté de localisation, une réponse est d&amp;rsquo;organiser son code. Richard a publié sur github un &lt;a href=&#34;github.com/rtfeldman/example-spa-application&#34;&gt;exemple d&amp;rsquo;organisation d&amp;rsquo;une Single Page Application&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;Pour répondre à la difficulté de localisation, une réponse est d&amp;rsquo;organiser son code. Richard a publié sur github un &lt;a href=&#34;https://github.com/rtfeldman/elm-spa-example&#34;&gt;exemple d&amp;rsquo;organisation d&amp;rsquo;une Single Page Application&lt;/a&gt;.&lt;/p&gt;
 
 &lt;p&gt;Concernant le problème de représentation mentale, Richard conseille de façon très classique de découper le code, et de faire en sorte qu&amp;rsquo;il réponde à une seule problématique à la fois, mais aussi de spécialiser les types.&lt;/p&gt;
 
@@ -185,7 +185,7 @@ Mais React-Native possède un inconvénient majeur d&amp;rsquo;après Josh : il 
 &lt;li&gt;duplicated code&lt;/li&gt;
 &lt;/ul&gt;
 
-&lt;p&gt;To address to the first issue, an answer is to organise the code. Richard put online &lt;a href=&#34;github.com/rtfeldman/example-spa-application&#34;&gt;an example of code organisation for a Single Page Application&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;To address to the first issue, an answer is to organise the code. Richard put online &lt;a href=&#34;https://github.com/rtfeldman/elm-spa-example&#34;&gt;an example of code organisation for a Single Page Application&lt;/a&gt;.&lt;/p&gt;
 
 &lt;p&gt;About the mental representation of the code, Richard made a very classical recommendation: split your code, and focus on one problem only. But he also add to specialize types.&lt;/p&gt;
 
