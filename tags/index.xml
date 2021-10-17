@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Tags on Pascal&#39;s dev blog</title>
+    <link>https://PascalLeMerrer.github.io/blog/tags/</link>
+    <description>Recent content in Tags on Pascal&#39;s dev blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Sun, 02 Jul 2017 17:42:27 +0200</lastBuildDate><atom:link href="https://PascalLeMerrer.github.io/blog/tags/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Development</title>
+      <link>https://PascalLeMerrer.github.io/blog/tags/development/</link>
+      <pubDate>Sun, 02 Jul 2017 17:42:27 +0200</pubDate>
+      
+      <guid>https://PascalLeMerrer.github.io/blog/tags/development/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Elm</title>
+      <link>https://PascalLeMerrer.github.io/blog/tags/elm/</link>
+      <pubDate>Sun, 02 Jul 2017 17:42:27 +0200</pubDate>
+      
+      <guid>https://PascalLeMerrer.github.io/blog/tags/elm/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Framework</title>
+      <link>https://PascalLeMerrer.github.io/blog/tags/framework/</link>
+      <pubDate>Sun, 02 Jul 2017 17:42:27 +0200</pubDate>
+      
+      <guid>https://PascalLeMerrer.github.io/blog/tags/framework/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Javascript</title>
+      <link>https://PascalLeMerrer.github.io/blog/tags/javascript/</link>
+      <pubDate>Sun, 02 Jul 2017 17:42:27 +0200</pubDate>
+      
+      <guid>https://PascalLeMerrer.github.io/blog/tags/javascript/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Marko</title>
+      <link>https://PascalLeMerrer.github.io/blog/tags/marko/</link>
+      <pubDate>Sun, 02 Jul 2017 17:42:27 +0200</pubDate>
+      
+      <guid>https://PascalLeMerrer.github.io/blog/tags/marko/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Riot</title>
+      <link>https://PascalLeMerrer.github.io/blog/tags/riot/</link>
+      <pubDate>Sun, 02 Jul 2017 17:42:27 +0200</pubDate>
+      
+      <guid>https://PascalLeMerrer.github.io/blog/tags/riot/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Conference</title>
+      <link>https://PascalLeMerrer.github.io/blog/tags/conference/</link>
+      <pubDate>Sun, 11 Jun 2017 22:42:27 +0200</pubDate>
+      
+      <guid>https://PascalLeMerrer.github.io/blog/tags/conference/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Mobile</title>
+      <link>https://PascalLeMerrer.github.io/blog/tags/mobile/</link>
+      <pubDate>Sun, 09 Oct 2016 10:24:44 +0200</pubDate>
+      
+      <guid>https://PascalLeMerrer.github.io/blog/tags/mobile/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>React</title>
+      <link>https://PascalLeMerrer.github.io/blog/tags/react/</link>
+      <pubDate>Sun, 09 Oct 2016 10:24:44 +0200</pubDate>
+      
+      <guid>https://PascalLeMerrer.github.io/blog/tags/react/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>React Native</title>
+      <link>https://PascalLeMerrer.github.io/blog/tags/react-native/</link>
+      <pubDate>Sun, 09 Oct 2016 10:24:44 +0200</pubDate>
+      
+      <guid>https://PascalLeMerrer.github.io/blog/tags/react-native/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Tutorial</title>
+      <link>https://PascalLeMerrer.github.io/blog/tags/tutorial/</link>
+      <pubDate>Sun, 09 Oct 2016 10:24:44 +0200</pubDate>
+      
+      <guid>https://PascalLeMerrer.github.io/blog/tags/tutorial/</guid>
+      <description></description>
+    </item>
+    
+  </channel>
+</rss>

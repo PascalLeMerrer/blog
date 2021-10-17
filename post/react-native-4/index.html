@@ -7,26 +7,26 @@
         <meta name="author">
         <meta name="description" content="Pascal&#39;s blog about software development.">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <meta name="generator" content="Hugo 0.19" />
-          <link href="https://pascallemerrer.github.io/blog/post/index.xml" rel="alternate" type="application/rss+xml" title="Pascal&#39;s dev blog" />
-          <link href="https://pascallemerrer.github.io/blog/post/index.xml" rel="feed" type="application/rss+xml" title="Pascal&#39;s dev blog" />
+        <meta name="generator" content="Hugo 0.88.1" />
+          <link href="https://PascalLeMerrer.github.io/blog/post/index.xml" rel="alternate" type="application/rss+xml" title="Pascal&#39;s dev blog" />
+          <link href="https://PascalLeMerrer.github.io/blog/post/index.xml" rel="feed" type="application/rss+xml" title="Pascal&#39;s dev blog" />
         <link href='//fonts.googleapis.com/css?family=Roboto:400,300,700|Noto+Serif:400,400italic,700,700italic' rel='stylesheet' type='text/css'>
-        <link rel="stylesheet" href="https://pascallemerrer.github.io/blog/css/styles.css">
-        <link rel="stylesheet" href="https://pascallemerrer.github.io/blog/css/custom_styles.css">
-        <link rel="icon" href="https://pascallemerrer.github.io/blog/favicon.ico">
-        <link rel="apple-touch-icon" href="https://pascallemerrer.github.io/blog/apple-touch-icon.png" />
-        <link rel="stylesheet" href="https://pascallemerrer.github.io/blog/css/highlightjs/monokai.css">
-        <script src="https://pascallemerrer.github.io/blog/js/vendor/modernizr-2.8.0.min.js"></script>
+        <link rel="stylesheet" href="https://PascalLeMerrer.github.io/blog/css/styles.css">
+        <link rel="stylesheet" href="https://PascalLeMerrer.github.io/blog/css/custom_styles.css">
+        <link rel="icon" href="https://PascalLeMerrer.github.io/blog/favicon.ico">
+        <link rel="apple-touch-icon" href="https://PascalLeMerrer.github.io/blog/apple-touch-icon.png" />
+        <link rel="stylesheet" href="https://PascalLeMerrer.github.io/blog/css/highlightjs/monokai.css">
+        <script src="https://PascalLeMerrer.github.io/blog/js/vendor/modernizr-2.8.0.min.js"></script>
         <style>
         .site-header h2 .logo {
-        background: url(https://pascallemerrer.github.io/blog/img/header.jpg) no-repeat 0 0;
+        background: url(https://PascalLeMerrer.github.io/blog/img/header.jpg) no-repeat 0 0;
         }
         @media (min--moz-device-pixel-ratio: 1.3), (-o-min-device-pixel-ratio: 2.6 / 2), (-webkit-min-device-pixel-ratio: 1.3), (min-device-pixel-ratio: 1.3), (min-resolution: 1.3dppx) {
           .site-header h2 .logo {
-            background-image: url(https://pascallemerrer.github.io/blog/img/header.jpg);
+            background-image: url(https://PascalLeMerrer.github.io/blog/img/header.jpg);
         }}
        .site-header {
-         background: #2a373d url(https://pascallemerrer.github.io/blog/img/header.jpg) no-repeat center center;
+         background: #2a373d url(https://PascalLeMerrer.github.io/blog/img/header.jpg) no-repeat center center;
          z-index: -1;
         }
         </style>
@@ -43,157 +43,144 @@
 <div class="container clearfix">
     <main role="main" class="content">
         <article class="post">
-            <a class="btn home" href="https://pascallemerrer.github.io/blog/" title="Back to home">&laquo; Back to home</a>
+            <a class="btn home" href="https://PascalLeMerrer.github.io/blog/" title="Back to home">&laquo; Back to home</a>
             
-<h1><a href="https://pascallemerrer.github.io/blog/post/react-native-4/" title="Creating a mobile application with React Native - part 4">Creating a mobile application with React Native - part 4</a></h1>
+<h1><a href="https://PascalLeMerrer.github.io/blog/post/react-native-4/" title="Creating a mobile application with React Native - part 4">Creating a mobile application with React Native - part 4</a></h1>
 
 <footer class="post-info">Posted on <span class="post-meta"><time datetime="2016.09.13">2016.09.13</time>
 
     &middot; Tagged in
         
-        <a href="https://pascallemerrer.github.io/blog/tags/development">development</a>, 
+        <a href="https://PascalLeMerrer.github.io/blog/tags/development">development</a>, 
         
-        <a href="https://pascallemerrer.github.io/blog/tags/tutorial">tutorial</a>, 
+        <a href="https://PascalLeMerrer.github.io/blog/tags/tutorial">tutorial</a>, 
         
-        <a href="https://pascallemerrer.github.io/blog/tags/mobile">mobile</a>, 
+        <a href="https://PascalLeMerrer.github.io/blog/tags/mobile">mobile</a>, 
         
-        <a href="https://pascallemerrer.github.io/blog/tags/react">react</a>, 
+        <a href="https://PascalLeMerrer.github.io/blog/tags/react">react</a>, 
         
-        <a href="https://pascallemerrer.github.io/blog/tags/react-native">react native</a>
+        <a href="https://PascalLeMerrer.github.io/blog/tags/react-native">react native</a>
         
     
 
 </span>
 </footer>
 
-            <p>This fourth part in the React Native <a href="https://pascallemerrer.github.io/blog/post/react-native-1/">article series</a> will be dedicated to adding an artist search feature.</p>
-
-<p></p>
-
+            <p>This fourth part in the React Native <a href="https://PascalLeMerrer.github.io/blog/post/react-native-1/">article series</a> will be dedicated to adding an artist search feature.</p>
 <h2 id="create-the-search-scene">Create the search scene</h2>
-
 <p>The initial scene will stay the album list, but we will add it a search button. A tap on this button will display a search screen on top of the album list. This last scene will be created in a file named <code>search.js</code>:</p>
-
-<div class="highlight"><pre><code class="language-html" data-lang="html"><span></span><span class="lineno">  1 </span>import React, { Component } from &#39;react&#39;;
-<span class="lineno">  2 </span>import { InteractionManager } from &#39;react-native&#39;
-<span class="lineno">  3 </span>import { Button,
-<span class="lineno">  4 </span>         Content,
-<span class="lineno">  5 </span>         Container,
-<span class="lineno">  6 </span>         Header,
-<span class="lineno">  7 </span>         Input,
-<span class="lineno">  8 </span>         InputGroup,
-<span class="lineno">  9 </span>         List,
-<span class="lineno"> 10 </span>         ListItem,
-<span class="lineno"> 11 </span>         Icon,
-<span class="lineno"> 12 </span>         Spinner,
-<span class="lineno"> 13 </span>         Text,
-<span class="lineno"> 14 </span>         Thumbnail,
-<span class="lineno"> 15 </span>         Title } from &#39;native-base&#39;;
-<span class="lineno"> 16 </span>var superagent = require(&#39;superagent&#39;);
-<span class="lineno"> 17 </span>
-<span class="lineno"> 18 </span>export default class TrackList extends Component {
-<span class="lineno"> 19 </span>
-<span class="lineno"> 20 </span>    constructor(props) {
-<span class="lineno"> 21 </span>      super(props);
-<span class="lineno"> 22 </span>      this.state = {
-<span class="lineno"> 23 </span>          loading: false,
-<span class="lineno"> 24 </span>          results: null
-<span class="lineno"> 25 </span>      }
-<span class="lineno"> 26 </span>    }
-<span class="lineno"> 27 </span>
-<span class="lineno"> 28 </span>    search(name) {
-<span class="lineno"> 29 </span>      if(name.length <span class="p">&lt;</span> <span class="nt">3</span><span class="err">)</span> <span class="err">{</span>
-<span class="lineno"> 30 </span>        <span class="na">return</span>
-<span class="lineno"> 31 </span>      <span class="err">}</span>
-<span class="lineno"> 32 </span>      <span class="na">superagent</span><span class="err">.</span><span class="na">get</span><span class="err">(&#39;</span><span class="na">http:</span><span class="err">//</span><span class="na">api</span><span class="err">.</span><span class="na">deezer</span><span class="err">.</span><span class="na">com</span><span class="err">/</span><span class="na">search</span><span class="err">/</span><span class="na">artist</span><span class="err">?</span><span class="na">q</span><span class="o">=</span><span class="s">artist:&#39;</span> <span class="err">+</span> <span class="na">name</span><span class="err">)</span>
-<span class="lineno"> 33 </span>        <span class="err">.</span><span class="na">set</span><span class="err">(&#39;</span><span class="na">Accept</span><span class="err">&#39;,</span> <span class="err">&#39;</span><span class="na">application</span><span class="err">/</span><span class="na">json</span><span class="err">&#39;)</span>
-<span class="lineno"> 34 </span>        <span class="err">.</span><span class="na">end</span><span class="err">((</span><span class="na">err</span><span class="err">,</span> <span class="na">response</span><span class="err">)</span> <span class="err">=</span><span class="p">&gt;</span> {
-<span class="lineno"> 35 </span>            if (response.ok) {
-<span class="lineno"> 36 </span>              this.setState({
-<span class="lineno"> 37 </span>                  loading: false,
-<span class="lineno"> 38 </span>                  results: response.body.data
-<span class="lineno"> 39 </span>              });
-<span class="lineno"> 40 </span>            }
-<span class="lineno"> 41 </span>            else {
-<span class="lineno"> 42 </span>              this.setState({
-<span class="lineno"> 43 </span>                  loading: false
-<span class="lineno"> 44 </span>              });
-<span class="lineno"> 45 </span>            }
-<span class="lineno"> 46 </span>        })
-<span class="lineno"> 47 </span>    }
-<span class="lineno"> 48 </span>
-<span class="lineno"> 49 </span>    back() {
-<span class="lineno"> 50 </span>      this.props.navigator.pop();
-<span class="lineno"> 51 </span>    }
-<span class="lineno"> 52 </span>
-<span class="lineno"> 53 </span>    displayAlbums(artist) {
-<span class="lineno"> 54 </span>      var route = {
-<span class="lineno"> 55 </span>        scene: 0,
-<span class="lineno"> 56 </span>        title: artist.name,
-<span class="lineno"> 57 </span>        artistId: artist.id
-<span class="lineno"> 58 </span>      }
-<span class="lineno"> 59 </span>      this.props.navigator.replacePrevious(route)
-<span class="lineno"> 60 </span>      this.back();
-<span class="lineno"> 61 </span>    }
-<span class="lineno"> 62 </span>
-<span class="lineno"> 63 </span>    render() {
-<span class="lineno"> 64 </span>        if(this.state.loading) {
-<span class="lineno"> 65 </span>          return (
-<span class="lineno"> 66 </span>            <span class="p">&lt;</span><span class="nt">Container</span><span class="p">&gt;</span>
-<span class="lineno"> 67 </span>                <span class="p">&lt;</span><span class="nt">Header</span><span class="p">&gt;</span>
-<span class="lineno"> 68 </span>                  <span class="p">&lt;</span><span class="nt">Title</span><span class="p">&gt;</span>search in progress...<span class="p">&lt;/</span><span class="nt">Title</span><span class="p">&gt;</span>
-<span class="lineno"> 69 </span>                <span class="p">&lt;/</span><span class="nt">Header</span><span class="p">&gt;</span>
-<span class="lineno"> 70 </span>              <span class="p">&lt;</span><span class="nt">Spinner</span> <span class="na">color</span><span class="o">=</span><span class="s">&quot;#440099&quot;</span><span class="p">/&gt;</span>
-<span class="lineno"> 71 </span>            <span class="p">&lt;/</span><span class="nt">Container</span><span class="p">&gt;</span>
-<span class="lineno"> 72 </span>          );
-<span class="lineno"> 73 </span>        }
-<span class="lineno"> 74 </span>        else {
-<span class="lineno"> 75 </span>          return(
-<span class="lineno"> 76 </span>            <span class="p">&lt;</span><span class="nt">Container</span><span class="p">&gt;</span>
-<span class="lineno"> 77 </span>                <span class="p">&lt;</span><span class="nt">Header</span> <span class="na">searchBar</span> <span class="na">rounded</span><span class="p">&gt;</span>
-<span class="lineno"> 78 </span>                  <span class="p">&lt;</span><span class="nt">InputGroup</span> <span class="na">borderType</span><span class="o">=</span><span class="s">&quot;regular&quot;</span><span class="p">&gt;</span>
-<span class="lineno"> 79 </span>                      <span class="p">&lt;</span><span class="nt">Icon</span> <span class="na">name</span><span class="o">=</span><span class="s">&quot;md-search&quot;</span> <span class="p">/&gt;</span>
-<span class="lineno"> 80 </span>                      <span class="p">&lt;</span><span class="nt">Input</span> <span class="na">placeholder</span><span class="o">=</span><span class="s">&quot;Artist name&quot;</span> <span class="na">onChangeText</span><span class="o">=</span><span class="s">{(text)</span> <span class="err">=</span><span class="p">&gt;</span> this.search(text)}/&gt;
-<span class="lineno"> 81 </span>                      <span class="p">&lt;</span><span class="nt">Icon</span> <span class="na">name</span><span class="o">=</span><span class="s">&quot;md-people&quot;</span> <span class="p">/&gt;</span>
-<span class="lineno"> 82 </span>                  <span class="p">&lt;/</span><span class="nt">InputGroup</span><span class="p">&gt;</span>
-<span class="lineno"> 83 </span>                  <span class="p">&lt;</span><span class="nt">Button</span> <span class="na">transparent</span><span class="p">&gt;</span>
-<span class="lineno"> 84 </span>                      Search
-<span class="lineno"> 85 </span>                  <span class="p">&lt;/</span><span class="nt">Button</span><span class="p">&gt;</span>
-<span class="lineno"> 86 </span>                <span class="p">&lt;/</span><span class="nt">Header</span><span class="p">&gt;</span>
-<span class="lineno"> 87 </span>                <span class="p">&lt;</span><span class="nt">Content</span><span class="p">&gt;</span>
-<span class="lineno"> 88 </span>                  <span class="p">&lt;</span><span class="nt">List</span> <span class="na">dataArray</span><span class="o">=</span><span class="s">{this.state.results}</span>
-<span class="lineno"> 89 </span>                        <span class="na">renderRow</span><span class="o">=</span><span class="s">{(item)</span> <span class="err">=</span><span class="p">&gt;</span>
-<span class="lineno"> 90 </span>                            <span class="p">&lt;</span><span class="nt">ListItem</span> <span class="na">button</span> <span class="na">onPress</span><span class="o">=</span><span class="s">{()=</span><span class="p">&gt;</span>this.displayAlbums(item)}&gt;
-<span class="lineno"> 91 </span>                                <span class="p">&lt;</span><span class="nt">Thumbnail</span> <span class="na">square</span> <span class="na">size</span><span class="o">=</span><span class="s">{56}</span> <span class="na">source</span><span class="o">=</span><span class="s">{{uri:</span> <span class="na">item</span><span class="err">.</span><span class="na">picture_small</span><span class="err">}}</span> <span class="p">/&gt;</span>
-<span class="lineno"> 92 </span>                                <span class="p">&lt;</span><span class="nt">Text</span><span class="p">&gt;</span>{item.name}<span class="p">&lt;/</span><span class="nt">Text</span><span class="p">&gt;</span>
-<span class="lineno"> 93 </span>                            <span class="p">&lt;/</span><span class="nt">ListItem</span><span class="p">&gt;</span>
-<span class="lineno"> 94 </span>                        }&gt;
-<span class="lineno"> 95 </span>                  <span class="p">&lt;/</span><span class="nt">List</span><span class="p">&gt;</span>
-<span class="lineno"> 96 </span>                <span class="p">&lt;/</span><span class="nt">Content</span><span class="p">&gt;</span>
-<span class="lineno"> 97 </span>            <span class="p">&lt;/</span><span class="nt">Container</span><span class="p">&gt;</span>
-<span class="lineno"> 98 </span>          );
-<span class="lineno"> 99 </span>        }
-<span class="lineno">100 </span>    }
-<span class="lineno">101 </span>}
-</code></pre></div>
-
-
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-html" data-lang="html"><span class="ln">  1</span>import React, { Component } from &#39;react&#39;;
+<span class="ln">  2</span>import { InteractionManager } from &#39;react-native&#39;
+<span class="ln">  3</span>import { Button,
+<span class="ln">  4</span>         Content,
+<span class="ln">  5</span>         Container,
+<span class="ln">  6</span>         Header,
+<span class="ln">  7</span>         Input,
+<span class="ln">  8</span>         InputGroup,
+<span class="ln">  9</span>         List,
+<span class="ln"> 10</span>         ListItem,
+<span class="ln"> 11</span>         Icon,
+<span class="ln"> 12</span>         Spinner,
+<span class="ln"> 13</span>         Text,
+<span class="ln"> 14</span>         Thumbnail,
+<span class="ln"> 15</span>         Title } from &#39;native-base&#39;;
+<span class="ln"> 16</span>var superagent = require(&#39;superagent&#39;);
+<span class="ln"> 17</span>
+<span class="ln"> 18</span>export default class TrackList extends Component {
+<span class="ln"> 19</span>
+<span class="ln"> 20</span>    constructor(props) {
+<span class="ln"> 21</span>      super(props);
+<span class="ln"> 22</span>      this.state = {
+<span class="ln"> 23</span>          loading: false,
+<span class="ln"> 24</span>          results: null
+<span class="ln"> 25</span>      }
+<span class="ln"> 26</span>    }
+<span class="ln"> 27</span>
+<span class="ln"> 28</span>    search(name) {
+<span class="ln"> 29</span>      if(name.length <span class="p">&lt;</span> <span class="nt">3</span><span class="err">)</span> <span class="err">{</span>
+<span class="ln"> 30</span>        <span class="na">return</span>
+<span class="ln"> 31</span>      <span class="err">}</span>
+<span class="ln"> 32</span>      <span class="na">superagent</span><span class="err">.</span><span class="na">get</span><span class="err">(&#39;</span><span class="na">http:</span><span class="err">//</span><span class="na">api</span><span class="err">.</span><span class="na">deezer</span><span class="err">.</span><span class="na">com</span><span class="err">/</span><span class="na">search</span><span class="err">/</span><span class="na">artist</span><span class="err">?</span><span class="na">q</span><span class="o">=</span><span class="s">artist:&#39;</span> <span class="err">+</span> <span class="na">name</span><span class="err">)</span>
+<span class="ln"> 33</span>        <span class="err">.</span><span class="na">set</span><span class="err">(&#39;</span><span class="na">Accept</span><span class="err">&#39;,</span> <span class="err">&#39;</span><span class="na">application</span><span class="err">/</span><span class="na">json</span><span class="err">&#39;)</span>
+<span class="ln"> 34</span>        <span class="err">.</span><span class="na">end</span><span class="err">((</span><span class="na">err</span><span class="err">,</span> <span class="na">response</span><span class="err">)</span> <span class="err">=</span><span class="p">&gt;</span> {
+<span class="ln"> 35</span>            if (response.ok) {
+<span class="ln"> 36</span>              this.setState({
+<span class="ln"> 37</span>                  loading: false,
+<span class="ln"> 38</span>                  results: response.body.data
+<span class="ln"> 39</span>              });
+<span class="ln"> 40</span>            }
+<span class="ln"> 41</span>            else {
+<span class="ln"> 42</span>              this.setState({
+<span class="ln"> 43</span>                  loading: false
+<span class="ln"> 44</span>              });
+<span class="ln"> 45</span>            }
+<span class="ln"> 46</span>        })
+<span class="ln"> 47</span>    }
+<span class="ln"> 48</span>
+<span class="ln"> 49</span>    back() {
+<span class="ln"> 50</span>      this.props.navigator.pop();
+<span class="ln"> 51</span>    }
+<span class="ln"> 52</span>
+<span class="ln"> 53</span>    displayAlbums(artist) {
+<span class="ln"> 54</span>      var route = {
+<span class="ln"> 55</span>        scene: 0,
+<span class="ln"> 56</span>        title: artist.name,
+<span class="ln"> 57</span>        artistId: artist.id
+<span class="ln"> 58</span>      }
+<span class="ln"> 59</span>      this.props.navigator.replacePrevious(route)
+<span class="ln"> 60</span>      this.back();
+<span class="ln"> 61</span>    }
+<span class="ln"> 62</span>
+<span class="ln"> 63</span>    render() {
+<span class="ln"> 64</span>        if(this.state.loading) {
+<span class="ln"> 65</span>          return (
+<span class="ln"> 66</span>            <span class="p">&lt;</span><span class="nt">Container</span><span class="p">&gt;</span>
+<span class="ln"> 67</span>                <span class="p">&lt;</span><span class="nt">Header</span><span class="p">&gt;</span>
+<span class="ln"> 68</span>                  <span class="p">&lt;</span><span class="nt">Title</span><span class="p">&gt;</span>search in progress...<span class="p">&lt;/</span><span class="nt">Title</span><span class="p">&gt;</span>
+<span class="ln"> 69</span>                <span class="p">&lt;/</span><span class="nt">Header</span><span class="p">&gt;</span>
+<span class="ln"> 70</span>              <span class="p">&lt;</span><span class="nt">Spinner</span> <span class="na">color</span><span class="o">=</span><span class="s">&#34;#440099&#34;</span><span class="p">/&gt;</span>
+<span class="ln"> 71</span>            <span class="p">&lt;/</span><span class="nt">Container</span><span class="p">&gt;</span>
+<span class="ln"> 72</span>          );
+<span class="ln"> 73</span>        }
+<span class="ln"> 74</span>        else {
+<span class="ln"> 75</span>          return(
+<span class="ln"> 76</span>            <span class="p">&lt;</span><span class="nt">Container</span><span class="p">&gt;</span>
+<span class="ln"> 77</span>                <span class="p">&lt;</span><span class="nt">Header</span> <span class="na">searchBar</span> <span class="na">rounded</span><span class="p">&gt;</span>
+<span class="ln"> 78</span>                  <span class="p">&lt;</span><span class="nt">InputGroup</span> <span class="na">borderType</span><span class="o">=</span><span class="s">&#34;regular&#34;</span><span class="p">&gt;</span>
+<span class="ln"> 79</span>                      <span class="p">&lt;</span><span class="nt">Icon</span> <span class="na">name</span><span class="o">=</span><span class="s">&#34;md-search&#34;</span> <span class="p">/&gt;</span>
+<span class="ln"> 80</span>                      <span class="p">&lt;</span><span class="nt">Input</span> <span class="na">placeholder</span><span class="o">=</span><span class="s">&#34;Artist name&#34;</span> <span class="na">onChangeText</span><span class="o">=</span><span class="s">{(text)</span> <span class="err">=</span><span class="p">&gt;</span> this.search(text)}/&gt;
+<span class="ln"> 81</span>                      <span class="p">&lt;</span><span class="nt">Icon</span> <span class="na">name</span><span class="o">=</span><span class="s">&#34;md-people&#34;</span> <span class="p">/&gt;</span>
+<span class="ln"> 82</span>                  <span class="p">&lt;/</span><span class="nt">InputGroup</span><span class="p">&gt;</span>
+<span class="ln"> 83</span>                  <span class="p">&lt;</span><span class="nt">Button</span> <span class="na">transparent</span><span class="p">&gt;</span>
+<span class="ln"> 84</span>                      Search
+<span class="ln"> 85</span>                  <span class="p">&lt;/</span><span class="nt">Button</span><span class="p">&gt;</span>
+<span class="ln"> 86</span>                <span class="p">&lt;/</span><span class="nt">Header</span><span class="p">&gt;</span>
+<span class="ln"> 87</span>                <span class="p">&lt;</span><span class="nt">Content</span><span class="p">&gt;</span>
+<span class="ln"> 88</span>                  <span class="p">&lt;</span><span class="nt">List</span> <span class="na">dataArray</span><span class="o">=</span><span class="s">{this.state.results}</span>
+<span class="ln"> 89</span>                        <span class="na">renderRow</span><span class="o">=</span><span class="s">{(item)</span> <span class="err">=</span><span class="p">&gt;</span>
+<span class="ln"> 90</span>                            <span class="p">&lt;</span><span class="nt">ListItem</span> <span class="na">button</span> <span class="na">onPress</span><span class="o">=</span><span class="s">{()=</span><span class="p">&gt;</span>this.displayAlbums(item)}&gt;
+<span class="ln"> 91</span>                                <span class="p">&lt;</span><span class="nt">Thumbnail</span> <span class="na">square</span> <span class="na">size</span><span class="o">=</span><span class="s">{56}</span> <span class="na">source</span><span class="o">=</span><span class="s">{{uri:</span> <span class="na">item</span><span class="err">.</span><span class="na">picture_small</span><span class="err">}}</span> <span class="p">/&gt;</span>
+<span class="ln"> 92</span>                                <span class="p">&lt;</span><span class="nt">Text</span><span class="p">&gt;</span>{item.name}<span class="p">&lt;/</span><span class="nt">Text</span><span class="p">&gt;</span>
+<span class="ln"> 93</span>                            <span class="p">&lt;/</span><span class="nt">ListItem</span><span class="p">&gt;</span>
+<span class="ln"> 94</span>                        }&gt;
+<span class="ln"> 95</span>                  <span class="p">&lt;/</span><span class="nt">List</span><span class="p">&gt;</span>
+<span class="ln"> 96</span>                <span class="p">&lt;/</span><span class="nt">Content</span><span class="p">&gt;</span>
+<span class="ln"> 97</span>            <span class="p">&lt;/</span><span class="nt">Container</span><span class="p">&gt;</span>
+<span class="ln"> 98</span>          );
+<span class="ln"> 99</span>        }
+<span class="ln">100</span>    }
+<span class="ln">101</span>}</code></pre></div>
 <p>There are some specific parts in this scene, compared to TrackList and AlbumList:</p>
-
 <ul>
 <li>first, the Header component (line 77) has an attribute &ldquo;searchBar&rdquo;, and contains the required components for displaying a search bar as defined by <a href="http://nativebase.io/docs/v0.5.2/components#searchBar">Native Base</a>;</li>
 <li>second, the main content of the scene is a list of artists (line 88), updated by the <code>search</code> function (line 28) each time the content of the search field changes (as long as it contains at least three characters);</li>
 <li>last but not least, a tap on an item in the result list (line 90) invokes the <code>displayAlbums</code> function (line 53) that replaces the route for the underlying album list. The new route contains the reference of the artist on which the user tapped.</li>
 </ul>
-
 <h2 id="update-the-main-class-to-integrate-the-search-scene">Update the main class to integrate the search scene</h2>
-
 <p>Then we need, as usual, to import this new scene in the app. In <code>index.android/js</code>, add:</p>
-<div class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span></span><span class="kr">import</span> <span class="nx">Search</span> <span class="nx">from</span> <span class="s1">&#39;./search&#39;</span><span class="p">;</span>
-</code></pre></div>
-
-<p>We could add an <code>else if</code> clause in the <code>renderScene</code> function, or replace the existing <code>if...else</code> with a <code>switch...case</code>. But these solutions, although effective, will produce a code with a poor readability when the number of scenes continues to grow. That&rsquo;s why I prefer the following form, with an array:</p>
-<div class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span></span>  <span class="nx">renderScene</span><span class="p">(</span><span class="nx">route</span><span class="p">,</span> <span class="nx">navigator</span><span class="p">)</span> <span class="p">{</span>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-javascript" data-lang="javascript"><span class="kr">import</span> <span class="nx">Search</span> <span class="nx">from</span> <span class="s1">&#39;./search&#39;</span><span class="p">;</span>
+</code></pre></div><p>We could add an <code>else if</code> clause in the <code>renderScene</code> function, or replace the existing <code>if...else</code> with a <code>switch...case</code>. But these solutions, although effective, will produce a code with a poor readability when the number of scenes continues to grow. That&rsquo;s why I prefer the following form, with an array:</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-javascript" data-lang="javascript">  <span class="nx">renderScene</span><span class="p">(</span><span class="nx">route</span><span class="p">,</span> <span class="nx">navigator</span><span class="p">)</span> <span class="p">{</span>
 
     <span class="kd">var</span> <span class="nx">scenes</span> <span class="o">=</span> <span class="p">[</span>
       <span class="o">&lt;</span><span class="nx">AlbumList</span> <span class="nx">title</span><span class="o">=</span><span class="p">{</span> <span class="nx">route</span><span class="p">.</span><span class="nx">title</span> <span class="p">}</span> <span class="nx">artistId</span><span class="o">=</span><span class="p">{</span> <span class="nx">route</span><span class="p">.</span><span class="nx">artistId</span> <span class="p">}</span> <span class="nx">navigator</span><span class="o">=</span><span class="p">{</span> <span class="nx">navigator</span> <span class="p">}</span> <span class="o">/&gt;</span><span class="p">,</span>
@@ -202,57 +189,43 @@
     <span class="p">]</span>
     <span class="k">return</span><span class="p">(</span><span class="nx">scenes</span><span class="p">[</span><span class="nx">route</span><span class="p">.</span><span class="nx">scene</span><span class="p">]);</span>
   <span class="p">}</span>
-</code></pre></div>
-
-<p>We will now simplify the initial rendering: by default we not not display anything in the album view (Good bye Daft Punk!). Doing this just require to remove the album ID and title from the initial route:</p>
-
-<pre><code>  render() {
+</code></pre></div><p>We will now simplify the initial rendering: by default we not not display anything in the album view (Good bye Daft Punk!). Doing this just require to remove the album ID and title from the initial route:</p>
+<pre tabindex="0"><code>  render() {
     return (&lt;Navigator
         initialRoute={ { scene: 0 } }
         renderScene={ this.renderScene.bind(this) }
       /&gt;);
   }
-</code></pre>
+</code></pre><p>This results in a rather austere home screen for the app, but I&rsquo;ll let the improvement of this screen as an exercise to the reader ^^.</p>
 
-<p>This results in a rather austere home screen for the app, but I&rsquo;ll let the improvement of this screen as an exercise to the reader ^^.</p>
-
-<p>
 <figure >
     
         <img src="https://PascalLeMerrer.github.io/blog/post/img/react-native-4/screenshot_1.png"  />
     
     
 </figure>
-</p>
 
 <h2 id="adapt-the-albumlist-scene">Adapt the AlbumList scene</h2>
-
 <p>Finally, modify the <code>render</code> function in <code>albumlist.js</code> to add a search button in the header of the Album list:</p>
-<div class="highlight"><pre><code class="language-html" data-lang="html"><span></span><span class="p">&lt;</span><span class="nt">Header</span><span class="p">&gt;</span>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-html" data-lang="html"><span class="p">&lt;</span><span class="nt">Header</span><span class="p">&gt;</span>
    <span class="p">&lt;</span><span class="nt">Button</span> <span class="na">transparent</span><span class="p">&gt;</span>
-      <span class="p">&lt;</span><span class="nt">Icon</span> <span class="na">name</span><span class="o">=</span><span class="s">&quot;md-disc&quot;</span> <span class="p">/&gt;</span>
+      <span class="p">&lt;</span><span class="nt">Icon</span> <span class="na">name</span><span class="o">=</span><span class="s">&#34;md-disc&#34;</span> <span class="p">/&gt;</span>
   <span class="p">&lt;/</span><span class="nt">Button</span><span class="p">&gt;</span>
    <span class="p">&lt;</span><span class="nt">Title</span><span class="p">&gt;</span>{this.props.title}<span class="p">&lt;/</span><span class="nt">Title</span><span class="p">&gt;</span>
    <span class="p">&lt;</span><span class="nt">Button</span> <span class="na">transparent</span> <span class="na">onPress</span><span class="o">=</span><span class="s">{()=</span><span class="p">&gt;</span>this.displaySearch()}&gt;
-      <span class="p">&lt;</span><span class="nt">Icon</span> <span class="na">name</span><span class="o">=</span><span class="s">&quot;md-search&quot;</span> <span class="p">/&gt;</span>
+      <span class="p">&lt;</span><span class="nt">Icon</span> <span class="na">name</span><span class="o">=</span><span class="s">&#34;md-search&#34;</span> <span class="p">/&gt;</span>
    <span class="p">&lt;/</span><span class="nt">Button</span><span class="p">&gt;</span>
 <span class="p">&lt;/</span><span class="nt">Header</span><span class="p">&gt;</span>
-</code></pre></div>
-
-<p>And add a <code>displaySearch</code> function in this same file:</p>
-<div class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span></span><span class="c1">// display the search scene</span>
-<span class="nx">displaySearch</span><span class="p">()</span> <span class="p">{</span>
+</code></pre></div><p>And add a <code>displaySearch</code> function in this same file:</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-javascript" data-lang="javascript"><span class="c1">// display the search scene
+</span><span class="c1"></span><span class="nx">displaySearch</span><span class="p">()</span> <span class="p">{</span>
   <span class="kd">var</span> <span class="nx">route</span> <span class="o">=</span> <span class="p">{</span>
                 <span class="nx">scene</span><span class="o">:</span> <span class="mi">2</span>
               <span class="p">}</span>
   <span class="k">this</span><span class="p">.</span><span class="nx">props</span><span class="p">.</span><span class="nx">navigator</span><span class="p">.</span><span class="nx">push</span><span class="p">(</span><span class="nx">route</span><span class="p">);</span>
 <span class="p">}</span>
-</code></pre></div>
-
-<p>A tap on the search button in the header will invoke <code>displaySearch</code> and so display the search scene in front of the album list.</p>
-
+</code></pre></div><p>A tap on the search button in the header will invoke <code>displaySearch</code> and so display the search scene in front of the album list.</p>
 <p>The search feature is now complete:</p>
-
 
 <figure >
     
@@ -260,7 +233,6 @@
     
     
 </figure>
-
 
 
 <figure >
@@ -271,7 +243,6 @@
 </figure>
 
 
-
 <figure >
     
         <img src="https://PascalLeMerrer.github.io/blog/post/img/react-native-4/screenshot_4.png"  />
@@ -279,50 +250,54 @@
     
 </figure>
 
-
 <h2 id="conclusion">Conclusion</h2>
-
 <p>The array of scenes in the renderScene function could probably be replaced with a better solution. Maybe each scene could define it&rsquo;s of rendering function and initialize it with data passed through the route. Some frameworks could  offer elegant solutions too. But for the sake of simplicity, we&rsquo;ll stick to this implementation.</p>
-
 <p>In the next part, we will add the support of the Android back button.</p>
             <ul class="share-buttons">
     <li>Share this article:</li>
     <li>
-        <a class="icon-facebook-squared" href="https://www.facebook.com/sharer/sharer.php?u=https%3a%2f%2fpascallemerrer.github.io%2fblog%2fpost%2freact-native-4%2f" onclick="window.open(this.href, 'facebook-share','width=580,height=296');return false;" title="Share on Facebook"></a>
+        <a class="icon-facebook-squared" href="https://www.facebook.com/sharer/sharer.php?u=https%3a%2f%2fPascalLeMerrer.github.io%2fblog%2fpost%2freact-native-4%2f" onclick="window.open(this.href, 'facebook-share','width=580,height=296');return false;" title="Share on Facebook"></a>
     </li>
     <li>
-        <a class="icon-twitter" href="https://twitter.com/share?text=Creating%20a%20mobile%20application%20with%20React%20Native%20-%20part%204&amp;url=https%3a%2f%2fpascallemerrer.github.io%2fblog%2fpost%2freact-native-4%2f" onclick="window.open(this.href, 'twitter-share', 'width=550,height=235');return false;" title="Tweet this article"></a>
+        <a class="icon-twitter" href="https://twitter.com/share?text=Creating%20a%20mobile%20application%20with%20React%20Native%20-%20part%204&amp;url=https%3a%2f%2fPascalLeMerrer.github.io%2fblog%2fpost%2freact-native-4%2f" onclick="window.open(this.href, 'twitter-share', 'width=550,height=235');return false;" title="Tweet this article"></a>
     </li>
     <li>
-        <a class="icon-gplus" href="https://plus.google.com/share?url=https%3a%2f%2fpascallemerrer.github.io%2fblog%2fpost%2freact-native-4%2f" onclick="window.open(this.href, 'google-plus-share', 'width=490,height=530');return false;" title="Share on Google&#43;"></a>
+        <a class="icon-gplus" href="https://plus.google.com/share?url=https%3a%2f%2fPascalLeMerrer.github.io%2fblog%2fpost%2freact-native-4%2f" onclick="window.open(this.href, 'google-plus-share', 'width=490,height=530');return false;" title="Share on Google&#43;"></a>
     </li>
     <li>
-        <a class="icon-linkedin" href="https://www.linkedin.com/shareArticle?mini=true&url=https%3a%2f%2fpascallemerrer.github.io%2fblog%2fpost%2freact-native-4%2f&title=Creating%20a%20mobile%20application%20with%20React%20Native%20-%20part%204" onclick="window.open(this.href, 'linkedin-share', 'width=600,height=494');return false;" title="Share on Linkedin"></a>
+        <a class="icon-linkedin" href="https://www.linkedin.com/shareArticle?mini=true&url=https%3a%2f%2fPascalLeMerrer.github.io%2fblog%2fpost%2freact-native-4%2f&title=Creating%20a%20mobile%20application%20with%20React%20Native%20-%20part%204" onclick="window.open(this.href, 'linkedin-share', 'width=600,height=494');return false;" title="Share on Linkedin"></a>
     </li>
 </ul>
 
         </article>
+        
         <div class="comments">
             <h3>Comments</h3>
             <div id="disqus_thread"></div>
-<script type="text/javascript">
-    var disqus_shortname = 'pascals-dev-blog';
-    var disqus_identifier = 'https:\/\/pascallemerrer.github.io\/blog\/post\/react-native-4\/';
-    var disqus_title = 'Creating a mobile application with React Native - part 4';
-    var disqus_url = 'https:\/\/pascallemerrer.github.io\/blog\/post\/react-native-4\/';
-
+<script type="application/javascript">
+    var disqus_config = function () {
+    
+    
+    
+    };
     (function() {
-        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
-        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
-        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+        if (["localhost", "127.0.0.1"].indexOf(window.location.hostname) != -1) {
+            document.getElementById('disqus_thread').innerHTML = 'Disqus comments not available by default when the website is previewed locally.';
+            return;
+        }
+        var d = document, s = d.createElement('script'); s.async = true;
+        s.src = '//' + "pascals-dev-blog" + '.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
     })();
 </script>
-<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
-<a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="https://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
         </div>
+        
     </main>
     <aside class="author">
-  <img class="profile-image" src="https://pascallemerrer.github.io/blog/img/profile-image.jpg" alt="" />
+  <img class="profile-image" src="https://PascalLeMerrer.github.io/blog/img/profile-image-128x128.jpeg" alt="" />
   <p class="name">by Pascal Le Merrer 
   <strong></strong></p>
   <p class="address">Somewhere on Earth</p>
@@ -350,7 +325,7 @@
 
 
 
-<li><a href="https://pascallemerrer.github.io/blog/post/index.xml" class="icon-rss" target="_blank" title="RSS"></a></li>
+<li><a href="https://PascalLeMerrer.github.io/blog/post/index.xml" class="icon-rss" target="_blank" title="RSS"></a></li>
 
   </ul>
   <br><br>
@@ -360,15 +335,19 @@
 
 <footer class="main-footer">
   <div class="container clearfix">
-        <a class="icon-rss" href="https://pascallemerrer.github.io/blog/post/index.xml" title="RSS"></a>
-        <p>&copy; 2017 &middot; Powered by <a href="http://gohugo.io">Hugo</a>. All contents licensed under <a href="https://creativecommons.org/licenses/by-sa/4.0/">CC BY-SA 4.0</a></p>
+        <a class="icon-rss" href="https://PascalLeMerrer.github.io/blog/post/index.xml" title="RSS"></a>
+        <p>&copy; 2021 &middot; Powered by <a href="http://gohugo.io">Hugo</a>. All contents licensed under <a href="https://creativecommons.org/licenses/by-sa/4.0/">CC BY-SA 4.0</a></p>
   </div>
 </footer>
+
 <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
 <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.8.0/highlight.min.js"></script>
 <script>hljs.initHighlightingOnLoad();</script>
-<script>window.jQuery || document.write('<script src="https:\/\/pascallemerrer.github.io\/blog\/js/vendor/jquery-1.11.0.min.js"><\/script>')</script>
-<script src="https://pascallemerrer.github.io/blog/js/plugins.js"></script>
+<script>window.jQuery || document.write('<script src="https:\/\/PascalLeMerrer.github.io\/blog\/js\/vendor\/jquery-1.11.0.min.js"><\/script>')</script>
+<script src="https://PascalLeMerrer.github.io/blog/js/plugins.js"></script>
+
+
+
 
 </body>
 </html>

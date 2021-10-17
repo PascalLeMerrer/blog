@@ -7,26 +7,26 @@
         <meta name="author">
         <meta name="description" content="Pascal&#39;s blog about software development.">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <meta name="generator" content="Hugo 0.19" />
-          <link href="https://pascallemerrer.github.io/blog/post/index.xml" rel="alternate" type="application/rss+xml" title="Pascal&#39;s dev blog" />
-          <link href="https://pascallemerrer.github.io/blog/post/index.xml" rel="feed" type="application/rss+xml" title="Pascal&#39;s dev blog" />
+        <meta name="generator" content="Hugo 0.88.1" />
+          <link href="https://PascalLeMerrer.github.io/blog/post/index.xml" rel="alternate" type="application/rss+xml" title="Pascal&#39;s dev blog" />
+          <link href="https://PascalLeMerrer.github.io/blog/post/index.xml" rel="feed" type="application/rss+xml" title="Pascal&#39;s dev blog" />
         <link href='//fonts.googleapis.com/css?family=Roboto:400,300,700|Noto+Serif:400,400italic,700,700italic' rel='stylesheet' type='text/css'>
-        <link rel="stylesheet" href="https://pascallemerrer.github.io/blog/css/styles.css">
-        <link rel="stylesheet" href="https://pascallemerrer.github.io/blog/css/custom_styles.css">
-        <link rel="icon" href="https://pascallemerrer.github.io/blog/favicon.ico">
-        <link rel="apple-touch-icon" href="https://pascallemerrer.github.io/blog/apple-touch-icon.png" />
-        <link rel="stylesheet" href="https://pascallemerrer.github.io/blog/css/highlightjs/monokai.css">
-        <script src="https://pascallemerrer.github.io/blog/js/vendor/modernizr-2.8.0.min.js"></script>
+        <link rel="stylesheet" href="https://PascalLeMerrer.github.io/blog/css/styles.css">
+        <link rel="stylesheet" href="https://PascalLeMerrer.github.io/blog/css/custom_styles.css">
+        <link rel="icon" href="https://PascalLeMerrer.github.io/blog/favicon.ico">
+        <link rel="apple-touch-icon" href="https://PascalLeMerrer.github.io/blog/apple-touch-icon.png" />
+        <link rel="stylesheet" href="https://PascalLeMerrer.github.io/blog/css/highlightjs/monokai.css">
+        <script src="https://PascalLeMerrer.github.io/blog/js/vendor/modernizr-2.8.0.min.js"></script>
         <style>
         .site-header h2 .logo {
-        background: url(https://pascallemerrer.github.io/blog/img/header.jpg) no-repeat 0 0;
+        background: url(https://PascalLeMerrer.github.io/blog/img/header.jpg) no-repeat 0 0;
         }
         @media (min--moz-device-pixel-ratio: 1.3), (-o-min-device-pixel-ratio: 2.6 / 2), (-webkit-min-device-pixel-ratio: 1.3), (min-device-pixel-ratio: 1.3), (min-resolution: 1.3dppx) {
           .site-header h2 .logo {
-            background-image: url(https://pascallemerrer.github.io/blog/img/header.jpg);
+            background-image: url(https://PascalLeMerrer.github.io/blog/img/header.jpg);
         }}
        .site-header {
-         background: #2a373d url(https://pascallemerrer.github.io/blog/img/header.jpg) no-repeat center center;
+         background: #2a373d url(https://PascalLeMerrer.github.io/blog/img/header.jpg) no-repeat center center;
          z-index: -1;
         }
         </style>
@@ -43,40 +43,35 @@
 <div class="container clearfix">
     <main role="main" class="content">
         <article class="post">
-            <a class="btn home" href="https://pascallemerrer.github.io/blog/" title="Back to home">&laquo; Back to home</a>
+            <a class="btn home" href="https://PascalLeMerrer.github.io/blog/" title="Back to home">&laquo; Back to home</a>
             
-<h1><a href="https://pascallemerrer.github.io/blog/post/react-native-5/" title="Creating a mobile application with React Native - part 5">Creating a mobile application with React Native - part 5</a></h1>
+<h1><a href="https://PascalLeMerrer.github.io/blog/post/react-native-5/" title="Creating a mobile application with React Native - part 5">Creating a mobile application with React Native - part 5</a></h1>
 
 <footer class="post-info">Posted on <span class="post-meta"><time datetime="2016.10.09">2016.10.09</time>
 
     &middot; Tagged in
         
-        <a href="https://pascallemerrer.github.io/blog/tags/development">development</a>, 
+        <a href="https://PascalLeMerrer.github.io/blog/tags/development">development</a>, 
         
-        <a href="https://pascallemerrer.github.io/blog/tags/tutorial">tutorial</a>, 
+        <a href="https://PascalLeMerrer.github.io/blog/tags/tutorial">tutorial</a>, 
         
-        <a href="https://pascallemerrer.github.io/blog/tags/mobile">mobile</a>, 
+        <a href="https://PascalLeMerrer.github.io/blog/tags/mobile">mobile</a>, 
         
-        <a href="https://pascallemerrer.github.io/blog/tags/react">react</a>, 
+        <a href="https://PascalLeMerrer.github.io/blog/tags/react">react</a>, 
         
-        <a href="https://pascallemerrer.github.io/blog/tags/react-native">react native</a>
+        <a href="https://PascalLeMerrer.github.io/blog/tags/react-native">react native</a>
         
     
 
 </span>
 </footer>
 
-            <p>In this fifth part of the <a href="https://pascallemerrer.github.io/blog/post/react-native-1/">article series about React Native</a>, we&rsquo;ll see how to support the native back button on Android devices.</p>
-
-<p></p>
-
+            <p>In this fifth part of the <a href="https://PascalLeMerrer.github.io/blog/post/react-native-1/">article series about React Native</a>, we&rsquo;ll see how to support the native back button on Android devices.</p>
 <p>To support the back button, we only have to modify the main android file, <code>index.android.js</code>.</p>
-
 <p>React Native provides a module named <code>BackAndroid</code>, that exposes an object on which you can register listeners. The  listeners are invoked when the back button is pressed. Then the app exits if there are no listeners or if none of the listeners returned true.</p>
-
 <p>In our implementation, the listener checks how many views are in the navigator&rsquo;s stack, by calling <code>navigator.getCurrentRoutes()</code>:</p>
-<div class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span></span><span class="nx">componentDidMount</span><span class="p">()</span> <span class="p">{</span>
-  <span class="nx">BackAndroid</span><span class="p">.</span><span class="nx">addEventListener</span><span class="p">(</span><span class="s1">&#39;hardwareBackPress&#39;</span><span class="p">,</span> <span class="p">()</span> <span class="o">=&gt;</span> <span class="p">{</span>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-javascript" data-lang="javascript"><span class="nx">componentDidMount</span><span class="p">()</span> <span class="p">{</span>
+  <span class="nx">BackAndroid</span><span class="p">.</span><span class="nx">addEventListener</span><span class="p">(</span><span class="s1">&#39;hardwareBackPress&#39;</span><span class="p">,</span> <span class="p">()</span> <span class="p">=&gt;</span> <span class="p">{</span>
     <span class="k">if</span> <span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">navigator</span> <span class="o">&amp;&amp;</span> <span class="k">this</span><span class="p">.</span><span class="nx">navigator</span><span class="p">.</span><span class="nx">getCurrentRoutes</span><span class="p">().</span><span class="nx">length</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">)</span> <span class="p">{</span>
       <span class="k">this</span><span class="p">.</span><span class="nx">navigator</span><span class="p">.</span><span class="nx">pop</span><span class="p">();</span>
       <span class="k">return</span> <span class="kc">true</span><span class="p">;</span>
@@ -84,27 +79,18 @@
     <span class="k">return</span> <span class="kc">false</span><span class="p">;</span>
   <span class="p">});</span>
 <span class="p">}</span>
-</code></pre></div>
-
-<p>If there are more than one scene in the stack, it drops the top one so we get back to the previous view. Otherwise, it returns false, to exit the app.</p>
-
+</code></pre></div><p>If there are more than one scene in the stack, it drops the top one so we get back to the previous view. Otherwise, it returns false, to exit the app.</p>
 <p>To ensure this listener is registered only once, we do it in one of the <a href="https://facebook.github.io/react/docs/component-specs.html#lifecycle-methods">lifecycle methods</a> offered by React Components: <code>componentDidMount</code>. This method is invoked once, just after the first rendering of the component.</p>
-
 <p>The listener uses the navigator. By default there is no simple way to access it outside of the rendering methods (<code>render</code> and <code>renderScene</code>). That&rsquo;s why we declare a navigator property in the constructor (more for documentation than anything else, as it is not required from a technical point of view):</p>
-<div class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span></span>  <span class="nx">constructor</span><span class="p">(</span><span class="nx">props</span><span class="p">)</span> <span class="p">{</span>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-javascript" data-lang="javascript">  <span class="nx">constructor</span><span class="p">(</span><span class="nx">props</span><span class="p">)</span> <span class="p">{</span>
     <span class="kr">super</span><span class="p">(</span><span class="nx">props</span><span class="p">);</span>
     <span class="k">this</span><span class="p">.</span><span class="nx">navigator</span> <span class="o">=</span> <span class="kc">null</span><span class="p">;</span>
   <span class="p">}</span>
-</code></pre></div>
-
-<p>And then we set this property in <code>renderScene</code>:</p>
-<div class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span></span>  <span class="nx">renderScene</span><span class="p">(</span><span class="nx">route</span><span class="p">,</span> <span class="nx">navigator</span><span class="p">)</span> <span class="p">{</span>
+</code></pre></div><p>And then we set this property in <code>renderScene</code>:</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-javascript" data-lang="javascript">  <span class="nx">renderScene</span><span class="p">(</span><span class="nx">route</span><span class="p">,</span> <span class="nx">navigator</span><span class="p">)</span> <span class="p">{</span>
     <span class="k">this</span><span class="p">.</span><span class="nx">navigator</span> <span class="o">=</span> <span class="nx">navigator</span><span class="p">;</span>
     <span class="p">...</span>
-</code></pre></div>
-
-<p>You could suppose this should do the trick. But running the app like this generates an error message:</p>
-
+</code></pre></div><p>You could suppose this should do the trick. But running the app like this generates an error message:</p>
 
 <figure >
     
@@ -113,19 +99,13 @@
     
 </figure>
 
-
 <p>We made a very common mistake in javascript: <code>this</code> in the <code>renderScene</code> function does not point to the AwesomeNativeBase object, but the object that &ldquo;owns&rdquo; the function, that is to say the navigator itself.</p>
-
 <p>To solve this, just replace</p>
-<div class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span></span><span class="nx">renderScene</span><span class="o">=</span><span class="p">{</span> <span class="k">this</span><span class="p">.</span><span class="nx">renderScene</span> <span class="p">}</span>
-</code></pre></div>
-
-<p>with:</p>
-<div class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span></span><span class="nx">renderScene</span><span class="o">=</span><span class="p">{</span> <span class="k">this</span><span class="p">.</span><span class="nx">renderScene</span><span class="p">.</span><span class="nx">bind</span><span class="p">(</span><span class="k">this</span><span class="p">)</span> <span class="p">}</span>
-</code></pre></div>
-
-<p>Here is the final code:</p>
-<div class="highlight"><pre><code class="language-html" data-lang="html"><span></span>  constructor(props) {
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-javascript" data-lang="javascript"><span class="nx">renderScene</span><span class="o">=</span><span class="p">{</span> <span class="k">this</span><span class="p">.</span><span class="nx">renderScene</span> <span class="p">}</span>
+</code></pre></div><p>with:</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-javascript" data-lang="javascript"><span class="nx">renderScene</span><span class="o">=</span><span class="p">{</span> <span class="k">this</span><span class="p">.</span><span class="nx">renderScene</span><span class="p">.</span><span class="nx">bind</span><span class="p">(</span><span class="k">this</span><span class="p">)</span> <span class="p">}</span>
+</code></pre></div><p>Here is the final code:</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-html" data-lang="html">  constructor(props) {
     super(props);
     this.navigator = null;
   }
@@ -157,55 +137,57 @@
         <span class="na">renderScene</span><span class="o">=</span><span class="s">{</span> <span class="na">this</span><span class="err">.</span><span class="na">renderScene</span><span class="err">.</span><span class="na">bind</span><span class="err">(</span><span class="na">this</span><span class="err">)</span> <span class="err">}</span>
       <span class="p">/&gt;</span>);
   }
-</code></pre></div>
-
-<p>As usual, the code of the app is available on github.</p>
-
+</code></pre></div><p>As usual, the code of the app is available on github.</p>
 <h2 id="conclusion">Conclusion</h2>
-
 <p>Not so much to say on this part&hellip;
 React Native provides a simple way to reproduce this Android basic feature.</p>
-
 <p>In the suite of these series, I will stop adding features to the app.
 Now, it&rsquo;s about time building an iOS version!</p>
             <ul class="share-buttons">
     <li>Share this article:</li>
     <li>
-        <a class="icon-facebook-squared" href="https://www.facebook.com/sharer/sharer.php?u=https%3a%2f%2fpascallemerrer.github.io%2fblog%2fpost%2freact-native-5%2f" onclick="window.open(this.href, 'facebook-share','width=580,height=296');return false;" title="Share on Facebook"></a>
+        <a class="icon-facebook-squared" href="https://www.facebook.com/sharer/sharer.php?u=https%3a%2f%2fPascalLeMerrer.github.io%2fblog%2fpost%2freact-native-5%2f" onclick="window.open(this.href, 'facebook-share','width=580,height=296');return false;" title="Share on Facebook"></a>
     </li>
     <li>
-        <a class="icon-twitter" href="https://twitter.com/share?text=Creating%20a%20mobile%20application%20with%20React%20Native%20-%20part%205&amp;url=https%3a%2f%2fpascallemerrer.github.io%2fblog%2fpost%2freact-native-5%2f" onclick="window.open(this.href, 'twitter-share', 'width=550,height=235');return false;" title="Tweet this article"></a>
+        <a class="icon-twitter" href="https://twitter.com/share?text=Creating%20a%20mobile%20application%20with%20React%20Native%20-%20part%205&amp;url=https%3a%2f%2fPascalLeMerrer.github.io%2fblog%2fpost%2freact-native-5%2f" onclick="window.open(this.href, 'twitter-share', 'width=550,height=235');return false;" title="Tweet this article"></a>
     </li>
     <li>
-        <a class="icon-gplus" href="https://plus.google.com/share?url=https%3a%2f%2fpascallemerrer.github.io%2fblog%2fpost%2freact-native-5%2f" onclick="window.open(this.href, 'google-plus-share', 'width=490,height=530');return false;" title="Share on Google&#43;"></a>
+        <a class="icon-gplus" href="https://plus.google.com/share?url=https%3a%2f%2fPascalLeMerrer.github.io%2fblog%2fpost%2freact-native-5%2f" onclick="window.open(this.href, 'google-plus-share', 'width=490,height=530');return false;" title="Share on Google&#43;"></a>
     </li>
     <li>
-        <a class="icon-linkedin" href="https://www.linkedin.com/shareArticle?mini=true&url=https%3a%2f%2fpascallemerrer.github.io%2fblog%2fpost%2freact-native-5%2f&title=Creating%20a%20mobile%20application%20with%20React%20Native%20-%20part%205" onclick="window.open(this.href, 'linkedin-share', 'width=600,height=494');return false;" title="Share on Linkedin"></a>
+        <a class="icon-linkedin" href="https://www.linkedin.com/shareArticle?mini=true&url=https%3a%2f%2fPascalLeMerrer.github.io%2fblog%2fpost%2freact-native-5%2f&title=Creating%20a%20mobile%20application%20with%20React%20Native%20-%20part%205" onclick="window.open(this.href, 'linkedin-share', 'width=600,height=494');return false;" title="Share on Linkedin"></a>
     </li>
 </ul>
 
         </article>
+        
         <div class="comments">
             <h3>Comments</h3>
             <div id="disqus_thread"></div>
-<script type="text/javascript">
-    var disqus_shortname = 'pascals-dev-blog';
-    var disqus_identifier = 'https:\/\/pascallemerrer.github.io\/blog\/post\/react-native-5\/';
-    var disqus_title = 'Creating a mobile application with React Native - part 5';
-    var disqus_url = 'https:\/\/pascallemerrer.github.io\/blog\/post\/react-native-5\/';
-
+<script type="application/javascript">
+    var disqus_config = function () {
+    
+    
+    
+    };
     (function() {
-        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
-        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
-        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+        if (["localhost", "127.0.0.1"].indexOf(window.location.hostname) != -1) {
+            document.getElementById('disqus_thread').innerHTML = 'Disqus comments not available by default when the website is previewed locally.';
+            return;
+        }
+        var d = document, s = d.createElement('script'); s.async = true;
+        s.src = '//' + "pascals-dev-blog" + '.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
     })();
 </script>
-<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
-<a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="https://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
         </div>
+        
     </main>
     <aside class="author">
-  <img class="profile-image" src="https://pascallemerrer.github.io/blog/img/profile-image.jpg" alt="" />
+  <img class="profile-image" src="https://PascalLeMerrer.github.io/blog/img/profile-image-128x128.jpeg" alt="" />
   <p class="name">by Pascal Le Merrer 
   <strong></strong></p>
   <p class="address">Somewhere on Earth</p>
@@ -233,7 +215,7 @@ Now, it&rsquo;s about time building an iOS version!</p>
 
 
 
-<li><a href="https://pascallemerrer.github.io/blog/post/index.xml" class="icon-rss" target="_blank" title="RSS"></a></li>
+<li><a href="https://PascalLeMerrer.github.io/blog/post/index.xml" class="icon-rss" target="_blank" title="RSS"></a></li>
 
   </ul>
   <br><br>
@@ -243,15 +225,19 @@ Now, it&rsquo;s about time building an iOS version!</p>
 
 <footer class="main-footer">
   <div class="container clearfix">
-        <a class="icon-rss" href="https://pascallemerrer.github.io/blog/post/index.xml" title="RSS"></a>
-        <p>&copy; 2017 &middot; Powered by <a href="http://gohugo.io">Hugo</a>. All contents licensed under <a href="https://creativecommons.org/licenses/by-sa/4.0/">CC BY-SA 4.0</a></p>
+        <a class="icon-rss" href="https://PascalLeMerrer.github.io/blog/post/index.xml" title="RSS"></a>
+        <p>&copy; 2021 &middot; Powered by <a href="http://gohugo.io">Hugo</a>. All contents licensed under <a href="https://creativecommons.org/licenses/by-sa/4.0/">CC BY-SA 4.0</a></p>
   </div>
 </footer>
+
 <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
 <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.8.0/highlight.min.js"></script>
 <script>hljs.initHighlightingOnLoad();</script>
-<script>window.jQuery || document.write('<script src="https:\/\/pascallemerrer.github.io\/blog\/js/vendor/jquery-1.11.0.min.js"><\/script>')</script>
-<script src="https://pascallemerrer.github.io/blog/js/plugins.js"></script>
+<script>window.jQuery || document.write('<script src="https:\/\/PascalLeMerrer.github.io\/blog\/js\/vendor\/jquery-1.11.0.min.js"><\/script>')</script>
+<script src="https://PascalLeMerrer.github.io/blog/js/plugins.js"></script>
+
+
+
 
 </body>
 </html>

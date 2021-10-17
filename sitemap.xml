@@ -1,160 +1,89 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-  
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+  xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
-    <loc>https://pascallemerrer.github.io/blog/post/The-Best-JS-Framework/</loc>
+    <loc>https://PascalLeMerrer.github.io/blog/tags/development/</loc>
     <lastmod>2017-07-02T17:42:27+02:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://pascallemerrer.github.io/blog/post/elm-europe-2017-day-2/</loc>
+  </url><url>
+    <loc>https://PascalLeMerrer.github.io/blog/tags/elm/</loc>
+    <lastmod>2017-07-02T17:42:27+02:00</lastmod>
+  </url><url>
+    <loc>https://PascalLeMerrer.github.io/blog/tags/framework/</loc>
+    <lastmod>2017-07-02T17:42:27+02:00</lastmod>
+  </url><url>
+    <loc>https://PascalLeMerrer.github.io/blog/tags/javascript/</loc>
+    <lastmod>2017-07-02T17:42:27+02:00</lastmod>
+  </url><url>
+    <loc>https://PascalLeMerrer.github.io/blog/tags/marko/</loc>
+    <lastmod>2017-07-02T17:42:27+02:00</lastmod>
+  </url><url>
+    <loc>https://PascalLeMerrer.github.io/blog/</loc>
+    <lastmod>2017-07-02T17:42:27+02:00</lastmod>
+  </url><url>
+    <loc>https://PascalLeMerrer.github.io/blog/post/</loc>
+    <lastmod>2017-07-02T17:42:27+02:00</lastmod>
+  </url><url>
+    <loc>https://PascalLeMerrer.github.io/blog/tags/riot/</loc>
+    <lastmod>2017-07-02T17:42:27+02:00</lastmod>
+  </url><url>
+    <loc>https://PascalLeMerrer.github.io/blog/tags/</loc>
+    <lastmod>2017-07-02T17:42:27+02:00</lastmod>
+  </url><url>
+    <loc>https://PascalLeMerrer.github.io/blog/post/the-best-js-framework/</loc>
+    <lastmod>2017-07-02T17:42:27+02:00</lastmod>
+  </url><url>
+    <loc>https://PascalLeMerrer.github.io/blog/tags/conference/</loc>
     <lastmod>2017-06-11T22:42:27+02:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://pascallemerrer.github.io/blog/post/elm-europe-2017-day-1/</loc>
+  </url><url>
+    <loc>https://PascalLeMerrer.github.io/blog/series/elm-europe-2017/</loc>
+    <lastmod>2017-06-11T22:42:27+02:00</lastmod>
+  </url><url>
+    <loc>https://PascalLeMerrer.github.io/blog/post/elm-europe-2017-day-2/</loc>
+    <lastmod>2017-06-11T22:42:27+02:00</lastmod>
+  </url><url>
+    <loc>https://PascalLeMerrer.github.io/blog/series/</loc>
+    <lastmod>2017-06-11T22:42:27+02:00</lastmod>
+  </url><url>
+    <loc>https://PascalLeMerrer.github.io/blog/post/elm-europe-2017-day-1/</loc>
     <lastmod>2017-06-11T09:42:27+02:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://pascallemerrer.github.io/blog/post/react-native-5/</loc>
+  </url><url>
+    <loc>https://PascalLeMerrer.github.io/blog/post/react-native-5/</loc>
     <lastmod>2016-10-09T10:24:44+02:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://pascallemerrer.github.io/blog/post/react-native-4/</loc>
+  </url><url>
+    <loc>https://PascalLeMerrer.github.io/blog/tags/mobile/</loc>
+    <lastmod>2016-10-09T10:24:44+02:00</lastmod>
+  </url><url>
+    <loc>https://PascalLeMerrer.github.io/blog/tags/react/</loc>
+    <lastmod>2016-10-09T10:24:44+02:00</lastmod>
+  </url><url>
+    <loc>https://PascalLeMerrer.github.io/blog/tags/react-native/</loc>
+    <lastmod>2016-10-09T10:24:44+02:00</lastmod>
+  </url><url>
+    <loc>https://PascalLeMerrer.github.io/blog/series/react-native/</loc>
+    <lastmod>2016-10-09T10:24:44+02:00</lastmod>
+  </url><url>
+    <loc>https://PascalLeMerrer.github.io/blog/tags/tutorial/</loc>
+    <lastmod>2016-10-09T10:24:44+02:00</lastmod>
+  </url><url>
+    <loc>https://PascalLeMerrer.github.io/blog/post/react-native-4/</loc>
     <lastmod>2016-09-13T00:08:30+02:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://pascallemerrer.github.io/blog/post/react-native-3/</loc>
+  </url><url>
+    <loc>https://PascalLeMerrer.github.io/blog/post/react-native-3/</loc>
     <lastmod>2016-09-05T19:11:22+02:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://pascallemerrer.github.io/blog/post/react-native-2/</loc>
+  </url><url>
+    <loc>https://PascalLeMerrer.github.io/blog/categories/</loc>
     <lastmod>2016-08-28T21:54:34+02:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://pascallemerrer.github.io/blog/post/react-native-1/</loc>
+  </url><url>
+    <loc>https://PascalLeMerrer.github.io/blog/post/react-native-2/</loc>
+    <lastmod>2016-08-28T21:54:34+02:00</lastmod>
+  </url><url>
+    <loc>https://PascalLeMerrer.github.io/blog/categories/development/</loc>
+    <lastmod>2016-08-28T21:54:34+02:00</lastmod>
+  </url><url>
+    <loc>https://PascalLeMerrer.github.io/blog/post/react-native-1/</loc>
     <lastmod>2016-08-15T00:18:02+02:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://pascallemerrer.github.io/blog/post/Hi/</loc>
+  </url><url>
+    <loc>https://PascalLeMerrer.github.io/blog/post/hi/</loc>
     <lastmod>2016-08-15T00:08:02+02:00</lastmod>
   </url>
-  
-  <url>
-    <loc>https://pascallemerrer.github.io/blog/categories/</loc>
-    <priority>0</priority>
-  </url>
-  
-  <url>
-    <loc>https://pascallemerrer.github.io/blog/tags/conference/</loc>
-    <lastmod>2017-06-11T22:42:27+02:00</lastmod>
-    <priority>0</priority>
-  </url>
-  
-  <url>
-    <loc>https://pascallemerrer.github.io/blog/tags/development/</loc>
-    <lastmod>2017-07-02T17:42:27+02:00</lastmod>
-    <priority>0</priority>
-  </url>
-  
-  <url>
-    <loc>https://pascallemerrer.github.io/blog/categories/development/</loc>
-    <lastmod>2016-08-28T21:54:34+02:00</lastmod>
-    <priority>0</priority>
-  </url>
-  
-  <url>
-    <loc>https://pascallemerrer.github.io/blog/tags/elm/</loc>
-    <lastmod>2017-07-02T17:42:27+02:00</lastmod>
-    <priority>0</priority>
-  </url>
-  
-  <url>
-    <loc>https://pascallemerrer.github.io/blog/series/elm-europe-2017/</loc>
-    <lastmod>2017-06-11T22:42:27+02:00</lastmod>
-    <priority>0</priority>
-  </url>
-  
-  <url>
-    <loc>https://pascallemerrer.github.io/blog/tags/framework/</loc>
-    <lastmod>2017-07-02T17:42:27+02:00</lastmod>
-    <priority>0</priority>
-  </url>
-  
-  <url>
-    <loc>https://pascallemerrer.github.io/blog/tags/javascript/</loc>
-    <lastmod>2017-07-02T17:42:27+02:00</lastmod>
-    <priority>0</priority>
-  </url>
-  
-  <url>
-    <loc>https://pascallemerrer.github.io/blog/tags/marko/</loc>
-    <lastmod>2017-07-02T17:42:27+02:00</lastmod>
-    <priority>0</priority>
-  </url>
-  
-  <url>
-    <loc>https://pascallemerrer.github.io/blog/tags/mobile/</loc>
-    <lastmod>2016-10-09T10:24:44+02:00</lastmod>
-    <priority>0</priority>
-  </url>
-  
-  <url>
-    <loc>https://pascallemerrer.github.io/blog/</loc>
-    <lastmod>2017-07-02T17:42:27+02:00</lastmod>
-    <priority>0</priority>
-  </url>
-  
-  <url>
-    <loc>https://pascallemerrer.github.io/blog/post/</loc>
-    <lastmod>2017-07-02T17:42:27+02:00</lastmod>
-    <priority>0</priority>
-  </url>
-  
-  <url>
-    <loc>https://pascallemerrer.github.io/blog/tags/react/</loc>
-    <lastmod>2016-10-09T10:24:44+02:00</lastmod>
-    <priority>0</priority>
-  </url>
-  
-  <url>
-    <loc>https://pascallemerrer.github.io/blog/tags/react-native/</loc>
-    <lastmod>2016-10-09T10:24:44+02:00</lastmod>
-    <priority>0</priority>
-  </url>
-  
-  <url>
-    <loc>https://pascallemerrer.github.io/blog/series/react-native/</loc>
-    <lastmod>2016-10-09T10:24:44+02:00</lastmod>
-    <priority>0</priority>
-  </url>
-  
-  <url>
-    <loc>https://pascallemerrer.github.io/blog/tags/riot/</loc>
-    <lastmod>2017-07-02T17:42:27+02:00</lastmod>
-    <priority>0</priority>
-  </url>
-  
-  <url>
-    <loc>https://pascallemerrer.github.io/blog/series/</loc>
-    <priority>0</priority>
-  </url>
-  
-  <url>
-    <loc>https://pascallemerrer.github.io/blog/tags/</loc>
-    <priority>0</priority>
-  </url>
-  
-  <url>
-    <loc>https://pascallemerrer.github.io/blog/tags/tutorial/</loc>
-    <lastmod>2016-10-09T10:24:44+02:00</lastmod>
-    <priority>0</priority>
-  </url>
-  
 </urlset>
